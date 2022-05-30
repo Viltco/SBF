@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sb_work_centre_machine_sb_work_centre_machine,sb_work_centre_machine.sb_work_centre_machine,model_centre_machine,,1,1,1,1

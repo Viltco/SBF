@@ -1,0 +1,26 @@
+<odoo>
+
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">view.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='client_order_ref']" position="attributes">
+                <attribute name="string">Customer PO Number</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <template id="track_po_line_price_unit_template">
+        <div>
+            <strong>The price unit has been updated.</strong>
+            <ul>
+                <li><t t-esc="line.product_id.display_name"/>:</li>
+                Price Unit: <t t-esc="line.price_unit" /> -&gt; <t t-esc="float(price_unit)"/><br/>
+            </ul>
+        </div>
+    </template>
+
+</odoo>

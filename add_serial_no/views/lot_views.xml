@@ -1,0 +1,53 @@
+<odoo>
+
+     <record id="view_custom_lot_tree" model="ir.ui.view">
+            <field name="name">custom.production.lot.tree</field>
+            <field name="model">custom.production.lot</field>
+            <field name="arch" type="xml">
+                <tree>
+                   <field name="name"/>
+                   <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_custom_lot_form" model="ir.ui.view">
+            <field name="name">custom.production.lot.form</field>
+            <field name="model">custom.production.lot</field>
+            <field name="arch" type="xml">
+                <form>
+<!--                    <header>-->
+<!--                        <button string="test" name="action_ftp" type="object"/>-->
+<!--                    </header>-->
+                    <sheet>
+                        <group col="4">
+                            <field name="name" required="1"/>
+                            <field name="code" required="1"/>
+                        </group>
+                    </sheet>
+<!--                    <div class="oe_chatter">-->
+<!--                        <field name="message_follower_ids"/>-->
+<!--                        <field name="message_ids"/>-->
+<!--                    </div>-->
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_custom_lot">
+            <field name="name">Custom Lot</field>
+            <field name="res_model">custom.production.lot</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_custom_lot_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">No found
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_custom_lot"
+                  name="Custom Lot"
+                  action="add_serial_no.action_custom_lot"
+                  parent="stock.menu_stock_inventory_control"
+                  sequence="4" active="False"/>
+
+</odoo>

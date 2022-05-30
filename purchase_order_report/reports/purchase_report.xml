@@ -1,0 +1,556 @@
+<odoo>
+
+    <record id="action_purchase_pdf_report" model="ir.actions.report">
+        <field name="name">Purchase Report</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">purchase_order_report.report_purchase_order_inh</field>
+    </record>
+
+    <template t-name="web.external_layout_standard">
+        <t t-foreach="docs" t-as="o">
+        <div t-attf-class="header o_company_#{res_company.id}_layout" t-att-style="report_header_style" width="100%">
+
+            <div class="first-page">
+            <div class="row">
+                <div class="col-6">
+                    <span t-field="res_company.name"/><br/>
+                    <span t-field="res_company.street"/><br/>
+                    <span t-field="res_company.city"/><br/>.
+                    <span t-field="res_company.phone"/><br/>
+                    <span t-field="res_company.email"/>
+                </div>
+                <div class="col-5">
+                    <strong>Report Date:</strong>
+                    <t>
+                        <t t-set="current_date" t-value="datetime.datetime.now()"/>
+                    </t>
+                    <span class="m-0" t-esc="current_date"/><br/>
+                    <span>
+                        <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" alt="Logo" width="70%"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- support for custom footer -->
+        <div t-attf-class="footer o_standard_footer o_company_#{res_company.id}_layout" position="attributes" id="footer">
+            <attribute name="t-if">
+                <div class="row">
+                    <div class="col-12" id="footer_center" style="font-size:12px; text-align:center;">
+                        <t>
+                            <t t-set="current_date" t-value="datetime.datetime.now()"/>
+                        </t>
+                        <span><strong>ORDER:</strong></span> <span t-field="o.partner_ref"/>
+                        <span><strong>REVISION:</strong></span> <span t-field="o.rev"/>
+                        <span><strong>PO DATE:</strong></span> <span t-field="o.date_order"/>
+                        <span><strong>TIME:</strong></span> <span t-esc="current_date"/>
+                        <span><strong>VENDOR NAME:</strong></span> <span t-field="o.partner_id.name"/>
+                    </div>
+                </div>
+            </attribute>
+        </div>
+        <div t-attf-class="footer o_standard_footer o_company_#{res_company.id}_layout" position="after">
+            <div t-attf-class="footer o_standard_footer o_company_#{res_company.id}_layout">
+                <t t-if="custom_footer" t-raw="custom_footer"/>
+            </div>
+        </div>
+        <div t-attf-class="article o_report_layout_standard o_company_#{res_company.id}_layout"
+             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div class="pt-5">
+                <xpath expr="." position="inside">
+                    <link rel="stylesheet" type="text/css" href="/bookings/static/src/css/pdf_report_style.css"/>
+                </xpath>
+                <!-- This div ensures that the address is not cropped by the header. -->
+                <t t-call="web.address_layout"/>
+            </div>
+            <t t-raw="0"/>
+
+        </div>
+    </t>
+    </template>
+
+    <template id="report_purchase_order_inh">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout_standard">
+            <t t-foreach="docs" t-as="o">
+<!--                <t t-call="web.external_layout_standard">-->
+<!--                <t t-call="web.internal_layout">-->
+<!--                    <t t-call="purchase_order_report.your_custom_layout_header">-->
+
+                    <div class="page">
+<!--                        <t t-call="web.external_layout_standard">-->
+
+                        <div class="row" style="margin-top:-40px;">
+                            <div class="col-8">
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <span class="m-0" t-field="o.name"/>
+                                </span>
+                            </div>
+                        </div><br/>
+                        <div style="font-size:20px; font-weight: bold;" align="center">
+                            <strong>Purchase Order</strong>
+                        </div><br/>
+
+                        <table width="100%" style="border:1px solid black;float:left; ">
+                            <tr class="text-left" >
+                                <td style="border:1px solid black; width:50%;">
+                                    <table width="100%" >
+                                        <tr>
+                                            <td style="padding:5px;" colspan="2">
+                                                <span> <strong>Vendor:</strong> </span><br/>
+                                                <span t-field="o.partner_id.name"/><br/>
+                                                <span t-field="o.partner_id.street"/><br/><br/>
+                                                <span> <strong>Phone:</strong> </span>
+                                                <span t-field="o.partner_id.phone"/><br/>
+                                                <span> <strong>Fax:</strong> </span>
+                                                <span t-field="o.partner_id.mobile"/><br/>
+                                                <span> <strong>Email:</strong> </span>
+                                                <span t-field="o.partner_id.email"/><br/><br/>
+                                                <span> <strong>ATTN:</strong> </span>
+                                                <span t-field="o.attn"/><br/><br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;" colspan="2">
+                                                <span> <strong>REQ REF:</strong> </span>
+                                                <span t-field="o.origin"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;">
+                                                <span> <strong>ISO REF:</strong> </span>
+                                                <span t-field="o.iso_ref"/>
+                                            </td>
+                                            <td style="border:1px solid black;padding:5px;" >
+                                                <span> <strong>PAYMENT TERMS:</strong> </span>
+                                                <span t-field="o.payment_term_id.name"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td style="border:1px solid black;width:50%;">
+                                    <table width="100%">
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;" colspan="2">
+                                                <strong><span>ORDER REF:</span>
+                                                    <span t-field="o.partner_ref"/></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;">
+                                                <strong><span>PO DATE:</span>
+                                                    <span t-field="o.date_order"/></strong>
+                                            </td>
+                                            <td style="border:1px solid black;padding:5px;">
+                                                <strong><span>REV:</span>
+                                                    <span t-field="o.rev"/></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;">
+                                                <strong><span>PO STATUS:</span>
+                                                    <span t-field="o.state"/></strong>
+                                            </td>
+                                            <td style="border:1px solid black;padding:5px;">
+                                                <strong><span>REV DATE:</span>
+                                                    <span t-field="o.rev_date"/></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;" colspan="2">
+                                                <span> <strong>SHIP TO:</strong> </span><br/>
+                                                <t t-if="o.partner_id.child_ids">
+                                                    <span t-field="o.partner_id.child_ids[0].street"/><br/>
+                                                    <span t-field="o.partner_id.child_ids[0].city"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span/><br/>
+                                                    <span/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;" colspan="2">
+                                                <span> <strong>BILL TO:</strong> </span><br/>
+                                                <span t-field="o.partner_id.street"/><br/>
+                                                <span t-field="o.partner_id.city"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;" colspan="2">
+                                                <span> <strong>INCOTERMS:</strong> </span>
+                                                <span t-field="o.incoterm_id.name"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;" colspan="2">
+                                                <span> <strong>SHIPMENT MODE:</strong> </span>
+                                                <span t-field="o.shipment_mode"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table><tr><td>&#160;</td></tr></table>
+                        <t t-set="total_discount" t-value="0"/>
+                        <t t-set="total_value" t-value="0"/>
+                        <table class="table table-sm">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th name="th_description" class="text-nowrap"><strong>SN</strong></th>
+                                    <th name="th_description" class="text-nowrap"><strong>ITEM CODE</strong></th>
+                                    <th name="th_taxes" class="text-nowrap"><strong>VENDOR PN</strong></th>
+                                    <th name="th_date_req" class="text-center text-nowrap"><strong>UOM</strong></th>
+                                    <th name="th_quantity" class="text-center text-nowrap"><strong>QTY</strong></th>
+                                    <th name="th_price_unit" class="text-center text-nowrap"><strong>PRICE</strong></th>
+                                    <th name="th_price_unit" class="text-center text-nowrap"><strong>Total</strong></th>
+                                    <th name="th_amount" class="text-center text-nowrap"><strong>DISC</strong></th>
+                                    <th name="th_amount" class="text-center text-nowrap"><strong>SUBTOTAL</strong></th>
+                                    <th name="th_amount" class="text-center text-nowrap"><strong>DEL DATE</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="current_total" t-value="0"/>
+
+                                <t t-set="count" t-value="0"/>
+                                <t t-foreach="products" t-as="line">
+                                    <t t-set="count" t-value="count+1"/>
+                                    <!--                        <t t-foreach="purchase_product(product)" t-as="line">-->
+                                    <t t-set="current_total" t-value="current_total + line[5]"/>
+                                    <!--                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>-->
+                                    <tr t-att-class="'font-weight-bold'">
+                                        <t>
+                                            <td id="product">
+                                                <span t-esc="count"/>
+                                            </td>
+                                            <td id="product">
+                                                <span t-esc="line[0]"/>
+                                            </td>
+                                            <td name="td_taxes">
+                                                <span t-esc="line[7]"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="line[2]"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="line[1]"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="line[3]"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="line[1] * line[3]"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="line[4]"/>
+                                            </td>
+                                            <t t-set="total_value" t-value="total_value + (line[1] * line[3])"/>
+                                            <t t-set="total_discount" t-value="total_discount + ((line[3] *line[4])/100)"/>
+                                            <td class="text-right">
+                                                <span t-esc="(line[1] * line[3]) - ((line[3] *line[4])/100)" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="line[6]"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+<!--                                    <tr>-->
+<!--                                        <td colspan="9">-->
+<!--                                            <span t-esc="line[7]"/>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+                                </t>
+                            </tbody>
+                        </table>
+                        <table width="100%" class="table table-condensed">
+                            <tr>
+                                <td width="50%" style="border:1px solid black;padding:5px;">
+                                    <span><strong>AMOUNT IN WORDS: </strong></span>
+                                    <span t-esc="amount_in_words"/>
+                                </td>
+                                <td width="50%" style="border:1px solid black;">
+                                    <table width="100%" height="100%" class="table table-condensed">
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;"><strong><span>Total Value</span></strong></td>
+                                            <td style="border:1px solid black;padding:5px;"><span t-esc="total_value" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;"><strong><span>Discount</span></strong></td>
+                                            <td style="border:1px solid black;padding:5px;"><span t-esc="total_discount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:1px solid black;padding:5px;"><strong><span>Net Value</span></strong></td>
+                                            <td style="border:1px solid black;padding:5px;"><span t-field="o.amount_total"/></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="border:1px solid black;padding:5px;"><span><strong>SPECIAL INSTRUCTION:</strong></span> <span t-esc="o.special_instruction"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="border:1px solid black;padding:5px;"><span><strong>SPECIAL TERMS:</strong></span> <span t-esc="o.special_terms"/></td>
+                            </tr>
+                            <tr>
+                                <td  style="border:1px solid black;padding:5px;">
+                                    <br/>
+                                    <span><strong>Prepared By: </strong></span> <span t-esc="o.user_id.name"/><br/>
+                                    <span><strong>DATE  TIME: </strong></span> <span t-esc="o.create_date"/>
+                                </td>
+                                <td style="border:1px solid black;padding:5px;">
+                                    <div class="text-center"><strong>FOR MRE: </strong></div>
+                                    <span><strong>AUTHORIZED SIGNATORY: </strong></span> <span t-esc="o.approved_by.name"/><br/>
+                                    <span><strong>DATE TIME: </strong></span> <span t-esc="o.date_approve"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  style="border:1px solid black;padding:5px;">
+                                    <span><strong>Receiver Note: </strong></span> <span t-esc="o.notes"/><br/>
+                                </td>
+                                <td style="border:1px solid black;padding:-5px;">
+                                    <table width="100%" >
+                                        <tr class="thead-light">
+                                           <td colspan="2" class="text-center" style="border:1px solid black;padding:5px;">
+                                               <span><strong>ORDER ACCEPTANCE</strong></span>
+                                           </td>
+                                        </tr>
+                                        <tr >
+                                           <td colspan="2" class="text-left" style="border:1px solid black;padding:5px;">
+                                               <span><strong>We Confirm Acceptance of this Order</strong></span>
+                                           </td>
+                                        </tr>
+                                        <tr >
+                                           <td colspan="2" class="text-left" style="border:1px solid black;padding:5px;">
+                                               <span><strong>NAME:</strong></span>
+                                           </td>
+                                        </tr>
+                                        <tr >
+                                           <td class="text-left" style="border:1px solid black;padding:5px;">
+                                               <span><strong>TITLE:</strong></span>
+                                           </td>
+                                            <td class="text-left" style="border:1px solid black;padding:5px;">
+                                               <span><strong>DATE:</strong></span>
+                                           </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <p style="page-break-after: always;"/>
+                        <table class="table table-condensed">
+                            <tr>
+                                <td width="50%" style="text-align:justify; font-size:10px;">
+                                    <span><strong>Condition and Terms Order Purchase</strong></span><br/><br/>
+                                    <span>
+                                            <strong>1- Warranty:</strong> Supplier undertakes and warrants to the buyer that all products, materials, equipment's, services to be performed under the Purchase Order are in conformity with the specifications under the Purchase Order and meets the specifications, drawings or descriptions on the face hereof or on attached specification sheets (which are incorporated herein by reference), and are of good and merchantable quality and will fit the buyer's intended purposes and known to the Supplier to be, free of defects in material and workmanship. All drawings provided hereunder shall be the property of Buyer and for his usage free of charge regardless of any provision or notation to the contrary on such drawings. The Supplier warrants that the product will be produced, sold and delivered in compliance with all applicable Saudi Laws, rules, and regulations.
+
+
+    2- Entire Agreement: This purchase order and the additional product quality and performance representations by Supplier, constitutes the entire agreement between the parties. The Buyer shall not be bound by any prior or future terms and conditions not provided for herein or by a written amendment. Any additional or inconsistent terms shown on Supplier's sales confirmation, shipping, documents or invoices, and any additions of inconsistencies therein with the provisions hereof shall be null and void.
+
+    3- Price:
+(a)- All prices specified and stipulated in the Purchase Order are net prices, unless indicated otherwise and agreed upon in writing shall be inclusive of all fees, charges, expenses of all kinds.
+(b)- Prices shall be subject to expenses deductions, or losses that may be incurred due to transport outage, imperfections, or defects in commodity or equipment, or noncompliance with samples and /or specifications whether clear or implied, or none compliance with the delivery date. (All prices shown in the P.O reflect the net price agreed upon inclusive of all applicable discounts, fees, any charges, custom duties and transportation charges, to delivery destination specified by the buyer.
+(c)- Changes: No claims, additional expenses or charges will be allowed by Supplier for additional work, material, packing service, and no substitution of material or changes in price will be permitted unless authorized by the buyer in writing.
+(d)- Taxes and Other Charges: Should any duties, Social Security and/or taxes including Zakat and Saudi Income Tax be assessed against or imposed on the Supplier by reason of any work, labor, or services performed for the buyer the Supplier will be solely responsible for such liabilities.
+                                    </span><br/>
+                                    <span>
+                                            <strong>4- Payment:</strong> the buyer shall pay to the Supplier for the products, supplies or provided services within 60 days from the date of receipt of commercial invoice unless otherwise stated in the Purchase Order.
+
+    5- The buyer has the right to reject any supplies, equipment, products or services which are not in accordance with the specifications and ask for replacement or correction, and in case of the Supplier failure the buyer shall replace or correct the same at the Suppliers' expense.
+    6- Title: The title and risk of loss and or damage to all sold products or services hereunder shall pass to buyer upon receiving and acceptance by the buyer. The Supplier warrants that the title is free and clear from any and all mortgages and encumbrances whatsoever.
+
+    7- Force Majeure: Neither Party shall be liable for failure or delays caused by conditions beyond their reasonable control, provided that a written notice thereof should be provided to the other party as soon as practicable. Any situation preventing performance or execution of the agreement shall be remedied as soon as reasonably possible. The Buyer in its sole discretion reserves the right to cancel the order if such delay is caused by the Supplier as time is essence of the order.
+8 - Penalties: A. If the Supplier fails to perform his commitments indicated in the Purchase Order, the buyer shall be entitled to arrange alternative supplier at the Supplier's expense. Under such circumstances the Supplier shall be liable for the actual cost of damages suffered by the buyer plus other administrative expenses.
+B. If the Supplier fails to fulfill his obligations in part or in hole under the terms of Purchase order , the Supplier shall be liable to pay a penalty equal to 1% of the value of the delayed goods or services up to 6%, however in case of construction the maximum penalty shall be up to 10% in accordance with Purchases laws applicable in the kingdom of Saudi Arabia.
+                                    </span><br/>
+                                    <span>
+                                        Gratuities and commissions: The Supplier understands that the Buyer policy prohibits any contracting party from paying a commission or giving a gift to anyone to influence the execution terms and performance of the contract, Otherwise the Buyer shall be entitled to claim the retrieval of such payments or gifts as being excess of his contract. In such case the Buyer reserves the right to take disciplinary and/or criminal action under the laws and regulations applicable in the kingdom of Saudi Arabia.
+                                    </span><br/>
+                                    <span>
+                                        General: The buyer will not be responsible for any injury sustained by the Supplier's personnel or any damage occurred to the equipment during the performance of his obligations under this Purchase Order. However the Supplier will also be held responsible for injury he may cause to buyer's or any third party employees or damage to their property or equipment during the performance of his obligations under this Purchase Order.
+                                    </span><br/>
+                                    <span>
+                                        11 - Indemnity: The Supplier undertakes to indemnify and hold buyer, its employees, contractors, agents and Suppliers, harmless from and against any all claims, suits, judgments, or expenses, including reasonable attorney's fees, which are based in whole or part upon breach of Supplier's warranties, or Supplier's negligence, including without limitation, claims, suits or judgments for personal injury including death, or property damage arising out of or relating directly or indirectly to this purchase order.
+                                    </span><br/>
+                                    <span>
+                                       12 - Notices: All notices hereunder shall be deemed given if delivered in writing personally or by courier, or sent by mail, electronic transmission, facsimile to buyer or to Supplier at the address set forth in this purchase order. Any notice given by mail shall be deemed given at the time such notice is transmitted through mail.
+                                    </span><br/>
+                                    <span>
+                                       13 - Assignment: This purchase order shall extend to and be binding upon the parties hereto, their successors, and assignees, provided, that the parties agreed in writing for such assignment.
+                                    </span><br/>
+                                    <span>
+                                       14 - Patents : The Supplier, its heirs, successors, assignees and legal representatives, shall forever protect, indemnify and save harmless the buyer, its customers, agents, and (Distributer), against all claims, suits, judgments, court costs, attorney's fees and other liabilities demands or losses in any manner arising out of alleged infringement of any patent copyright or trademark, rights because of their possession, use or sale or the subject matter to which this purchase order relates, The Supplier shall promptly notify the Buyer of bringing of any suit. Supplier shall have the rights to be represented in defense thereof by counsel of its own selection and at its own expense. Buyer ,its customers, contractors, agents and (Distributers), shall have a free and unrestricted right and licenses to use said subject matter in any and all arts and under all patents in or under which Buyer may now or in future have an interest.
+                                    </span> <br/>
+                                    <span>
+                                       15 - Non-Waiver: Waiver of any breach, failure to enforce any of the terms or conditions of this purchase order or course of conduct at any time shall not limit or waive either party's rights thereafter to enforce or compel strict compliance with every term and condition of this purchase order.
+                                    </span> <br/>
+                                    <span>
+                                       16 - Confidentiality: This purchase order, the items ordered, quantity, specifications and price shall be deemed confidential and shall not be revealed by Supplier to any third party not necessary for the completion of the order unless permission is first obtained in writing from buyer.
+                                    </span> <br/>
+                                    <span>
+                                       17 - Audit: Except for firm fixed price orders, Buyer may, upon its request, audit any and all records of Supplier relating to material and/ or services provided hereunder, provided, however, Supplier shall have the right to exclude any trade secrets, formulas, or processes from such inspection. Supplier further agrees to maintain its books and records relating to material and / or services provided hereunder for a period of two (2) years from the date such material and / or services were provided and to make such books and records available to buyer at any time or times within the two year period.
+                                    </span> <br/>
+                                    <span>
+                                       18 - Conflict of interest: The Supplier warrants that it has not given or received any commissions, payments, gifts, kickbacks, lavish or extensive entertainment or other things of value to or from any employees or buyer agents or any third party in connection with this purchase order. As well, the Supplier acknowledges that the giving or receiving of any such payments, gifts, entertainment, or other things of value is strict violation of Buyer's corporate policy and may result in the cancellation of this and all future purchase orders. Supplier shall notify Buyer's audit department of any such solicitation by any of buyer's employees, agents or any third party
+                                    </span> <br/>
+                                    <span>
+                                       19 - Acceptance: The Supplier admits it has read and understands the conditions of this purchase order and acknowledges that Supplier's written acceptance (will be within 10 days from the date of receipt of purchase order otherwise it considered as accepted, and the commencement of any work or services under this purchase order shall constitute the Supplier's acceptance of these terms and conditions.
+                                    </span> <br/>
+                                    <span>
+                                       20 - Termination: The Buyer may terminate this purchase order, with or without cause, upon a minimum of fourteen (14) days prior written notice to Supplier.
+                                    </span> <br/>
+                                    <span>
+                                       21 - No Advertising: The Supplier shall not, without first obtaining the written consent of buyer in any manner advertise or publish the fact that Supplier has contracted to furnish buyer with the goods or services or works covered by this purchase order, or use any trademarks or trade names of buyer in Supplier's advertising or promotional materials.
+                                    </span> <br/>
+                                     <span>
+                                       22 - Applicable Laws and Jurisdiction: This Purchase Order shall be subject to the laws, Rules and Regulations applicable in the Kingdom of Saudi Arabia. The parties will try to settle any dispute amicably otherwise it will be subject to arbitration in accordance with the arbitration law of Saudi Arabia, without prejudice to the jurisdictions of the appropriate courts of the Kingdom of Saudi Arabia .                                    </span> <br/>
+                                </td>
+                                <td width="50%" style="text-align:justify;font-size:10px;">
+                                <span>
+ -1 ﺗﻌﻬﺪ : ﻳﺘﻌﻬﺪ ﺍﻟﻤـــــــﻮﺭﺩ ﻟﻠﻤﺸﺘﺮﻱ ﺑﺄﻥ ﺍﻟﻤﻨﺘﺠﺎﺕ ﻭﺍﻟﻤﻮﺍﺩ ﻭﺍﻟﻤﻌﺪﺍﺕ ﻭﺍﻟﺨﺪﻣﺎﺕ ﺍﻟﺘﻲ ﺳﻴﺘﻢ ﺗﻘﺪﻳﻤﻬﺎ ﺑﻤﻮﺟﺐ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻣﻄﺎﺑﻘﺔ ﻟﻠﻤﻮﺍﺻﻔﺎﺕ ﺍﻟﻮﺍﺭﺩﺓ ﺑﻪ ﻛﻤﺎ ﻳﺘﻄﺎﺍﺑﻖ ﻣﻊ ﻭﺃﻱ ﻣﻮﺍﺻﻔﺎﺕ ﻭﺭﺳﻮﻣﺎﺕ ﻭﺃﻭﺻﺎﻑ ﻣﺮﻓﻘﺔ ﺑﺄﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻛﻤﺎ ﻳﻀﻤﻦ ﺍﻟﻤﻮﺭﺩ ﺟﻮﺩﺗﻬﺎ ﺍﻟﻌﺎﻟﻴﺔ ﻭ ﺗﻮﺍﻓﻘﻬﺎ ﻣﻊ ﺍﻷﻏﺮﺍﺽ ﺍﻟﺘﺠﺎﺭﻳﺔ ﺍﻟﻤﺨﺼﺼﺔ ﻟﻬﺎ ﻣﻦ ﻗﺒﻞ ﺍﻟﻤﺸﺘﺮﻱ  ﻭﻛﻤﺎ ﻳﻘﺮ ﺍﻟﻤﻮﺭﺩ ﺑﺄﻧﻬﺎ ﺧﺎﻟﻴﺔ ﻣﻦ ﻋﻴﻮﺏ ﺍﻟﻤﻮﺍﺩ ﻭ ﺍﻟﺘﺼﻨﻴﻊ . ﻛﻤﺎ ﺗﻜﻮﻥ ﺟﻤﻴﻊ ﺍﻟﺮﺳﻮﻣﺎﺕ ﺍﻟﻤﻘﺪﻣﺔ ﺑﻤﻮﺟﺐ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻫﺬﺍ ﻣﻠﻜﺎ ﻟﻠﻤﺸﺘﺮﻱ ﻹﺳﺘﺨﺪﺍﻣﻬﺎ ﻣﺠﺎﻧﺎ ﺑﺼﺮﻑ ﺍﻟﻨﻈﺮ ﻋﻦ ﺃﻱ ﻧﺺ ﻣﺨﺎﻟﻒ ﻟﺬﻟﻚ ﻓﻲ ﺍﻟﺮﺳﻮﻣﺎﺕ ﻭﺍﻟﻤﺴﺘﻨﺪﺍﺕ ﺍﻷﺧﺮﻯ ﻳﻨﺺ ﺧﻼﻓﺎ ﻟﺬﻟﻚ . ﻛﻤﺎ ﻳﺘﻌﻬﺪ ﺍﻟﻤﻮﺭﺩ ﺑﺄﻧﻪ ﺳﻴﺘﻢ ﺇﻧﺘﺎﺝ ﻭﺑﻴﻊ ﻭﺗﺴﻠﻴﻢ
+ﺍﻟﺒﻀﺎﻋﺔ ﻭﻓﻘﺎ ﻟﻸﻧﻈﻤﺔ ﻭﺍﻟﻘﻮﺍﻧﻴﻦ ﺍﻟﻤﻄﺒﻘـﺔ ﻭﺍﻟﺴﺎﺭﻳﺔ ﻓﻲ ﺍﻟﻤﻤﻠﻜﺔ ﺍﻟﻌﺮﺑﻴﺔ ﺍﻟﺴﻌﻮﺩﻳﺔ.
+                                </span><br/>
+                                    <span>
+ -2ﺷﻤﻮﻟﻴﺔ ﺍﻻﺗﻔﺎﻗﻴﺔ : ﻳﺸﻜﻞ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﺇﺿﺎﻓﺔ ﺇﻟﻰ ﺷﺮﻭﻁ ﺟﻮﺩﺓ ﺍﻟﻤﻨﺘﺞ ﺍﻹﺿﺎﻓﻴﺔ ﻭﺇﻓﺎﺩﺓ ﺍﻟﻤﻮﺭﺩ ﻟﺘﻨﻔﻴﺬ ﺍﻻﺗﻔﺎﻕ ﺍﻟﻜﻠﻲ ﺍﻟﺬﻱ ﺗﻢ ﺑﻴﻦ ﺍﻟﻄﺮﻓﻴﻦ. ﻭﻻ ﻳﻜﻮﻥ ﺍﻟﻤﺸﺘﺮﻱ ﻣﻠﺰﻣﺎ ﺑﺄﻱ ﺷﺮﻭﻁ ﺳﺎﺑﻘﺔ ﺃﻭ ﻻﺣﻘﺔ ﻟﻢ ﻳﺘﻢ ﺍﻟﻨﺺ ﻋﻠﻴﻬﺎ ﻓﻲ ﻫﺬﺍ ﺍﻻﺗﻔﺎﻕ ﺃﻭ ﺃﻱ ﺗﻌﺪﻳﻞ ﻛﺘﺎﺑﻲ ﻻﺣﻖ ، ﻭﺗﻌﺘﺒﺮ ﺃﻱ ﺷﺮﻭﻁ ﺇﺿﺎﻓﻴﺔ ﺃﻭ ﻣﺘﻨﺎﻗﻀﺔ ﻳﻨﺺ ﻋﻠﻴﻬﺎ ﺍﻟﻤﻮﺭﺩ ﻓﻲ ﺧﻄﺎﺏ ﺍﻟﺘﺄﻛﻴﺪ ﺍﻟﻤﻘﺪﻡ ﻣﻨﻪ ﺃﻭ ﻓﻲ ﻭﺛﺎﺋﻖ ﺍﻟﺸﺤﻦ ﺃﻭ
+ﺍﻟﻔﻮﺍﺗﻴﺮ ﺃﻭ ﺃﻱ ﺇﺿﺎﻓﺎﺕ ﺗﺘﻌﺎﺭﺽ ﻣﻊ ﻣﺎ ﻭﺭﺩ ﻓﻲ ﻫﺬﻩ ﺍﻻﺗﻔﺎﻗﻴﺔ ﺑﺎﻃﻠﺔ ﻭﻻ ﺃﺛﺮ ﻟﻬﺎ ﻗﺎﻧﻮﻧﺎ .
+                                </span><br/>
+                                    <span>
+ﺃ- ﺗﻌﺘﺒﺮ ﺍﻷﺳﻌﺎﺭ ﺍﻟﻮﺍﺭﺩﺓ ﻓﻲ ﺃﻣـﺮ ﺍﻟﺸﺮﺍﺀ ﺃﺳﻌﺎﺭﺍ ﺷﺎﻣﻠﺔ ﻭﺫﻟﻚ ﻣﺎ ﻟﻢ ﻳﺘﻢ ﺍﻟﻨﺺ ﺻﺮﺍﺣﺔ ﻋﻠﻰ ﺧﻼﻑ ﺫﻟﻚ ﻛﻤﺎ ﺗﻌﺘﺒﺮ ﺷﺎﻣﻠﺔ ﻟﻜﻞ
+ﺍﻷﺗﻌﺎﺏ ﻭﺍﻟﺮﺳﻮﻡ ﻭﺍﻟﻤﺼﺮﻭﻓﺎﺕ ﺃﻳﺎ ﻛﺎﻥ ﻧﻮﻋﻬﺎ . ﺏ _ ﺗﺨﻀﻊ ﺍﻷﺳﻌﺎﺭ ﻟﺨﺼﻢ ﺍﻟﻤﺼﺎﺭﻳﻒ ﺃﻭ ﺍﻟﺨﺴﺎﺋﺮ ﺍﻟﻨﺎﺗﺠﺔ ﺍﺛﻨﺎﺀ ﺍﻟﻨﻘﻞ ﺍﻭ ﺑﺴﺒﺐ ﻋﻴﻮﺏ ﻓﻰ ﺍﻟﺴﻠﻊ ﺃﻭ ﺍﻟﻤﻌﺪﺍﺕ ﺃﻭ ﻋﺪﻡ ﻣﻄﺎﺑﻘﺘﻬﺎ ﻟﻠﻌﻴﻨﺎﺕ ﻭ/ ﺃﻭ ﺍﻟﻤﻮﺍﺻﻔﺎﺕ ﺍﻟﻤﻨﺼﻮﺹ ﻋﻨﻬﺎ ﺃﻭ ﺍﻟﻤﻮﺍﺻﻔﺎﺕ ﺍﻟﻀﻤﻨﻴﺔ ﺃﻭ ﺗﺎﺭﻳﺦ ﺍﻟﺘﺴﻠﻴﻢ ﻭﺗﻌﻜﺲ ﺍﻷﺳﻌﺎﺭ ﺍﻟﻤﻮﺿﺤﺔ ﻓﻲ ﺃﻣـﺮ ﺍﻟﺸﺮﺍﺀ ﺍﻷﺳﻌﺎﺭ ﺍﻟﺼﺎﻓﻴﺔ ﺍﻟﻤﺘﻔﻖ ﻋﻠﻴﻬﺎ ﺷﺎﻣﻠﺔ ﻛﻞ ﺍﻟﺨﺼﻮﻣﺎﺕ ﺍﻟﻤﻄﺒﻘﺔ ﻭﺍﻷﺗﻌﺎﺏ ﻭﺍﻟﻤﺼﺎﺭﻳﻒ ﻭﺭﺳﻮﻡ ﺍﻟﺠﻤﺎﺭﻙ ﻭﺍﻟﻨﻘﻞ ﻣﺎ ﻟﻢ
+ﻳﺘﻔﻖ ﻋﻠﻰ ﺧﻼﻑ ﺫﻟﻚ ﺣﺘﻰ ﻭﺻﻮﻟﻬﺎ ﻟﺠﻬﺔ ﺍﻟﺘﺴﻠﻴﻢ ﺍﻟﺘﻲ ﻳﺤﺪﺩﻫﺎ ﺍﻟﻤﺸﺘﺮﻱ . ﺝ - ﺍﻟﺘﻌﺪﻳـــﻼﺕ: ﻻ ﻳﺤﻖ ﻟﻠﻤﻮﺭﺩ ﺗﻘﺪﻳﻢ ﺃﻱ ﻣﻄﺎﻟﺒﺎﺕ ﺃﻭ ﻣﺼﺮﻭﻓﺎﺕ ﺃﻭ ﺭﺳﻮﻡ ﺇﺿﺎﻓﻴﺔ ﻋﻦ ﺍﻷﻋﻤﺎﻝ ﺃﻭ ﺍﻟﻤﻮﺍﺩ ﺍﻹﺿﺎﻓﻴﺔ ﺃﻭ ﻋﻦ ﻣﻮﺍﺩ
+ﺃﻭ ﺃﻋﻤﺎﻝ ﺍﻟﺘﻌﺒﺌﺔ ﻭﻻ ﻳﺠﻮﺯ ﺍﺳﺘﺒﺪﺍﻝ ﺍﻟﻤﻮﺍﺩ ﺃﻭ ﺗﻐﻴﻴﺮ ﺍﻟﺴﻌـﺮ ﺇﻻ ﺑﻤﻮﺍﻓﻘﺔ ﻭﺗﻔﻮﻳﺾ ﺍﻟﻤﺸﺘﺮﻱ ﺍﻟﻜﺘﺎﺑـﻴﺔ . ﺩ- ﺍﻟﻀﺮﺍﺋﺐ ﻭﺍﻟﺮﺳﻮﻡ ﺍﻷﺧﺮﻯ : ﻳﻜﻮﻥ ﺍﻟﻤﻮﺭﺩ ﻭﺣﺪﻩ ﻣﺴﺌﻮﻻ ﻋﻦ ﺗﺤﻤﻞ ﺃﻱ ﺇﻟﺘﺰﺍﻣﺎﺕ ﻣﺎﻟﻴﺔ ﺑﺴﺒﺐ ﺃﻳﺔ ﻋﻤﺎﻟﺔ ﺃﻭ ﺧﺪﻣﺎﺕ ﻧﻔﺬﻫﺎ ﺃﻭ ﺧﺪﻣﺎﺕ ﺗﻢ ﺗﻘﺪﻳﻤﻬﺎ ﻟﻠﻤﺸﺘﺮﻱ. ﺑﻤﺎ ﻓﻲ ﺫﻟﻚ ﺍﻟﺮﺳﻮﻡ ﻭﺃﻱ ﻣﺒﺎﻟﻎ ﻣﻘﺎﺑﻞ ﺍﻟﺘﺄﻣﻴﻨﺎﺕ ﺍﻹﺟﺘﻤﺎﻋﻴﺔ ﺃﻭ ﺍﻟﻀﺮﺍﺋﺐ ﺃﻭ ﺯﻛﺎﺓ ﺍﻟﺪﺧﻞ ﻣﻤﺎ ﻳﺘﻢ
+ﻓﺮﺿﻪ ﻋﻠﻲ ﺍﻟﻤﻮﺭﺩ ﻧﺘﻴﺠﺔ ﻷﻳﺔ ﺃﻋﻤﺎﻝ ﺃﻭ ﻋﻤﺎﻟﺔ ﺃﻭ ﺧﺪﻣﺎﺕ ﻣﻘﺪﻣﺔ ﻟﻠﻤﺸﺘﺮﻱ
+                                </span><br/>
+                                    <span>
+ -4ﺍﻟﺪﻓـﻊ : ﻳﺪﻓﻊ ﺍﻟﻤﺸﺘﺮﻱ ﻟﻠﻤﻮﺭﺩ ﻗﻴﻤﺔ ﺍﻟﻤﻮﺍﺩ ﻭﺍﻟﺘﻮﺭﻳﺪﺍﺕ ﻭﺍﻟﺨﺪﻣﺎﺕ ﺍﻟﻤﻘﺪﻣﺔ ﺑﻤﻮﺟﺐ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﺧﻼﻝ 60 ﻳﻮﻣﺎ ﻣﻦ ﺗﺎﺭﻳﺦ ﺇﺳﺘﻼﻡ ﺍﻟﺒﻀﺎﻋﺔ ﺃﻭ ﺍﻟﺨﺪﻣﺎﺕ ﺃﻭ ﺍﻟﻤﻌﺪﺍﺕ ﻭﻗﺒﻮﻟﻬﺎ ﺑﻮﺍﺳﻄﺔ ﺍﻟﻤﺸﺘﺮﻱ ، ﻭﻳﺘﻢ ﺻﺮﻑ ﺍﻟﻤﺒﻠﻎ ﺍﻟﻤﺴﺘﺤﻖ ﺑﻨﺎﺀ ﻋﻠﻰ ﺍﻟﻔﻮﺍﺗﻴﺮ ﺍﻟﻤﻘﺪﻣﺔ
+ﻣﻦ ﺍﻟﺒﺎﺋﻊ ﻭﻣﺎ ﻗﺪ ﻳﻄﻠﺒﻪ ﺍﻟﻤﺸﺘﺮﻱ ﻣﻦ ﻣﺴﺘﻨﺪﺍﺕ ﺃﺧﺮﻯ ﻣﺎﻟﻢ ﻳﺬﻛﺮ ﺧﻼﻑ ﺫﻟﻚ ﺑﺄﻣﺮ ﺍﻟﺸﺮﺍﺀ
+                                </span><br/>
+                                    <span>
+ -5ﻟﻠﻤﺸﺘﺮﻱ ﺍﻟﺤﻖ ﻓﻲ ﺭﻓﺾ ﺃﻱ ﻣﻮﺍﺩ ﺃﻭﻣﻌﺪﺍﺕ ﺃﻭ ﻣﻨﺘﺠﺎﺕ ﺃﻭ ﺧﺪﻣﺎﺕ ﻏﻴﺮ ﻣﻄﺎﺑﻘﺔ ﻟﻠﻤﻮﺍﺻﻔﺎﺕ ﻭﻃﻠﺐ ﺇﺳﺘﺒﺪﺍﻟﻬﺎ ﺃﻭ ﺍﻟﺘﺼﺤﻴﺢ،
+ﻭﻟﻠﻤﺸﺘﺮﻱ ﺣﻖ ﺇﺳﺘﺒﺪﺍﻟﻬﺎ ﺃﻭﺍﻟﺘﺼﺤﻴﺢ ﻋﻠﻰ ﺣﺴﺎﺏ ﺍﻟﻤﻮﺭﺩ ﺇﺫﺍ ﻓﺸﻞ ﺍﻟﻤﻮﺭﺩ ﻓﻲ ﺍﻟﻘﻴﺎﻡ ﺑﺬﻟﻚ .
+                                    </span><br/>
+                                    <span>
+                                    -6 ﺍﻟﻤﻠﻜﻴﺔ: ﺗﻨﺘﻘﻞ ﺍﻟﻤﻠﻜﻴﺔ ﻭﻛﺎﻓﺔ ﻣﺨﺎﻃﺮ ﺍﻟﻔﻘﺪﺍﻥ ﻭ/ﺃﻭ ﺍﻟﺨﺴﺎﺭﺓ ﻟﺠﻤﻴﻊ ﺍﻟﻤﻨﺘﺠﺎﺕ ﺃﻭ ﺍﻟﺨﺪﻣﺎﺕ ﺍﻟﻤﺒﺎﻋﺔ ﺑﻤﻮﺟﺐ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻫﺬﺍ
+ﺇﻟﻰ ﺍﻟﻤﺸﺘﺮﻯ ﻋﻨﺪ ﺇﺳﺘﻼﻡ ﻭﻗﺒﻮﻝ ﺍﻟﻤﺸﺘﺮﻱ ﻟﻬﺎ. ﻭﻳﻀﻤﻦ ﺍﻟﻤﻮﺭﺩ ﺑﺄﻥ ﻣﻠﻜﻴﺘﻪ ﻟﻠﺒﻀﺎﻋﺔ ﺧﺎﻟﻴﺔ ﻣﻦ ﺍﻟﺮﻫﻦ ﺃﻭ ﺃﻱ ﺇﻟﺘﺰﺍﻣﺎﺕ ﻗﺎﻧﻮﻧﻴﺔ
+ﺃﺧﺮﻯ.                                    </span><br/>
+                                         <span>
+                                       -7 ﺍﻟﻘﻮﺓ ﺍﻟﻘﺎﻫﺮﺓ: ﻻ ﻳﻜﻮﻥ ﺃﻱ ﻣﻦ ﺍﻟﻄﺮﻓﻴﻦ ﻣﺴﺌﻮﻻ ﻋﻦ ﺍﻟﻔﺸﻞ ﺃﻭ ﺍﻟﺘﺄﺧﻴﺮ ﺍﻟﺬﻱ ﻳﺤﺪﺙ ﺑﺴﺒﺐ ﺣﺪﻭﺙ ﻇﺮﻭﻑ ﺧﺎﺭﺟﺔ ﻋﻦ ﺇﺭﺍﺩﺓ ﺃﻱ ﻣﻦ ﺍﻟﻄﺮﻓﻴﻦ ﺑﺸﺮﻁ ﺃﻥ ﻳﻘﻮﻡ ﻫﺬﺍ ﺍﻟﻄﺮﻑ ﺑﺘﺰﻭﻳﺪ ﺍﻟﻄﺮﻑ ﺍﻵﺧﺮ ﺑﺈﺷﻌﺎﺭ ﺧﻄﻲ ﺑﺄﺳﺮﻉ ﻭﻗﺖ ﻣﻤﻜﻦ ﻣﻊ ﺿﺮﻭﺭﺓ ﺃﻥ ﻳﺘﻢ ﺗﺼﺤﻴﺢ ﺍﻟﻈﺮﻭﻑ ﺍﻟﺘﻲ ﺗﺤﻮﻝ ﺩﻭﻥ ﺗﻨﻔﻴﺬ ﺍﻹﺗﻔﺎﻗﻴﺔ ﻭﺗﻮﺭﻳﺪ ﺍﻟﺴﻠﻌﺔ ﺑﺄﺳﺮﻉ ﻭﻗﺖ ﻣﻤﻜﻦ ﻭﻳﺤﺘﻔﻆ ﺍﻟﻤﺸﺘﺮﻯ ﺑﺤﻖ ﺇﻟﻐﺎﺀ ﺍﻟﻄﻠﺐ ﻭﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﺇﺫﺍ ﻛﺎﻥ ﺍﻟﺘﺄﺧﻴﺮ ﺑﺴﺒﺐ ﺭﺍﺟﻊ ﻟﻠﻤﻮﺭﺩ ﻭﻭﻓﻘﺎ ﻟﺘﻘﺪﻳﺮﻩ ﺳﻴﺆﺛﺮ ﺳﻠﺒﺎ ﻋﻠﻴﻪ ﻧﻈﺮﺍ ﻟﻜﻮﻥ ﻋﻨﺼﺮ ﺍﻟﻮﻗﺖ ﺃﻣﺮ ﺟﻮﻫﺮﻱ ﻓﻲ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ
+                                    </span><br/>
+                                         <span>
+                                        8 – ﺍﻟﺠﺰﺍﺀﺍﺕ : ﺇﺫﺍ ﺃﺧﻔﻖ ﺍﻟﻤﻮﺭﺩ ﻓﻲ ﺗﻨﻔﻴﺬ ﺍﻟﺘﺰﺍﻣﺎﺗﻪ ﺍﻟﻤﺒﻴﻨﺔ ﻓﻲ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻳﺤﻖ ﻟﻠﻤﺸﺘﺮﻱ ﺍﻟﺘﺮﺗﻴﺐ ﻭﺍﻹﺗﻔﺎﻕ ﻣﻊ ﻣﻮﺭﺩﻳﻦ
+ﺁﺧﺮﻳﻦ ﻟﻠﺘﻮﺭﻳﺪ ﻋﻠﻰ ﺣﺴﺎﺏ ﺍﻟﻤﻮﺭﺩ ﺍﻟﻤﺘﻌﺎﻗﺪ ﻭﻓﻲ ﻫﺬﻩ ﺍﻟﺤﺎﻟﺔ ﻳﻜﻮﻥ ﺍﻟﻤﻮﺭﺩ ﻣﻄﺎﻟﺒﺎ ﻟﺪﻓﻊ ﺍﻟﺘﻜﺎﻟﻴﻒ ﺍﻟﻔﻌﻠﻴﺔ ﻭﺍﻷﺿﺮﺍﺭ ﺍﻟﺘﻲ
+ﺗﻜﺒﺪﻫﺎ ﺍﻟﻤﺸﺘﺮﻱ ﺑﺎﻹﺿﺎﻓﺔ ﺇﻟﻰ ﺍﻟﻨﻔﻘﺎﺕ ﺍﻹﺩﺍﺭﻳــﺔ ﺍﻷﺧﺮﻯ ﺍﻟﻨﺎﺗﺠﺔ ﻋﻦ ﺫﻟﻚ. ﺏ - ﺇﺫﺍ ﻓﺸﻞ ﺍﻟﻤﻮﺭﺩ ﻓﻲ ﺗﻨﻔﻴﺬ ﺇﻟﺘﺰﺍﻣﺎﺗﻪ ﺟﺰﺋﻴﺎ ﺃﻭ ﻛﻠﻴﺎ ﺑﻤﻮﺟﺐ ﺃﺣﻜﺎﻡ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﺃﻭ ﺍﻟﻌﻘﺪ ﻓﺈﻧﻪ ﻳﻜﻮﻥ ﻣﻠﺰﻣﺎ ﺑﺪﻓﻊ ﻏﺮﺍﻣﺔ ﺗﺴﺎﻭﻱ %1 ﻣﻦ ﻗﻴﻤﺔ ﺍﻟﺒﻀﺎﺋﻊ ﺃﻭ ﺍﻟﺨﺪﻣﺎﺕ ﺍﻟﻤﺘﺄﺧﺮﺓ ﺑﺤﺪ ﺃﻋﻠﻲ ﻳﺒﻠﻎ %6 ﻣﻦ ﺍﻟﻘﻴﻤﺔ ، ﻭﻓﻲ ﺣﺎﻟﺔ ﺍﻹﻧﺸﺎﺀﺍﺕ ﻳﺼﺒﺢ ﺍﻟﺤﺪ
+ﺍﻷﻋﻠﻲ ﻟﻠﻐﺮﺍﻣﺔ ﺣﺘﻰ %10 ﻭﻓﻘﺎ ﻟﻨﻈﺎﻡ ﺍﻟﻤﺸﺘﺮﻳﺎﺕ ﺍﻟﻤﻄﺒﻖ ﺑﺎﻟﻤﻤﻠﻜﺔ ﺍﻟﻌﺮﺑﻴﺔ ﺍﻟﺴﻌﻮﺩﻳﺔ .
+
+                                    </span><br/>
+                                         <span>
+                                       9 – ﺍﻟﻤﻨﺢ ﻭﺍﻟﻌﻤﻮﻻﺕ : ﻣﻦ ﺍﻟﻤﻌﻠﻮﻡ ﻟﻠﻤﻮﺭﺩ ﺃﻥ ﺍﻟﻨﻈﺎﻡ ﻭﺍﻟﺴﻴﺎﺳﺔ ﺍﻟﻤﻄﺒﻘﺔ ﻟﺪﻯ ﺍﻟﻤﺸﺘﺮﻱ ﻳﻤﻨﻊ ﺟﻤﻴﻊ ﺍﻟﻤﺘﻌﺎﻗﺪﻳﻦ ﻣﻌﻪ ﻣﻦ ﺩﻓﻊ ﻋﻤﻮﻻﺕ ﺃﻭ ﻣﻨﺢ ﺃﻭ ﻫﺪﺍﻳﺎ ﻷﻱ ﺷﺨﺺ ﻟﻠﺘﺄﺛﻴﺮ ﺑﻐﺮﺽ ﺍﻟﺤﺼﻮﻝ ﻋﻠﻰ ﺍﻟﻌﻘﺪ ﺃﻭ ﺷﺮﻭﻃﻪ ﻭﻓﻲ ﺣﺎﻟﺔ ﺣﺪﻭﺙ ﺫﻟﻚ ﻓﺈﻥ ﻟﻠﻤﺸﺘﺮﻱ ﺍﻟﺤﻖ ﻓﻲ ﻣﺼﺎﺩﺭﺓ ﻣﺜﻞ ﻫﺬﻩ ﺍﻟﻤﺪﻓﻮﻋﺎﺕ ﺃﻭ ﺍﻟﻬﺪﺍﻳﺎ ﻋﻠﻰ ﺇﻋﺘﺒﺎﺭ ﺃﻧﻬﺎ ﺧﺎﺭﺟﺔ ﻋﻦ ﻧﻄﺎﻕ ﻫﺬﺍ ﺍﻟﻌﻘﺪ ، ﻛﻤﺎ ﻳﺤﺘﻔﻆ ﺑﺤﻘﻪ ﺑﺈﺗﺨﺎﺫ
+ﺍﻹﺟﺮﺍﺀﺍﺕ ﺍﻟﻨﻈﺎﻣﻴﺔ ﻭﺍﻟﺠﻨﺎﺋﻴﺔ ﻃﺒﻘﺎ ﻟﻸﻧﻈﻤﺔ ﻭﺍﻟﻠﻮﺍﺋﺢ ﺍﻟﺴﺎﺭﻳﺔ ﺑﺎﻟﻤﻤﻠﻜﺔ ﺍﻟﻌﺮﺑﻴﺔ ﺍﻟﺴﻌﻮﺩﻳﺔ
+                                    </span><br/>
+                                    <span>
+                                         10 – ﻋﺎﻡ : ﻻ ﻳﻜﻮﻥ ﺍﻟﻤﺸﺘﺮﻱ ﻣﺴﺌﻮﻻ ﻋﻦ ﺃﻳﺔ ﺇﺻﺎﺑﺎﺕ ﻗﺪ ﺗﻠﺤﻖ ﺑﻤﻮﻇﻔﻲ ﺍﻟﻤﻮﺭﺩ ﺃﻭ ﺃﻳﺔ ﺃﺿﺮﺍﺭ ﺗﻠﺤﻖ ﺑﻤﻌﺪﺍﺗﻪ ﺃﺛﻨﺎﺀ ﺗﻨﻔﻴﺬ
+ﺇﻟﺘﺰﺍﻣﺎﺗﻪ ﺑﻤﻮﺟﺐ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﺃﻭ ﺍﻟﻌﻘﺪ، ﻛﻤﺎ ﻳﻜﻮﻥ ﺍﻟﻤﻮﺭﺩ ﻣﺴﺌﻮﻻ ﻋﻦ ﺃﻳﺔ ﺇﺻﺎﺑﺎﺕ ﻗﺪ ﻳﻠﺤﻘﻬﺎ ﺑﻤﻮﻇﻔﻲ ﻭﻣﻤﺘﻠﻜﺎﺕ ﻭﻣﻌﺪﺍﺕ
+ﺍﻟﻤﺸﺘﺮﻱ ﺃﻭ ﺃﻱ ﺃﻃﺮﺍﻑ ﺃﺧﺮﻱ ﺃﺛﻨﺎﺀ ﺗﻨﻔﻴﺬ ﺇﻟﺘﺰﺍﻣﺎﺗﻪ ﺑﻤﻮﺟﺐ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ
+                                    </span><br/>
+                                         <span>
+                                       11 – ﺍﻟﺘﻌﻮﻳﺾ : ﻋﻠﻰ ﺍﻟﻤﻮﺭﺩ ﺃﻥ ﻳﻘﻮﻡ ﺑﺤﻤﺎﻳﺔ ﻭﺗﻌﻮﻳﺾ ﻭﺇﻋﻔﺎﺀ ﺍﻟﻤﺸﺘﺮﻯ ﻭﻋﻤﻼﺋﻪ ﻭﻣﻘﺎﻭﻟﻴﻪ ﻭﻭﻛﻼﺋﻪ ﻭﻣﻮﺯﻋﻴﻪ ﻣﻦ ﺍﻟﻀﺮﺭ ﻭﺍﻟﻤﺴﺌﻮﻟﻴﺔ ﺍﻟﻨﺎﺗﺠﺔ ﻋﻦ ﺟﻤﻴﻊ ﺍﻟﻤﻄﺎﻟﺒﺎﺕ ﻭﺍﻟﻘﻀﺎﻳﺎ ﻭﺍﻷﺣﻜﺎﻡ ﻭﻣﺼﺎﺭﻳﻒ ﺍﻟﻤﺤﺎﻛﻢ ﻭﺍﻷﺗﻌﺎﺏ ﺍﻟﻘﺎﻧﻮﻧﻴﺔ ﻭﺟﻤﻴﻊ ﺍﻟﻤﺴﺌﻮﻟﻴﺎﺕ ﻭﺍﻟﻄﻠﺒﺎﺕ ﻭﺍﻟﺨﺴﺎﺋﺮ ﺍﻟﻨﺎﺗﺠﺔ ﻛﻠﻴﺎ ﺃﻭ ﺟﺰﺋﻴﺎ ﻣﻦ ﺇﺧﻼﻝ ﺍﻟﻤﻮﺭﺩ ﻟﻀﻤﺎﻧﺎﺗﻪ ﺃﻭ ﺇﻫﻤﺎﻟﻪ ﺷﺎﻣﻠﺔ ﻭﺑﺪﻭﻥ ﺣﺪﻭﺩ ﺍﻟﻤﻄﺎﻟﺒﺎﺕ ﻭﺍﻟﺪﻋﺎﻭﻱ
+ﻭﺍﻷﺣﻜﺎﻡ ﺑﺎﻷﺿﺮﺍﺭ ﺍﻟﺸﺨﺼﻴﺔ ﺍﻟﺘﻲ ﺗﺸﻤﻞ ﺍﻟﻤﻮﺕ ﺃﻭ ﺇﺗﻼﻑ ﺍﻟﻤﻤﺘﻠﻜﺎﺕ ﺍﻟﻨﺎﺗﺠﺔ ﻣﻦ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻭﺍﻟﺘﻲ ﺗﺘﻌﻠﻖ ﺑﻪ ﺑﺼﻮﺭﺓ ﻣﺒﺎﺷﺮﺓ ﺃﻭ
+ﻏﻴﺮ ﻣﺒﺎﺷﺮﺓ
+                                    </span><br/>
+                                         <span>
+                                        12 – ﺍﻹﺧﻄﺎﺭﺍﺕ: ﺗﻌﺘﺒﺮ ﺟﻤﻴﻊ ﺍﻹﺧﻄﺎﺭﺍﺕ ﻗﺪ ﺗﻤﺖ ﺑﺼﻮﺭﺓ ﺻﺤﻴﺤﺔ ﻭﻣﺤﻘﻘﺔ ﻟﻠﻐﺮﺽ ﺍﻟﻤﻄﻠﻮﺏ ﻓﻲ ﺣﺎﻝ ﺗﺴﻠﻴﻤﻬﺎ ﺷﺨﺼﻴﺎ
+ﻭﻣﻜﺘﻮﺑﺔ ﺃﻭ ﻋﻦ ﻃﺮﻳﻖ ﺍﻟﺒﺮﻳﺪ ﺍﻟﺴﺮﻳﻊ ﺃﻭ ﺍﻟﻌﺎﺩﻱ ﺃﻭ ﻋﺒﺮ ﺍﻟﺮﺳﺎﻟﺔ ﺍﻹﻟﻜﺘﺮﻭﻧﻴﺔ ﺃﻭ ﺍﻟﻔﺎﻛﺲ ﺇﻟﻰ ﺍﻟﻤﺸﺘﺮﻱ ﺃﻭ ﺍﻟﻤـﻮﺭﺩ ﻋﻠﻰ ﻋﻨﻮﺍﻧﻪ
+ﺍﻟﻤﺴﺠﻞ ﻓﻲ ﺃﻣـﺮ ﺍﻟﺸﺮﺍﺀ ﻭﻓﻲ ﺣﺎﻟﺔ ﺇﺭﺳﺎﻟﻬﺎ ﻋﻦ ﻃﺮﻳﻖ ﺍﻟﺒﺮﻳﺪ ﺗﻌﺘﺒﺮ ﺍﻟﺮﺳﺎﻟﺔ ﻗﺪ ﺗﻢ ﺗﺴﻠﻴﻤﻬﺎ ﻓﻮﺭ ﺍﻹﺭﺳﺎﻝ ﺑﺎﻟﺒﺮﻳﺪ .
+                                    </span><br/>
+                                         <span>
+                                        13 – ﺍﻟﺘﻨﺎﺯﻝ: ﻳﻤﺘـﺪ ﺍﻷﺛﺮ ﺍﻟﻘﺎﻧﻮﻧﻲ ﻷﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻫﺬﺍ ﺇﻟﻰ ﺍﻟﻄﺮﻓﻴﻦ ﻭﻳﻜﻮﻥ ﻣﻠﺰﻣﺎ ﻟﻬﻤﺎ ﻭﻟﺨﻠﻔﺎﺋﻬﻢ ﻭﺍﻟﻤﺘﻨﺎﺯﻝ ﻟﻬﻢ ﻋﻠﻰ ﺃﻥ ﻳﺘﻢ
+ﺍﻹﺗﻔﺎﻕ ﻛﺘﺎﺑـﺔ ﻋﻠﻰ ﻫﺬﺍ ﺍﻟﺘﻨﺎﺯﻝ
+                                    </span><br/>
+                                         <span>
+                                        . 14 – ﺑﺮﺍﺀﺍﺕ ﺍﻻﺧﺘﺮﺍﻉ: ﻋﻠﻰ ﺍﻟﻤﻮﺭﺩ ﻭﻭﺭﺛﺘﻪ ﺍﻟﺸﺮﻋﻴﻴﻦ ﻭﺧﻠﻔﺎﺋﻬﻢ ﻭﺍﻟﻤﺘﻨﺎﺯﻝ ﻟﻬﻢ ﻭﻣﻤﺜﻠﻴﻬﻢ ﺍﻟﺸﺮﻋﻴﻴﻦ ﺃﻥ ﻳﻘﻮﻣﻮﺍ ﺑﺤﻤﺎﻳﺔ ﻭﺗﻌﻮﻳﺾ ﻭﺇﻋﻔﺎﺀ ﺍﻟﻤﺸﺘﺮﻯ ﻭﻋﻤﻼﺋﻪ ﻭﻣﻘﺎﻭﻟﻴﻪ ﻭﻭﻛﻼﺋﻪ ﻭﻣﻮﺯﻋﻴﻪ ﻣﻦ ﺍﻟﻀﺮﺭ ﻭﺍﻟﻤﺴﺌﻮﻟﻴﺔ ﺍﻟﻨﺎﺗﺠﺔ ﻋﻦ ﺟﻤﻴﻊ ﺍﻟﻤﻄﺎﻟﺒﺎﺕ ﻭﺍﻟﻘﻀﺎﻳﺎ ﻭﺍﻷﺣﻜﺎﻡ
+ﻭﻣﺼﺎﺭﻳﻒ ﺍﻟﻤﺤﺎﻛﻢ ﻭﺍﻷﺗﻌﺎﺏ ﺍﻟﻘﺎﻧﻮﻧﻴﺔ ﻭﺟﻤﻴﻊ ﺍﻟﻤﺴﺌﻮﻟﻴﺎﺕ ﻭﺍﻟﻄﻠﺒﺎﺕ ﻭﺍﻟﺨﺴﺎﺋﺮ ﺃﻳﺎ ﻛﺎﻥ ﻧﻮﻋﻬﺎ ﺍﻟﻨﺎﺗﺠﺔ ﻋﻦ ﺍﻹﺧﻼﻝ ﺑﺄﻱ ﻣﻦ ﺑﺮﺍﺀﺍﺕ ﺍﻻﺧﺘﺮﺍﻉ ﺃﻭ ﺣﻘﻮﻕ ﺍﻟﻄﺒﻊ ﺃﻭ ﺍﻟﻌﻼﻣﺎﺕ ﺍﻟﺘﺠﺎﺭﻳﺔ ﺑﺴﺒﺐ ﺍﻣﺘﻼﻙ ﺃﻭ ﺍﺳﺘﻌﻤﺎﻝ ﺃﻭ ﺑﻴﻊ ﺍﻟﻤﻮﺿﻮﻉ ﺍﻟﻤﺘﻌﻠﻖ ﺑﺄﻣﺮ ﺍﻟﺸﺮﺍﺀ ﺑﺸﺮﻁ ﺃﻥ ﻳﻘﻮﻡ ﺍﻟﻤﻮﺭﺩ ﺑﺈﺷﻌﺎﺭ ﺍﻟﻤﺸﺘﺮﻯ ﻓﻮﺭﺍ ﺑﺮﻓﻊ ﺃﻳﺔ ﺩﻋﺎﻭﻱ ﻭﻳﺤﻖ ﻟﻠﻤﻮﺭﺩ ﺃﻥ ﻳﺘﻢ ﺗﻤﺜﻴﻠﻪ ﻓﻲ ﻫﻴﺌﺔ ﺍﻟﺪﻓﺎﻉ ﻋﻦ ﻃﺮﻳﻖ ﺍﻟﻤﺤﺎﻣﻲ ﺍﻟﺬﻱ ﻳﺨﺘﺎﺭﻩ ﺑﻨﻔﺴﻪ ﻭﻋﻠﻰ ﻧﻔﻘﺘﻪ ﺍﻟﺨﺎﺻﺔ، ﻛﻤﺎ ﻳﻜﻮﻥ ﻟﻠﻤﺸﺘﺮﻱ ﻭﻋﻤﻼﺋﻪ ﻭﻣﻘﺎﻭﻟﻴﻪ ﻭﻭﻛﻼﺋﻪ ﻭﻣﻮﺯﻋﻴﻪ ﺍﻟﺤﻖ ﺍﻟﻘﺎﻧﻮﻧﻲ ﻏﻴﺮ ﺍﻟﻤﻘﻴﺪ ﻭﺍﻟﺘﺮﺧﻴﺺ ﻹﺳﺘﻌﻤﺎﻝ ﺍﻟﻤﻮﺿﻮﻉ ﻣﺤﻞ ﺍﻟﻌﻘﺪ ﻓﻲ ﺟﻤﻴﻊ ﺍﻟﻮﺟﻮﻩ ﺍﻟﻤﺘﻌﻠﻘﺔ ﺑﺠﻤﻴﻊ ﺑﺮﺍﺀﺍﺕ ﺍﻻﺧﺘﺮﺍﻉ ﺃﻭ ﺍﻟﺘﻲ ﺗﻜﻮﻥ ﻟﻠﻤﺸﺘﺮﻱ ﻣﺼﻠﺤﺔ
+ﻓﻴﻬﺎ ﻣﺴﺘﻘﺒﻼ.
+
+                                    </span><br/>
+                                         <span>
+                                        15 – ﻋـﺪﻡ ﺍﻟﺘﻨﺎﺯﻝ: ﻻ ﻳﻌﺘﺒﺮ ﺗﻨﺎﺯﻝ ﺃﻱ ﻣﻦ ﺍﻟﻄﺮﻓﻴﻦ ﻹﺧﻼﻝ ﻣﻦ ﺍﻟﻄﺮﻑ ﺍﻵﺧﺮ ﻷﻱ ﺑﻨﺪ ﺃﻭ ﻋﺪﻡ ﻗﺪﺭﺓ ﺃﻱ ﻣﻦ ﺍﻟﻄﺮﻓﻴﻦ ﺇﻧﻔـﺎﺫ ﺃﻱ
+ﻣﻦ ﺍﻟﺸﺮﻭﻁ ﺍﻟﻮﺍﺭﺩﺓ ﻓﻲ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﺃﻭ ﻣﻤﺎﺭﺳﺔ ﺍﻟﺘﺼﺮﻑ ﻓﻲ ﺃﻱ ﻭﻗﺖ ﻣﻦ ﺍﻷﻭﻗﺎﺕ ﻣﺎﻧﻌﺎ ﻟﺤﻖ ﺍﻟﻤﺸﺘﺮﻱ ﺃﻭ ﺍﻟﺒﺎﺋﻊ ﻣﻦ ﺇﻧﻔﺎﺫ ﺍﻟﺸﺮﻭﻁ
+ﻭﺍﻷﺣﻜﺎﻡ ﺍﻷﺧﺮﻯ ﺍﻟﻮﺍﺭﺩﺓ ﻓﻲ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ
+                                    </span><br/>
+                                         <span>
+                                        16 – ﺍﻟﺴﺮﻳﺔ: ﺗﻌﺘﺒﺮ ﺟﻤﻴﻊ ﺍﻟﻤﻌﻠﻮﻣﺎﺕ ﺍﻟﻮﺍﺭﺩﺓ ﻓﻲ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻭﺍﻟﺒﻀﺎﺋﻊ ﺍﻟﻤﻄﻠﻮﺑﺔ ﺑﻤﻮﺟﺒﻪ ﻭﺟﻮﺩﺗﻬﺎ ﻭﺍﻟﻤﻮﺍﺻﻔﺎﺕ ﻭﺍﻷﺳﻌﺎﺭ
+ﻣﻌﻠﻮﻣﺎﺕ ﺳﺮﻳﺔ ﻭﻻ ﻳﺠﻮﺯ ﻟﻠﻤﻮﺭﺩ ﺇﻓﺸﺎﺋﻬﺎ ﻷﻱ ﻃﺮﻑ ﺛﺎﻟﺚ ﻏﻴﺮ ﺿﺮﻭﺭﻱ ﻹﻛﻤﺎﻝ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻭﺫﻟﻚ ﻣﺎﻟﻢ ﻳﺤﺼﻞ ﻋﻠﻰ ﻣﻮﺍﻓﻘﺔ
+                                             ﺍﻟﻤﺸﺘﺮﻱ ﺍﻟﺨﻄﻴﺔ ﺍﻟﻤﺴﺒﻘﺔ
+                                    </span><br/>
+                                         <span>
+                                        17 – ﺍﻟﺘﺪﻗﻴﻖ: ﺑﺎﺳﺘﺜﻨﺎﺀ ﺃﻭﺍﻣﺮ ﺍﻟﺸﺮﺍﺀ ﺑﺎﻟﺴﻌﺮ ﺍﻟﺜﺎﺑﺖ ﺍﻟﻤﺆﻛﺪ ﻳﺠﻮﺯ ﻟﻠﻤﺸﺘﺮﻯ ﻭﺑﻨﺎﺀ ﻋﻠﻰ ﻃﻠﺒﻪ ﻣﺮﺍﺟﻌﺔ ﻭﺗﺪﻗﻴﻖ ﺟﻤﻴﻊ ﺃﻭ ﺃﻱ ﻣﻦ ﺳﺠﻼﺕ ﺍﻟﻤﻮﺭﺩ ﺍﻟﺤﺴﺎﺑﻴﺔ ﺍﻟﻤﺘﻌﻠﻘﺔ ﺑﺎﻟﻤﻮﺍﺩ ﻭ/ﺃﻭ ﺍﻟﺨﺪﻣﺎﺕ ﻣﺤﻞ ﺍﻟﻄﻠﺐ ﻋﻠﻰ ﺃﻧﻪ ﻳﺤﻖ ﻟﻠﺒﺎﺋﻊ ﺍﺳﺘﺒﻌﺎﺩ ﺃﻱ ﻣﻦ ﺍﻷﺳﺮﺍﺭ ﺍﻟﺘﺠﺎﺭﻳﺔ ﺃﻭ ﺃﻱ ﻣﻦ ﺍﻟﻨﻤﺎﺫﺝ ﺃﻭﺍﻟﻌﻤﻠﻴﺎﺕ ﻋﻦ ﺍﻟﺘﻔﺘﻴﺶ. ﻛﻤﺎ ﻳﻮﺍﻓﻖ ﺍﻟﻤﻮﺭﺩ ﺃﻳﻀﺎ ﻋﻠﻰ ﺍﻻﺣﺘﻔﺎﻅ ﺑﺴﺠﻼﺗﻪ ﻭﺩﻓﺎﺗﺮﻩ ﺍﻟﻤﺘﻌﻠﻘﺔ ﺑﺎﻟﻤﻮﺍﺩ ﻭ/ﺃﻭ ﺍﻟﺨﺪﻣﺎﺕ ﻣﺤﻞ ﺍﻟﻄﻠﺐ ﻟﻤﺪﺓ ﺳﻨﺘﻴﻦ ﺍﻋﺘﺒﺎﺭﺍ ﻣﻦ ﺗﺎﺭﻳﺦ ﺗﻘﺪﻳﻢ ﺍﻟﻤﻮﺍﺩ ﻭ/ﺃﻭ ﺍﻟﺨﺪﻣﺎﺕ ﻭﺃﻥ ﺗﻜﻮﻥ ﻫﺬﻩ ﺍﻟﺪﻓﺎﺗﺮ ﻭﺍﻟﺴﺠﻼﺕ ﻣﺘﺎﺣﺔ
+ﻟﻠﻤﺸﺘﺮﻱ ﻓﻲ ﺃﻱ ﻭﻗﺖ ﻣﻦ ﺍﻷﻭﻗﺎﺕ ﺧﻼﻝ ﻓﺘﺮﺓ ﺍﻟﺴﻨﺘﻴﻦ.
+                                    </span><br/>
+                                         <span>
+                                        18 – ﺗﻀﺎﺭﺏ ﺍﻟﻤﺼﺎﻟﺢ: ﻳﺘﻌﻬﺪ ﺍﻟﻤـﻮﺭﺩ ﺑﺄﻧﻪ ﻟﻢ ﻳﺘﻢ ﺗﻘﺪﻳﻢ ﺃﻭ ﺍﺳﺘﻼﻡ ﺃﻱ ﻋﻤﻮﻻﺕ ﺃﻭ ﻣﺒﺎﻟﻎ ﻣﺎﻟﻴﺔ ﺃﻭ ﻫﺪﺍﻳﺎ ﺃﻭ ﺭﺷﺎﻭﻯ ﺃﻭ ﻋﻄﺎﻳﺎ ﺃﻭ ﺧﺪﻣﺎﺕ ﺗﺮﻓﻴﻬﻴﺔ ﻭﺍﺳﻌﺔ ﺃﻭ ﺃﻱ ﻣﻦ ﺍﻷﺷﻴﺎﺀ ﺍﻟﻘﻴﻤﺔ ﺇﻟﻰ ﺃﻭ ﻣﻦ ﺃﻱ ﻣﻦ ﻣﻮﻇﻔﻲ ﺃﻭ ﻭﻛﻼﺀ ﺍﻟﻤﺸﺘﺮﻱ ﺃﻭ ﺃﻱ ﻃﺮﻑ ﺁﺧﺮ ﻟﻪ ﻋﻼﻗﺔ ﺑﻄﻠﺐ ﺍﻟﺸﺮﺍﺀ ﻭﻳﻘﺮ ﺍﻟﺒﺎﺋﻊ ﺃﻥ ﺗﻘﺪﻳﻢ ﺃﻭ ﺍﺳﺘﻼﻡ ﺍﻟﻌﻤﻮﻻﺕ ﺃﻭ ﺍﻟﻤﺒﺎﻟﻎ ﺍﻟﻤﺎﻟﻴﺔ ﺃﻭ ﺍﻟﻬﺪﺍﻳﺎ ﺃﻭ ﺍﻟﺮﺷﺎﻭﻯ ﺃﻭ ﺍﻟﻌﻄﺎﻳﺎ ﺃﻭ ﺍﻟﺨﺪﻣﺎﺕ ﺍﻟﺘﺮﻓﻴﻬﻴﺔ ﺍﻟﻮﺍﺳﻌﺔ ﺃﻭ ﺍﻷﺷﻴﺎﺀ ﺍﻟﻘﻴﻤﺔ ﻳﻌﺪ ﻣﺨﺎﻟﻔﺔ ﺻﺮﻳﺤﺔ ﻟﺴﻴﺎﺳﺔ ﻭﺃﻧﻈﻤﺔ ﺍﻟﻤﺸﺘﺮﻱ ﺍﻟﺘﺠﺎﺭﻳﺔ ﻭﻗـﺪ ﺗﺆﺩﻯ ﺇﻟﻰ ﺇﻟﻐﺎﺀ ﺍﻟﻄﻠﺐ ﺍﻟﺤﺎﻟﻲ ﻭﻃﻠﺒﺎﺕ ﺍﻟﺸﺮﺍﺀ ﺍﻟﻤﺴﺘﻘﺒﻠﻴﺔ. ﻭﻋﻠﻰ ﺍﻟﻤﻮﺭﺩ ﺃﻥ ﻳﻘﻮﻡ ﺑﺈﺑﻼﻍ ﺇﺩﺍﺭﺓ ﺍﻟﺘﺪﻗﻴﻖ ﻟﺪﻯ ﺍﻟﻤﺸﺘﺮﻱ ﺑﻤﺜﻞ ﻫﺬﻩ ﺍﻟﻌﺮﻭﺽ ﺍﻟﺘﻲ ﻳﺘﻠﻘﺎﻫﺎ
+ﻣﻦ ﻣﻮﻇﻔﻲ ﻭﻭﻛﻼﺀ ﺍﻟﻤﺸﺘﺮﻱ ﺃﻭ ﻣﻦ ﺍﻟﻐﻴﺮ
+                                    </span><br/>
+                                         <span>
+                                       19 – ﺍﻟﻘﺒـﻮﻝ : ﻳﻘـﺮ ﺍﻟﻤـﻮﺭﺩ ﺑﺄﻧﻪ ﻗـﺮﺃ ﻭﻓﻬﻢ ﺍﻟﺸﺮﻭﻁ ﺍﻟﻮﺍﺭﺩﺓ ﻓﻲ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻛﻤﺎ ﻳﻘﺮ ﺑﺄﻧﻪ ﺳﻴﻘﻮﻡ ﺑﺎﻟﻤﻮﺍﻓﻘﺔ ﺍﻟﺨﻄﻴﺔ ﻓﻲ ﺧﻼﻝ
+ﻋﺸﺮﺓ ﺃﻳﺎﻡ ﻣﻦ ﺇﺳﺘﻼﻣﻪ ﺃﻣﺮ ﺍﻟﺸﺮﺍﺀ ، ﻭﺇﻻ ﺳﻴﻌﺘﺒﺮ ﺑﺄﻧﻪ ﺗﻢ ﻗﺒﻮﻟﻪ ﻷﻣﺮ ﺍﻟﺸﺮﺍﺀ ، ﻛﻤﺎ ﻳﻌﻨﻲ ﻗﻴﺎﻡ ﺍﻟﻤﻮﺭﺩ ﺑﺒﺪﺀ ﺃﻱ ﻣﻦ ﺍﻷﻋﻤﺎﻝ ﺃﻭ
+ﺍﻟﺨﺪﻣﺎﺕ ﺍﻟﻤﺘﻌﻠﻘﺔ ﺑﺄﻣﺮ ﺍﻟﺸﺮﺍﺀ ﻣﻮﺍﻓﻘﺘﻪ ﻋﻠﻰ ﻫﺬﻩ ﺍﻟﺸﺮﻭﻁ .
+                                    </span><br/>
+                                         <span>
+                                        20 – ﺇﻧﻬﺎﺀ ﻃﻠﺐ ﺍﻟﺸﺮﺍﺀ : ﻳﺠﻮﺯ ﻟﻠﻤﺸﺘﺮﻯ ﺇﻧﻬﺎﺀ ﻃﻠﺐ ﺍﻟﺸﺮﺍﺀ ﺑﺴﺒﺐ ﺃﻭ ﺑﺪﻭﻥ ﺳﺒﺐ ﻋﻠﻰ ﺃﻥ ﻳﺨﻄﺮ ﺍﻟﻤـﻮﺭﺩ ﻛﺘﺎﺑـﺔ ﺑﺬﻟﻚ ﻗﺒﻞ
+(14) ﺃﺭﺑﻌﺔ ﻋﺸﺮ ﻳﻮﻣﺎ ﻋﻠﻲ ﺍﻷﻗﻞ .
+21 – ﻋﺪﻡ ﺍﻹﻋــﻼﻥ: ﻻ ﻳﺠﻮﺯ ﻟﻠﻤﻮﺭﺩ ﺩﻭﻥ ﺍﻟﺤﺼﻮﻝ ﻋﻠﻰ ﺍﻟﻤﻮﺍﻓﻘﺔ ﺍﻟﺨﻄﻴﺔ ﺍﻟﻤﺴﺒﻘﺔ ﻣﻦ ﺍﻟﻤﺸﺘﺮﻱ ﺇﻋﻼﻥ ﺃﻭ ﻧﺸﺮ ﺗﻌﺎﻗﺪﻩ ﻣﻊ
+ﺍﻟﻤﺸﺘﺮﻱ ﻟﺘﺰﻭﻳﺪﻩ ﺑﺎﻟﺒﻀﺎﻋﺔ ﺃﻭ ﺍﻟﺨﺪﻣﺎﺕ ﺃﻭ ﺍﻷﻋﻤﺎﻝ ﺍﻟﻤﺘﻌﻠﻘﺔ ﺑﻄﻠﺐ ﺍﻟﺸﺮﺍﺀ ﺃﻭ ﺍﺳﺘﻌﻤﺎﻝ ﺃﻱ ﻣﻦ ﺍﻟﻌﻼﻣﺎﺕ ﺃﻭ ﺍﻷﺳﻤﺎﺀ ﺍﻟﺘﺠﺎﺭﻳﺔ
+ﻟﻠﻤﺸﺘﺮﻱ ﻓﻲ ﻣﻮﺍﺩ ﺇﻋﻼﻧﻴﺔ ﻭﺗﺮﻭﻳﺠﻴﺔ ﺗﺨﺺ ﺍﻟﻤﻮﺭﺩ
+                                    </span><br/>
+                                         <span>
+
+22 – ﺍﻟﻘﺎﻧﻮﻥ ﻭﺍﺟﺐ ﺍﻟﺘﻄﺒﻴﻖ ﻭﺍﻹﺧﺘﺼﺎﺹ: ﺗﺨﻀﻊ ﻃﻠﺐ ﺍﻟﺸـﺮﺍﺀ ﻫﺬﺍ ﻭﻳﻔﺴﺮ ﻭﻓﻘﺎ ﻟﻸﻧﻈﻤﺔ ﻭﺍﻷﺣﻜﺎﻡ ﺍﻟﺴﺎﺋﺪﺓ ﺑﺎﻟﻤﻤﻠﻜﺔ ﺍﻟﻌﺮﺑﻴﺔ ﺍﻟﺴﻌﻮﺩﻳﺔ، ﻭﻋﻠﻰ ﺍﻷﻃﺮﺍﻑ ﻣﺤﺎﻭﻟﺔ ﺗﺴﻮﻳﺔ ﺃﻱ ﻧﺰﺍﻉ ﻳﻨﺸﺄ ﺑﻴﻨﻬﻤﺎ ﺑﺎﻟﻠﺠﻮﺀ ﻟﻠﻄﺮﻕ ﺍﻟﻮﺩﻳﺔ ، ﻭﺇﺫﺍ ﺗﻌﺬﺭ ﺫﻟﻚ ﻳﺤﺎﻝ ﺍﻟﻨﺰﺍﻉ ﻟﻠﺘﺤﻜﻴﻢ ﻭﻓﻘﺎ ﻟﻨﻈﺎﻡ ﺍﻟﺘﺤﻜﻴﻢ ﺑﺎﻟﻤﻤﻠﻜﺔ ﺍﻟﻌﺮﺑﻴﺔ ﺍﻟﺴﻌﻮﺩﻳﺔ ﻭﺫﻟﻚ ﺩﻭﻥ ﺍﻟﻤﺴﺎﺱ ﺑﻤﺎ ﻟﻤﺤﺎﻛﻢ ﺍﻟﻤﻤﻠﻜﺔ ﺍﻟﻌﺮﺑﻴﺔ ﺍﻟﺴﻌﻮﺩﻳﺔ ﻣﻦ ﺇﺧﺘﺼﺎﺻﺎﺕ
+ﻭﺳﻠﻄﺎﺕ ﻟﻠﻨﻈﺮ ﻓﻲ ﺍﻟﺪﻋﻮﻱ.
+                                    </span><br/>
+                                </td>
+                            </tr>
+                        </table>
+<!--                        </t>-->
+                    </div>
+                </t>
+                </t>
+            </t>
+<!--        </t>-->
+    </template>
+
+<!--    <template id="your_custom_layout_header">-->
+
+<!--        <div class="header">-->
+
+<!--           <div class="row">&ndash;&gt;-->
+<!--                <div class="col-6">-->
+<!--                    <span t-field="o.company_id.name"/><br/>-->
+<!--                    <span t-field="o.company_id.street"/><br/>-->
+<!--                    <span t-field="o.company_id.city"/><br/>.-->
+<!--                    <span t-field="o.company_id.phone"/><br/>-->
+<!--                    <span t-field="o.company_id.email"/>-->
+<!--                </div>-->
+<!--                <div class="col-5">-->
+<!--                    <strong>Report Date:</strong>-->
+<!--                    <t>-->
+<!--                        <t t-set="current_date" t-value="datetime.datetime.now()"/>-->
+<!--                    </t>-->
+<!--                    <span class="m-0" t-esc="current_date"/><br/>-->
+<!--                    <span>-->
+<!--                        <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" width="70%"/>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div><br/><br/>-->
+<!--        </div>-->
+
+<!--    </template>-->
+
+
+
+</odoo>

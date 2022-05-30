@@ -1,0 +1,43 @@
+<odoo>
+
+    <record id="view_material_purchase_requisition_form_inh" model="ir.ui.view">
+        <field name="name">material.purchase.requisition.form</field>
+        <field name="model">material.purchase.requisition</field>
+        <field name="inherit_id" ref="material_purchase_requisitions.material_purchase_requisition_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <button string="Add Vendor" type="object" name="action_add_vendors" attrs="{'invisible': [('requisition_type', '=', 'internal')]}"/>
+                <button string="Add Components" type="object" name="action_add_components" attrs="{'invisible': ['|', ('state', '!=', 'draft') ,('is_components_added', '=', True)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='date_end']" position="after">
+                <field name="vendor_id" groups="material_purchase_requisitions.group_store_keeper,material_purchase_requisitions.group_purchase_requisition_manager,material_purchase_requisitions.group_purchase_requisition_user,material_purchase_requisitions.group_purchase_requisition_department"/>
+            </xpath>
+
+            <xpath expr="//field[@name='requisiton_responsible_id']" position="after">
+                <field name="product_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="qty" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="requisition_type" attrs="{'readonly': [('state', 'not in', ['draft', 'dept_confirm'])]}"/>
+                <field name="is_components_added" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//notebook/page" position="after">
+                <page string="Requisition Products">
+                    <field name="requisition_product_lines" >
+                        <tree editable="bottom" create="0">
+                            <field name="product_id"/>
+                            <field name="qty_in_cm"/>
+                            <field name="qty"/>
+                            <field name="uom_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+
+        </field>
+    </record>
+
+
+</odoo>

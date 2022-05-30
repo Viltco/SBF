@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="paperformat_jtc_reports" model="report.paperformat">
+        <field name="name">European A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">2</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="jtc_bag_report"
+            model="mrp.production"
+            string="JTC Bag Report"
+            report_type="qweb-pdf"
+            name="sanad_jtc_report.jtc_bag_template"
+            file="sanad_jtc_report.jtc_bag_template"
+            paperformat="paperformat_jtc_reports"
+    />
+
+    <report id="jtc_dis_spout_report"
+            model="mrp.production"
+            string="JTC Dis Spout Report"
+            report_type="qweb-pdf"
+            name="sanad_jtc_report.jtc_dis_spout_template"
+            file="sanad_jtc_report.jtc_dis_spout_template"
+            paperformat="paperformat_jtc_reports"
+    />
+
+    <report id="jtc_filling_spout_report"
+            model="mrp.production"
+            string="JTC Filling Spout Report"
+            report_type="qweb-pdf"
+            name="sanad_jtc_report.jtc_filling_spout_template"
+            file="sanad_jtc_report.jtc_filling_spout_template"
+            paperformat="paperformat_jtc_reports"
+    />
+
+    <report id="jtc_wall_report"
+            model="mrp.production"
+            string="JTC Wall Report"
+            report_type="qweb-pdf"
+            name="sanad_jtc_report.jtc_wall_template"
+            file="sanad_jtc_report.jtc_wall_template"
+            paperformat="paperformat_jtc_reports"
+    />
+
+</odoo>

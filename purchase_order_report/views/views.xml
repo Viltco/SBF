@@ -1,0 +1,82 @@
+<odoo>
+  <data>
+
+     <record model="ir.ui.view" id="purchase_order_form_inh">
+            <field name="name">purchase.order.form.inh</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_ref']" position="after">
+                    <field name="attn" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="rev" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="iso_ref" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="rev_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="shipment_mode" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </xpath>
+
+                <xpath expr="//notebook/page[@name='purchase_delivery_invoice']" position="after">
+                    <page string="Special Instructions" >
+                        <group col="4" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                        <field name="special_instruction" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="special_terms" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                    </page>
+                </xpath>
+
+                 <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='origin']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='date_order']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_ref']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='date_planned']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_status']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='incoterm_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='notes']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+            </field>
+        </record>
+  </data>
+</odoo>

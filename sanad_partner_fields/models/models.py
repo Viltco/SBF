@@ -1,0 +1,46 @@
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields, api
+from odoo.exceptions import UserError
+
+
+class ResPartnerInh(models.Model):
+    _inherit = 'res.partner'
+
+    vat = fields.Char(string='Tax ID', size=15, index=True, help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
+    cr_no = fields.Char('CR#', default='', required=True, size=10)
+    partner_type = fields.Selection([
+        ('supplier', 'Supplier'), ('customer', 'Customer')],
+        index=True, required=True, tracking=15)
+
+    @api.constrains('cr_no')
+    def _check_value(self):
+        if not self.cr_no.isnumeric() or len(self.cr_no) < 10:
+            raise UserError('Incorrect CR# format: CR# can be numeric only. Must be 10 digits only.')
+
+    @api.constrains('vat')
+    def _check_vat(self):
+        if self.vat:
+            if not self.vat.isnumeric() or len(self.vat) < 15:
+                raise UserError('Incorrect TAX ID format: TAX ID can be numeric only. Must be 15 digits only.')
+
+    @api.onchange('partner_type')
+    def onchange_partner_type(self):
+        if self.partner_type == 'supplier':
+            self.customer_rank = 0
+            self.supplier_rank = 1
+        if self.partner_type == 'customer':
+            self.customer_rank = 1
+            self.supplier_rank = 0
+
+    @api.onchange('cr_no')
+    def set_upper(self):
+        self.cr_no = str(self.cr_no).upper()
+        return
+
+    @api.constrains('cr_no')
+    def check_code(self):
+        if self.cr_no:
+            code = self.env['res.partner'].search([('cr_no', '=', self.cr_no)])
+            if len(code) > 1:
+                raise UserError('CR No Already Exist')

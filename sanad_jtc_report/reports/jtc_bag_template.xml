@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="jtc_bag_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-foreach="doc.remove_dups()" t-as="line">
+                        <t t-set="company" t-value="res_company"/>
+                        <div class="page">
+                            <table class="table table-bordered" style="border:1px solid black">
+                                <tbody class="text-center">
+                                    <tr style="height:10%">
+                                        <td>
+                                            <strong>Doc No : </strong><span t-field="doc.name"/><br/>
+                                            <strong>Department : </strong><span t-field="doc.user_id.employee_id.department_id.name"/><br/>
+                                            <strong>Print Date : </strong><span t-esc="datetime.datetime.now().strftime('%m-%d-%Y')"/><br/>
+                                        </td>
+                                        <td>
+                                            <span style="font-size:23px;"><b>Sanad Bags Co. Factory</b></span><br/>
+                                            <span style="font-size:23px;"><b>Job Travel Card</b></span>
+                                        </td>
+                                        <td>
+                                            <span class="text-center" width="110%"><img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" alt="Logo" width="90%"/></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div style="float: left;">
+                                <div>
+                                    <strong>Scheduled Date : </strong>
+                                    <span t-field="doc.date_planned_start"/>
+                                </div>
+                            </div>
+
+                            <div style="float:left; margin-left:50%">
+                                <div>
+                                    <strong>Issue No : </strong>
+                                    <span t-esc="doc.jtc_splits_name()"/>
+                                </div>
+                            </div>
+                            <t t-set="last" t-value="0"/>
+                            <table class="table table-bordered">
+                                <thead class="text-center" style="background-color:#eeeeee; font-size:14px; font-weight:600;">
+                                    <th>Process</th>
+                                    <th colspan="2" class="text-nowrap">Job Reference No</th>
+                                    <th class="text-nowrap">Operator ID</th>
+                                    <th class="text-nowrap">Operator Signature</th>
+                                    <th colspan="2" class="text-nowrap">Process Quality Acceptance</th>
+                                    <th>Remarks</th>
+                                    <th>Initial</th>
+                               </thead>
+                                <tbody class="text-center" style="font-size:12px;">
+<!--                                    <t t-set="join" t-value="doc.total_join()"/>-->
+                                    <td t-att-rowspan="26" style="vertical-align: middle;">
+                                        <span t-esc="line['operation']"/> - <span t-esc="line['work_name']"/>
+                                    </td>
+<!--                                    <tr t-foreach="doc.jtc_splits()" t-as="qty">-->
+                                    <tr t-foreach="int(line['quantity'])" t-as="qty">
+                                        <td class="text-nowrap">
+                                            <span>Bag No.</span>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <span t-esc="qty+1"/> - <span t-esc="doc.jtc_splits_name()"/>
+<!--                                            <span t-esc="qty"/>-->
+                                        </td>
+                                        <t t-set="last" t-value="qty+1"/>
+                                        <td class="text-nowrap">
+                                            <span t-esc="line['code']"/>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <span t-esc="line['employee']"/>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <i class="fa fa-square-o" aria-hidden="true"/>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <span>Accepted</span>
+                                        </td>
+                                        <td>
+    <!--                                        <span t-field="line.name"/>-->
+                                        </td>
+                                        <td>
+    <!--                                        <span t-field="line.name"/>-->
+                                        </td>
+                                    </tr>
+                                    <t t-set="rejected" t-value="doc.qty_produce - int(line['quantity'])"/>
+                                    <t t-foreach="int(rejected)" t-as="l">
+                                        <tr>
+                                            <td class="text-nowrap">
+                                                <span>Bag No.</span>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <span t-esc="last+l+1"/> - <span t-esc="doc.jtc_splits_name()"/>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                 <span t-esc="line['code']"/>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                 <span t-esc="line['employee']"/>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <i class="fa fa-square-o" aria-hidden="true"/>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <span>Rejected</span>
+                                            </td>
+                                            <td>
+        <!--                                        <span t-field="line.name"/>-->
+                                            </td>
+                                            <td>
+        <!--                                        <span t-field="line.name"/>-->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-foreach="25-(int(line['quantity']) + int(rejected))" t-as="ss">
+                                        <tr>
+                                            <td class="text-nowrap">
+                                                <span>Bag No.</span>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <span></span>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                 <span></span>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                 <span></span>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <i class="fa fa-square-o" aria-hidden="true"/>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <span></span>
+                                            </td>
+                                            <td>
+        <!--                                        <span t-field="line.name"/>-->
+                                            </td>
+                                            <td>
+        <!--                                        <span t-field="line.name"/>-->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p style="page-break-after: always;"/>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

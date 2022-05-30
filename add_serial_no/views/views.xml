@@ -1,0 +1,34 @@
+<odoo>
+
+
+    <record id="view_stock_move_operations_raw_inh" model="ir.ui.view">
+        <field name="name">stock.move.operations.raw.form.inh</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_operations"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[1]" position="after">
+                <group>
+                    <field name="first" readonly="1"/>
+                </group>
+                <group col="4">
+                    <field name="qty"/>
+                    <button string="Add SR" type="object" name="action_add_lines"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_stock_move_operations_expiry_inh" model="ir.ui.view">
+        <field name="name">stock.move.operations.inherit.form</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='lot_name']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
