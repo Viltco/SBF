@@ -13,12 +13,14 @@ class ResPartnerInh(models.Model):
         ('supplier', 'Supplier'), ('customer', 'Customer')],
         index=True, required=True, tracking=15)
 
-    @api.constrains('cr_no')
+    @api.onchange('cr_no')
     def _check_value(self):
-        if not self.cr_no.isnumeric() or len(self.cr_no) < 10:
-            raise UserError('Incorrect CR# format: CR# can be numeric only. Must be 10 digits only.')
+        # print(self.context)
+        if self.cr_no:
+            if not self.cr_no.isnumeric() or len(self.cr_no) < 10:
+                raise UserError('Incorrect CR# format: CR# can be numeric only. Must be 10 digits only.')
 
-    @api.constrains('vat')
+    @api.onchange('vat')
     def _check_vat(self):
         if self.vat:
             if not self.vat.isnumeric() or len(self.vat) < 15:
