@@ -45,77 +45,85 @@
                                     </tbody>
                                 </t>
                             </table>
+                            <!--                            <t t-set="order_counter" t-value="0"/>-->
                             <t t-foreach="orders" t-as="rfq">
                                 <t t-if="o.name == rfq.origin">
+                                    <!--                                    <t t-set="order_counter" t-value="order_counter + 1"/>-->
+                                    <!--                                    <t t-if="order_counter%2 == 0">-->
+                                    <!--                                        <p style="page-break-before:always;"></p>-->
+                                    <!--                                    </t>-->
                                     <!--                                    <table class="table table-bordered table-sm"-->
                                     <!--                                           style="table-layout: fixed; width: 100%;">-->
                                     <!--                                        -->
                                     <!--                                    </table>-->
-                                    <div class=" text-center">
-                                        <h3>
-                                            <span t-field="rfq.partner_id.name"/>
-                                        </h3>
+
+                                    <div style="page-break-inside:avoid; page-break-before:auto">
+                                        <div class=" text-center">
+                                            <h3>
+                                                <span t-field="rfq.partner_id.name"/>
+                                            </h3>
+                                        </div>
+                                        <table class="table table-borderless table-sm"
+                                               style="table-layout: fixed; width: 100%;">
+                                            <tr>
+                                                <th style="padding-left:50px">Email</th>
+                                                <td style="padding-left:50px">
+                                                    <span t-field="rfq.partner_id.email"/>
+                                                </td>
+                                                <th style="padding-left:50px">Mobile</th>
+                                                <td style="padding-left:50px">
+                                                    <span t-field="rfq.partner_id.mobile"/>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <th style="padding-left:50px">Payment Term</th>
+                                                <td style="padding-left:50px">
+                                                    <span t-field="rfq.payment_term_id"/>
+                                                </td>
+                                                <th style="padding-left:50px">Delivery Lead Time</th>
+                                                <td style="padding-left:50px">
+                                                    <span t-field="rfq.partner_id.phone"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="table table-bordered table-sm"
+                                               style="table-layout: fixed; width: 100%;">
+                                            <tr>
+                                                <th style="text-align:center" width="10%">NO</th>
+                                                <th style="text-align:center">ITEM DESCRIPTION</th>
+                                                <th style="text-align:center" width="20%">UNIT PRICE</th>
+                                                <th style="text-align:center" width="20%">SUBTOTAL</th>
+                                            </tr>
+                                            <t t-set="sr_rfq" t-value="0"/>
+                                            <t t-foreach="rfq.order_line" t-as="rfq_line">
+                                                <t t-set="sr_rfq" t-value="sr_rfq + 1"/>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="text-align:center" width="10%">
+                                                            <span t-esc="sr_rfq"/>
+                                                        </td>
+                                                        <td style="text-align:left">
+                                                            <span t-esc="rfq_line.product_id.name"/>
+                                                        </td>
+
+                                                        <td style="text-align:center" width="20%">
+                                                            <span t-esc="rfq_line.price_unit"/>
+                                                        </td>
+                                                        <td style="text-align:center" width="20%">
+                                                            <span t-esc="rfq_line.price_subtotal"/>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </t>
+                                        </table>
                                     </div>
-                                    <table class="table table-borderless table-sm"
-                                           style="table-layout: fixed; width: 100%;">
-                                        <tr>
-                                            <th style="padding-left:50px">Email</th>
-                                            <td style="padding-left:50px">
-                                                <span t-field="rfq.partner_id.email"/>
-                                            </td>
-                                            <th style="padding-left:50px">Mobile</th>
-                                            <td style="padding-left:50px">
-                                                <span t-field="rfq.partner_id.mobile"/>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <th style="padding-left:50px">Payment Term</th>
-                                            <td style="padding-left:50px">
-                                                <span t-field="rfq.payment_term_id"/>
-                                            </td>
-                                            <th style="padding-left:50px">Delivery Lead Time</th>
-                                            <td style="padding-left:50px">
-                                                <span t-field="rfq.partner_id.phone"/>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <table class="table table-bordered table-sm"
-                                           style="table-layout: fixed; width: 100%;">
-                                        <tr>
-                                            <th style="text-align:center" width="10%">NO</th>
-                                            <th style="text-align:center">ITEM DESCRIPTION</th>
-                                            <th style="text-align:center" width="20%">UNIT PRICE</th>
-                                            <th style="text-align:center" width="20%">SUBTOTAL</th>
-                                        </tr>
-                                        <t t-set="sr_rfq" t-value="0"/>
-                                        <t t-foreach="rfq.order_line" t-as="rfq_line">
-                                            <t t-set="sr_rfq" t-value="sr_rfq + 1"/>
-                                            <tbody>
-                                                <tr>
-                                                    <td style="text-align:center" width="10%">
-                                                        <span t-esc="sr_rfq"/>
-                                                    </td>
-                                                    <td style="text-align:left">
-                                                        <span t-esc="rfq_line.product_id.name"/>
-                                                    </td>
-
-                                                    <td style="text-align:center" width="20%">
-                                                        <span t-esc="rfq_line.price_unit"/>
-                                                    </td>
-                                                    <td style="text-align:center" width="20%">
-                                                        <span t-esc="rfq_line.price_subtotal"/>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </t>
-                                    </table>
                                 </t>
                             </t>
-                            <br/>
-                            <br/>
+
                         </t>
                     </div>
+
                 </div>
             </t>
         </template>
