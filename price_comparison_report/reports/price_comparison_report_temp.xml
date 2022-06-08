@@ -86,7 +86,7 @@
                                             <th style="text-align:center" width="10%">NO</th>
                                             <th style="text-align:center">ITEM DESCRIPTION</th>
                                             <th style="text-align:center" width="20%">UNIT PRICE</th>
-                                            <th style="text-align:center" width="20%">TOTAL VALUE SR</th>
+                                            <th style="text-align:center" width="20%">SUBTOTAL</th>
                                         </tr>
                                         <t t-set="sr_rfq" t-value="0"/>
                                         <t t-foreach="rfq.order_line" t-as="rfq_line">
@@ -104,7 +104,7 @@
                                                         <span t-esc="rfq_line.price_unit"/>
                                                     </td>
                                                     <td style="text-align:center" width="20%">
-                                                        <span t-esc="rfq_line.product_qty"/>
+                                                        <span t-esc="rfq_line.price_subtotal"/>
                                                     </td>
                                                 </tr>
                                             </tbody>
