@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="paper_format_price_comparison" model="report.paperformat">
+            <field name="name">European A4</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">35</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">30</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="price_comparison_pdf"
+                string="Price Comparison Report"
+                model="purchase.requisition"
+                report_type="qweb-pdf"
+                name="price_comparison_report.price_comparison_id_print"
+                file="price_comparison_report.price_comparison_id_print"
+                paperformat="paper_format_price_comparison"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,178 @@
+<odoo>
+    <data>
+        <template id="price_comparison_id_print">
+            <t t-call="web.html_container">
+                <div class="article o_report_layout_standard" t-att-data-oe-model="doc and doc._name"
+                     t-att-data-oe-id="doc and doc.id">
+                    <t t-call="price_comparison_report.sannad_bags_header_footer"/>
+                    <div class="page">
+                        <br/>
+                        <br/>
+                        <t t-foreach="docs" t-as="o">
+                            <div class=" text-center">
+                                <h3>MATERIAL REQUEST</h3>
+                            </div>
+
+                            <table class="table table-bordered table-sm"
+                                   style="table-layout: fixed; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center" width="10%">NO</th>
+                                        <th style="text-align:center">ITEM DESCRIPTION</th>
+                                        <th style="text-align:center" width="20%">UNIT</th>
+                                        <th style="text-align:center" width="20%">QTY</th>
+                                    </tr>
+                                </thead>
+                                <t t-set="sr_no" t-value="0"/>
+                                <t t-foreach="o.line_ids" t-as="line">
+                                    <t t-set="sr_no" t-value="sr_no + 1"/>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center" width="10%">
+                                                <span t-esc="sr_no"/>
+                                            </td>
+                                            <td style="text-align:left">
+                                                <span t-esc="line.product_id.name"/>
+                                            </td>
+
+                                            <td style="text-align:center" width="20%">
+                                                <span t-esc="line.product_uom_id.name"/>
+                                            </td>
+                                            <td style="text-align:center" width="20%">
+                                                <span t-esc="line.product_qty"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </t>
+                            </table>
+                            <t t-foreach="orders" t-as="rfq">
+                                <t t-if="o.name == rfq.origin">
+                                    <!--                                    <table class="table table-bordered table-sm"-->
+                                    <!--                                           style="table-layout: fixed; width: 100%;">-->
+                                    <!--                                        -->
+                                    <!--                                    </table>-->
+                                    <div class=" text-center">
+                                        <h3>
+                                            <span t-field="rfq.partner_id.name"/>
+                                        </h3>
+                                    </div>
+                                    <table class="table table-borderless table-sm"
+                                           style="table-layout: fixed; width: 100%;">
+                                        <tr>
+                                            <th style="padding-left:50px">Email</th>
+                                            <td style="padding-left:50px">
+                                                <span t-field="rfq.partner_id.email"/>
+                                            </td>
+                                            <th style="padding-left:50px">Mobile</th>
+                                            <td style="padding-left:50px">
+                                                <span t-field="rfq.partner_id.mobile"/>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th style="padding-left:50px">Payment Term</th>
+                                            <td style="padding-left:50px">
+                                                <span t-field="rfq.payment_term_id"/>
+                                            </td>
+                                            <th style="padding-left:50px">Delivery Lead Time</th>
+                                            <td style="padding-left:50px">
+                                                <span t-field="rfq.partner_id.phone"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: fixed; width: 100%;">
+                                        <tr>
+                                            <th style="text-align:center" width="10%">NO</th>
+                                            <th style="text-align:center">ITEM DESCRIPTION</th>
+                                            <th style="text-align:center" width="20%">UNIT PRICE</th>
+                                            <th style="text-align:center" width="20%">TOTAL VALUE SR</th>
+                                        </tr>
+                                        <t t-set="sr_rfq" t-value="0"/>
+                                        <t t-foreach="rfq.order_line" t-as="rfq_line">
+                                            <t t-set="sr_rfq" t-value="sr_rfq + 1"/>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="text-align:center" width="10%">
+                                                        <span t-esc="sr_rfq"/>
+                                                    </td>
+                                                    <td style="text-align:left">
+                                                        <span t-esc="rfq_line.product_id.name"/>
+                                                    </td>
+
+                                                    <td style="text-align:center" width="20%">
+                                                        <span t-esc="rfq_line.price_unit"/>
+                                                    </td>
+                                                    <td style="text-align:center" width="20%">
+                                                        <span t-esc="rfq_line.product_qty"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </t>
+                                    </table>
+                                </t>
+                            </t>
+                            <br/>
+                            <br/>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="sannad_bags_header_footer">
+            <t t-set="company" t-value="user.company_id"/>
+            <div class="header first-page row" style="padding-left:40px">
+                <img src="/price_comparison_report/static/description/sanad_header.png"
+                     style="height:100px; width:800px;"/>
+                <!--                <div style="text-align: left;" class="column">-->
+                <!--                    <p style="text-align:center;padding-top:10px;">-->
+                <!--                        <img t-if="not user.company_id.logo"-->
+                <!--                             t-att-src="'/web/static/src/img/placeholder.png'"-->
+                <!--                             height="50"-->
+                <!--                             border="1" width="100"/>-->
+                <!--                        <img t-if="user.company_id.logo"-->
+                <!--                             t-att-src="'data:image/png;base64,%s' % to_text(user.company_id.logo)"-->
+                <!--                             height="50" border="1" width="100"/>-->
+                <!--                    </p>-->
+                <!--                </div>-->
+                <!--                <div style="text-align: right; padding-left:350px;" class="column">-->
+                <!--                    <br/>-->
+                <!--                    <span style="padding-top:10px">مصنع شركة سند للاكياس</span>-->
+                <!--                    <br/>-->
+                <!--                    <span style="padding-top:10px">Sanad Bags Company Factory</span>-->
+                <!--                </div>-->
+            </div>
+            <div class="footer">
+                <img src="/price_comparison_report/static/description/sannad_footer.png"
+                     style="height:100px; width:800px; padding-left:40px"/>
+
+                <!--                <table class="table table-borderless table-sm"-->
+                <!--                       style="table-layout: fixed; width: 100%; font-size:14px;">-->
+                <!--                    <tr>-->
+                <!--                        <td>مصنع شركة سند للاكياس</td>-->
+                <!--                        <td>-->
+
+                <!--                        </td>-->
+                <!--                        <td>-->
+
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                            www.sanadbags.com-->
+                <!--                        </td>-->
+                <!--                    </tr>-->
+                <!--                    <tr>-->
+                <!--                        <td>Sanad Bags Company Factory</td>-->
+                <!--                        <td>-->
+
+                <!--                        </td>-->
+                <!--                        <td>-->
+
+                <!--                        </td>-->
+                <!--                        <td>info@sanadbags.com</td>-->
+                <!--                    </tr>-->
+                <!--                </table>-->
+            </div>
+        </template>
+    </data>
+</odoo>
