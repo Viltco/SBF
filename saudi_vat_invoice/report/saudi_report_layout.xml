@@ -61,7 +61,7 @@
                         <tr>
                             <th style="white-space:nowrap;">Invoice Issue Date:</th>
                             <td style="width:50px !important;white-space:nowrap;text-align:center;" >
-                                <span t-esc="doc.get_current_date()"/>
+                                <span t-esc="doc.invoice_date"/>
                             </td>
 <!--                            <td style="width:50px !important;white-space:nowrap;">-->
 <!--                                <span t-esc="doc.date_issue"/>-->
@@ -69,22 +69,22 @@
 
                             <th style="white-space:nowrap;">تاريخ إصدار الفاتورة</th>
                         </tr>
-                        <tr>
-                            <th style="white-space:nowrap;">PO Reference:</th>
-                            <td style="width:50px !important;text-align:center;">
-                                <t t-esc="doc.po_ref"></t>
-                            </td>
-<!--                            <td style="width:50px !important;">-->
+<!--                        <tr>-->
+<!--                            <th style="white-space:nowrap;">PO Reference:</th>-->
+<!--                            <td style="width:50px !important;text-align:center;">-->
 <!--                                <t t-esc="doc.po_ref"></t>-->
 <!--                            </td>-->
-                            <th style="white-space:nowrap;">رقم طلب الشراء</th>
-                        </tr>
+<!--&lt;!&ndash;                            <td style="width:50px !important;">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <t t-esc="doc.po_ref"></t>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                            <th style="white-space:nowrap;">رقم طلب الشراء</th>-->
+<!--                        </tr>-->
                     </table>
                 </div>
                 <div style="float: right !important; margin-top:-100px;">
-<!--                    <img t-attf-src="data:image/*;base64,{{doc.qr_code}}" style="width:180px; height:180px;"/>-->
-                    <img t-attf-src="data:image/*;base64,{{doc.company_id.logo}}"
-                 style="width:190px; height:100px;"/>
+                    <img t-attf-src="data:image/*;base64,{{doc.qr_code_image}}" style="width:180px; height:180px;"/>
+<!--                    <img t-attf-src="data:image/*;base64,{{doc.company_id.logo}}"-->
+<!--                 style="width:190px; height:100px;"/>-->
                 </div>
             </ul>
         </div>
@@ -419,12 +419,12 @@
             </tr>
         </table>
 
-            <div style="float: right !important; margin-top:-165px;">
+<!--            <div style="float: right !important; margin-top:-165px;">-->
 
-                    <img t-attf-src="data:image/*;base64,{{doc.qr_code}}" style="width:180px; height:180px;"/>
+<!--                    <img t-attf-src="data:image/*;base64,{{doc.qr_code}}" style="width:180px; height:180px;"/>-->
 <!--                    <img t-attf-src="data:image/*;base64,{{doc.company_id.logo}}"-->
 <!--                 style="width:220px; height:150px;"/>-->
-                </div>
+<!--                </div>-->
 
         </div>
 

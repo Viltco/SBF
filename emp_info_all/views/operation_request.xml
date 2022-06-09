@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="operation_request_tree" model="ir.ui.view">
+        <field name="name">operation.request.tree</field>
+        <field name="model">operation.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="employee_code"/>
+                <field name="employee_ems_code"/>
+                <field name="department"/>
+                <field name="job_position"/>
+                <field name="operation"/>
+                <field name="expense_needed"/>
+                <field name="handle_by"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="operation_request_form" model="ir.ui.view">
+        <field name="name">operation.request.form</field>
+        <field name="model">operation.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button id="button_submit" name="action_submit" string="Submit" type="object"
+                            class="btn-primary" states="new"/>
+                    <button id="button_approve" name="action_approve" string="Approve" type="object"
+                            class="btn-primary" states="waiting_approval"/>
+                    <button id="button_reject" name="action_reject" string="Reject" type="object"
+                            class="btn-primary"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,waiting_approval,approved"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <group string="Employee Information">
+                            <field name="employee_id"/>
+                            <field name="employee_code"/>
+                            <field name="employee_ems_code"/>
+                            <field name="department"/>
+                            <field name="job_position"/>
+                        </group>
+                        <group string="Type of Request">
+                            <field name="operation"/>
+                            <field name="expense_needed"/>
+                            <field name="reason_for_saudi_certification"
+                                   attrs="{'invisible': [('operation', '!=', 'saudizationcertification')]}"/>
+                            <field name="client_name"
+                                   attrs="{'invisible': [('operation', '!=', 'saudizationcertification')]}"/>
+                            <field name="project_name"
+                                   attrs="{'invisible': [('operation', '!=', 'saudizationcertification')]}"/>
+                            <field name="handle_by"/>
+                        </group>
+                        <group string="Required Documents"
+                               attrs="{'invisible': [('operation', '!=', 'changingprofession')]}">
+                            <p>
+                                1.The Original Certificate Authenticated by the Ministry of Foreign Affairs in his Country. Then Cultural Attache of the Embassy then the Embassy.
+                                <br></br>
+                                2.Original Iqama
+                                <br></br>
+                                3.One Photo
+                                <br></br>
+                                4.Original Passport
+                                <br></br>
+                                5.Joining Certification of Saudi Council of Accountants(if he is accountant)
+                                <br></br>
+                                5.Joining Certification of Saudi Council of Engineers(if he is engineer)
+                                <br></br>
+                            </p>
+                        </group>
+                        <group string="Required Documents"
+                               attrs="{'invisible': [('operation', '!=', 'familyvisarequest')]}">
+                            <p>
+                                1.Original Bachelor or master Degree attested by saudi Embassy and Ministry of Foreign
+                                Affairs and to be translated in Arabic Language
+                                <br></br>
+                                2.Original Marriage Certificate attested by saudi Embassy and Ministry of Foreign
+                                Affairs and to be translated in Arabic Language
+                                <br></br>
+                                3.Wife's kid's passport first page copy
+                                <br></br>
+                                4.kids original birth certificate attested by Saudi Embassy and Ministry of Foreign
+                                Affairs
+                                <br></br>
+                                5.Letter from SOCPA if the position in Iqama is "account"
+                                <br></br>
+                                6.Pay 2000 fee from MOI system from any bank
+                                <br></br>
+                                7.Childs Medical Report(Vaccination)
+                                <br></br>
+                            </p>
+                        </group>
+                        <group string="Required Documents" attrs="{'invisible': [('operation', '!=', 'lossingiqama')]}">
+                            <p>
+                                1.Original Passport
+                                <br></br>
+                                2.Report From Police (if stolen)
+                                <br></br>
+                                3.Fill in QA Form from GR
+                                <br></br>
+                                4.Iqama Photo Copy
+                                <br></br>
+                            </p>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="operation_request_action" model="ir.actions.act_window">
+        <field name="name">Operation Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">operation.request</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                create your first operation request!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="gr_operation_root"
+              name="GR Operation"
+              parent="hr.menu_hr_root"
+              sequence="20"/>
+
+    <menuitem id="operation_request_root"
+              name="Operation Request"
+              parent="gr_operation_root"
+              action="operation_request_action"
+              sequence="20"/>
+
+
+</odoo>

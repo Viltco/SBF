@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sponsorship_transfer_tree" model="ir.ui.view">
+        <field name="name">sponsorship.transfer.tree</field>
+        <field name="model">sponsorship.transfer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="recruiter"/>
+                <field name="handle_by"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sponsorship_transfer_form" model="ir.ui.view">
+        <field name="name">sponsorship.transfer.form</field>
+        <field name="model">sponsorship.transfer</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button id="button_submit" name="action_submit" string="Submit" type="object"
+                            class="btn-primary" states="draft"/>
+                    <button id="button_approve" name="action_approve" string="Approve" type="object"
+                            class="btn-primary" states="waiting_approval"/>
+                    <button id="button_reject" name="action_reject" string="Reject" type="object"
+                            class="btn-primary"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,waiting_approval, approved"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="recruiter"/>
+                            <field name="handle_by"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Required Documents">
+                            <group>
+                                <group string="For SponsorShip Transfer">
+                                    <p>
+                                        1.Demand Letter from his previous Company
+                                        <br></br>
+                                        2.All passports(original) valid
+                                        <br></br>
+                                        3.Iqama Valid Original
+                                        <br></br>
+                                        4.3 release lettersfrom the first sponser to:
+                                        <br></br>
+                                        A.Immigration
+                                        <br></br>
+                                        B.KPMG Company
+                                        <br></br>
+                                        C.Labor Office
+                                        <br></br>
+                                        <br></br>
+                                        5.Two Photos
+                                        <br></br>
+                                        6.Original Medical Report
+                                        <br></br>
+                                        7.Pay Traffic Plenty
+                                        <br></br>
+                                        8.Agreement on sponsorship transfer on line in labor office
+                                        <br></br>
+                                        9.Cancel Entry exit visa(if he has)
+                                        <br></br>
+                                    </p>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="sponsorship_transfer_action" model="ir.actions.act_window">
+        <field name="name">Sponsorship Transfer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sponsorship.transfer</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                create your first Sponsorship Transfer!
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="sponsorship_transfer_root"
+              name="Sponsorship Transfer"
+              parent="gr_operation_root"
+              action="sponsorship_transfer_action"
+              sequence="20"/>
+
+
+</odoo>
