@@ -4,11 +4,11 @@
     <template id="external_layout_saudi">
 
 
-<!--        <td valign="middle" align="right">-->
-<!--            <img t-attf-src="data:image/*;base64,{{doc.company_id.logo}}"-->
-<!--                 style="margin: auto; display: block; height: 150px;"/>-->
-<!--            &lt;!&ndash;                    <img src="/logo.png?company=${object.company_id.id}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>&ndash;&gt;-->
-<!--        </td>-->
+        <td valign="middle" align="right">
+            <img t-attf-src="data:image/*;base64,{{doc.company_id.logo}}"
+                 style="margin: auto; display: block; height: 100px;"/>
+            <!--                    <img src="/logo.png?company=${object.company_id.id}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>-->
+        </td>
 
         <style>
             table {

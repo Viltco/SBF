@@ -15,11 +15,13 @@ import qrcode
 from odoo.exceptions import UserError
 from pytz import timezone
 
-# class AccountMovettt(models.Model):
-#     _inherit = 'account.edi.document'
-#
-#     def action_export_xml(self):
-#         pass
+
+class AccountMovettt(models.Model):
+    _inherit = 'account.edi.document'
+
+    def action_export_xml(self):
+        pass
+
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
