@@ -31,6 +31,14 @@ class AccountMove(models.Model):
     qr_code = fields.Binary(string='QR code', copy=False)
     generate_method = fields.Selection(related="company_id.qr_code_generation_config",)
     po_ref = fields.Char('PO Reference')
+    transaction_type = fields.Selection([
+        ('nominal_supply', 'Nominal Supply'),
+    ], string='Transaction Type', default='nominal_supply')
+
+    def get_amount(self):
+        text = self.currency_id.amount_to_text(self.amount_residual)
+        return text.title()
+
 
     # def get_current_date(self):
     #     now_utc_date = self.date_issue

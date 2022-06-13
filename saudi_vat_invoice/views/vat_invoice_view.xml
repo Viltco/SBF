@@ -9,8 +9,9 @@
 <!--	     		<field name="date_issue" invisible="1"/>-->
 	     		<field name="date_supply"/>   	
 	       	</xpath>
-			<xpath expr="//field[@name='ref']" position="after">
+			<xpath expr="//field[@name='payment_reference']" position="after">
 	     		<field name="po_ref"/>
+	     		<field name="transaction_type"/>
 	       	</xpath>
 			<xpath expr="//page[@name='other_info']" position="after">
 	     		<page name="qr_code" string="QR Code">
