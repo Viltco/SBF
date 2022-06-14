@@ -65,8 +65,34 @@ class StockPickingInh(models.Model):
             raise UserError('Delivery Document should be check to "Confirm""')
 
 
+class PurchaseOrderLineInh(models.Model):
+    _inherit = 'purchase.order.line'
+
+    brand = fields.Char()
+    warranty = fields.Char()
+
+
 class PurchaseOrderInh(models.Model):
     _inherit = 'purchase.order'
+
+    comparison_lines = fields.One2many('comparison.line', 'order_id')
+
+    def action_add_lines(self):
+        product_list = []
+        for rec in self.comparison_lines:
+            rec.unlink()
+        for line in self.order_line:
+            product_list.append((0, 3, {
+                'product_id': line.product_id.id,
+                'brand': line.brand,
+                'warranty': line.warranty,
+                'product_qty': line.product_qty,
+                'discount': line.discount,
+                'price_unit': line.price_unit,
+                'product_uom': line.product_uom.id,
+                'price_subtotal': line.price_subtotal
+            }))
+        self.comparison_lines = product_list
 
     def button_approved(self):
         record = super(PurchaseOrderInh, self).button_approved()
@@ -75,4 +101,18 @@ class PurchaseOrderInh(models.Model):
                 picking.do_unreserve()
                 picking.is_receipt = True
         return record
+
+
+class ComparisonItemsLine(models.Model):
+    _name = 'comparison.line'
+
+    order_id = fields.Many2one('purchase.order')
+    product_id = fields.Many2one('product.product')
+    product_uom = fields.Many2one('uom.uom')
+    product_qty = fields.Float('Quantity')
+    price_unit = fields.Float()
+    price_subtotal = fields.Float()
+    discount = fields.Float()
+    brand = fields.Char()
+    warranty = fields.Char()
 

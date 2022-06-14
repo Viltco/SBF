@@ -1,6 +1,40 @@
 <odoo>
     <data>
 
+        <record id="view_purchase_order_form_inh" model="ir.ui.view">
+            <field name="name">purchase.order.form.inh</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//header" position="inside">
+                    <button string="Add Comparison Items" name="action_add_lines" type="object" states="draft"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                    <field name="brand"/>
+                    <field name="warranty"/>
+                </xpath>
+
+                <xpath expr="//page[@name='purchase_delivery_invoice']" position="after">
+                    <page string="Comparison Items">
+                        <field name="comparison_lines" readonly="1">
+                            <tree edbitable="bottom">
+                                <field name="product_id"/>
+                                <field name="brand"/>
+                                <field name="warranty"/>
+                                <field name="product_qty"/>
+                                <field name="product_uom" string="UOM"/>
+                                <field name="discount"/>
+                                <field name="price_unit"/>
+                                <field name="price_subtotal" string="Subtotal"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
         <record id="view_stock_picking_form_inh" model="ir.ui.view">
             <field name="name">stock.picking.form.inh</field>
             <field name="model">stock.picking</field>
@@ -29,7 +63,7 @@
                     <attribute name="attrs">{'invisible': ['|',('state', 'not in', ['confirmed']), ('is_receipt', '=', True)]}</attribute>
                 </xpath>
 
-                 <xpath expr="//button[@name='open_quality_alert_picking']" position="attributes">
+                <xpath expr="//button[@name='open_quality_alert_picking']" position="attributes">
                     <attribute name="attrs">{'invisible': [('state', '!=', 'qc_inspection')]}</attribute>
                 </xpath>
 

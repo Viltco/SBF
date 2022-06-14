@@ -39,6 +39,10 @@ class AccountMove(models.Model):
         text = self.currency_id.amount_to_text(self.amount_residual)
         return text.title()
 
+    def dict_values(self):
+        res = dict(self.env['account.move']._fields['transaction_type'].selection).get(self.transaction_type)
+        return res
+
 
     # def get_current_date(self):
     #     now_utc_date = self.date_issue

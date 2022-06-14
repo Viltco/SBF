@@ -89,7 +89,7 @@
                         <tr>
                             <th style="white-space:nowrap;">Transaction Type:</th>
                             <td style="width:50px !important;text-align:center;">
-                                <t t-esc="doc.transaction_type"></t>
+                                <t t-esc="doc.dict_values()"></t>
                             </td>
                             <!--                            <td style="width:50px !important;">-->
                             <!--                                <t t-esc="doc.po_ref"></t>-->
@@ -148,7 +148,7 @@
                 <td style="text-align: right;font-size:12px;">رقم المبنى</td>
             </tr>
             <tr>
-                <td style="text-align: left;font-size:12px;">Street name</td>
+                <td style="text-align: left;font-size:12px;">Street Name</td>
                 <td style="font-size:12px;">
                     <t t-esc="doc.company_id.partner_id.street"></t>
                 </td>
@@ -156,7 +156,7 @@
                     <t t-esc="doc.company_id.partner_id.street_arabic"></t>
                 </td>
                 <td style="text-align: right;font-size:12px;">اسم الشارع</td>
-                <td style="text-align: left;font-size:12px;">Street name</td>
+                <td style="text-align: left;font-size:12px;">Street Name</td>
                 <td style="font-size:12px;">
                     <t t-esc="doc.partner_id.street"></t>
                 </td>
