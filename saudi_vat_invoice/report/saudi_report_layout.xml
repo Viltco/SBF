@@ -116,10 +116,10 @@
             <tr>
                 <th style="text-align: left;width: 15% !important;font-size:12px;">Name</th>
                 <th style="width: 15% !important;font-size:12px;">
-                    <t t-esc="doc.company_id.name"></t>
+                    <t t-esc="doc.company_id.partner_id.name"></t>
                 </th>
                 <th style="font-size:12px;text-align: right;">
-                    <t t-esc="doc.company_id.name_arabic"></t>
+                    <t t-esc="doc.company_id.partner_id.name_arabic"></t>
                 </th>
                 <th style="text-align: right;width: 15% !important;font-size:12px;">الإسم</th>
                 <th style="text-align: left;width: 15% !important;font-size:12px;">Name</th>
@@ -134,7 +134,7 @@
             <tr>
                 <td style="text-align: left;width: 15% !important;font-size:12px;">Building No.</td>
                 <td style="font-size:12px;">
-                    <t t-esc="doc.company_id.building_number"></t>
+                    <t t-esc="doc.company_id.partner_id.building_number"></t>
                 </td>
                 <td></td>
                 <td style="text-align: right;font-size:12px;">رقم المبنى</td>
@@ -150,10 +150,10 @@
             <tr>
                 <td style="text-align: left;font-size:12px;">Street name</td>
                 <td style="font-size:12px;">
-                    <t t-esc="doc.company_id.street"></t>
+                    <t t-esc="doc.company_id.partner_id.street"></t>
                 </td>
                 <td style="font-size:12px;text-align: right;">
-                    <t t-esc="doc.company_id.street_arabic"></t>
+                    <t t-esc="doc.company_id.partner_id.street_arabic"></t>
                 </td>
                 <td style="text-align: right;font-size:12px;">اسم الشارع</td>
                 <td style="text-align: left;font-size:12px;">Street name</td>
@@ -168,10 +168,10 @@
             <tr>
                 <td style="text-align: left;font-size:12px;">District</td>
                 <td style="font-size:12px;">
-                    <t t-esc="doc.company_id.district_id.name"></t>
+                    <t t-esc="doc.company_id.partner_id.district_id.name"></t>
                 </td>
                 <td style="font-size:12px;text-align: right;">
-                    <t t-esc="doc.company_id.district_id_arabic"></t>
+                    <t t-esc="doc.company_id.partner_id.district_id_arabic"></t>
                 </td>
                 <td style="text-align: right;font-size:12px;">منطقة</td>
                 <td style="text-align: left;font-size:12px;">District</td>
@@ -186,10 +186,10 @@
             <tr>
                 <td style="text-align: left;font-size:12px;">City</td>
                 <td style="font-size:12px;">
-                    <t t-esc="doc.company_id.city"></t>
+                    <t t-esc="doc.company_id.partner_id.city"></t>
                 </td>
                 <td style="font-size:12px;text-align: right;">
-                    <t t-esc="doc.company_id.city_arabic"></t>
+                    <t t-esc="doc.company_id.partner_id.city_arabic"></t>
                 </td>
                 <td style="text-align: right;font-size:12px;">المدينة</td>
                 <td style="text-align: left;font-size:12px;">City</td>
@@ -204,10 +204,10 @@
             <tr>
                 <td style="text-align: left;font-size:12px;">Country</td>
                 <td style="font-size:12px;">
-                    <t t-esc="doc.company_id.country_id.name"></t>
+                    <t t-esc="doc.company_id.partner_id.country_id.name"></t>
                 </td>
                 <td style="font-size:12px;text-align: right;">
-                    <t t-esc="doc.company_id.country_arabic"></t>
+                    <t t-esc="doc.company_id.partner_id.country_arabic"></t>
                 </td>
                 <td style="text-align: right;font-size:12px;">البلد</td>
                 <td style="text-align: left;font-size:12px;">Country</td>
@@ -222,10 +222,10 @@
             <tr>
                 <td style="text-align: left;font-size:12px;">ZIP/Postal Code</td>
                 <td style="font-size:12px;">
-                    <t t-esc="doc.company_id.zip"></t>
+                    <t t-esc="doc.company_id.partner_id.zip"></t>
                 </td>
                 <td style="font-size:12px;text-align: right;">
-                    <t t-esc="doc.company_id.zip_arabic"></t>
+                    <t t-esc="doc.company_id.partner_id.zip_arabic"></t>
                 </td>
                 <td style="text-align: right;font-size:12px;">رمز بريدي</td>
                 <td style="text-align: left;font-size:12px;">ZIP/Postal Code</td>
@@ -240,10 +240,10 @@
             <tr>
                 <td style="text-align: left;font-size:12px;">Phone</td>
                 <td style="font-size:12px;">
-                    <t t-esc="doc.company_id.phone"></t>
+                    <t t-esc="doc.company_id.partner_id.phone"></t>
                 </td>
                 <td style="font-size:12px;text-align: right;">
-                    <t t-esc="doc.company_id.phone"></t>
+                    <t t-esc="doc.company_id.partner_id.phone"></t>
                 </td>
                 <td style="text-align: right;font-size:12px;">هاتف</td>
                 <td style="text-align: left;font-size:12px;">Phone</td>
@@ -258,10 +258,10 @@
             <tr>
                 <td style="text-align: left;font-size:12px;">Additional No.</td>
                 <td style="font-size:12px;">
-                    <t t-esc="doc.company_id.additional_no"></t>
+                    <t t-esc="doc.company_id.partner_id.additional_no"></t>
                 </td>
                 <td>
-                    <t t-esc="doc.company_id.additional_no_arabic"/>
+                    <t t-esc="doc.company_id.partner_id.additional_no_arabic"/>
                 </td>
                 <td style="text-align: right;font-size:12px;">رقم إضافي</td>
                 <td style="text-align: left;font-size:12px;">Additional No.</td>
@@ -276,7 +276,7 @@
             <tr>
                 <td style="text-align: left;font-size:12px;">VAT Number:</td>
                 <td style="font-size:12px;">
-                    <t t-esc="doc.company_id.vat"></t>
+                    <t t-esc="doc.company_id.partner_id.vat"></t>
                 </td>
                 <td style="width: 10% !important;font-size:12px;"></td>
                 <td style="text-align: right;font-size:12px;">رقم الضريبي</td>
@@ -292,7 +292,7 @@
             <tr>
                 <td style="text-align: left;font-size:12px;">Other Seller ID:</td>
                 <td style="font-size:12px;">
-                    <t t-esc="doc.company_id.other_seller_id"></t>
+                    <t t-esc="doc.company_id.partner_id.other_seller_id_arabic"></t>
                 </td>
                 <td style="width: 10% !important;font-size:12px;"></td>
                 <td style="text-align: right;font-size:12px;">معرف البائع الآخر</td>
@@ -306,8 +306,6 @@
                 <td style="text-align: right;font-size:12px;">معرف البائع الآخر</td>
             </tr>
         </table>
-
-
         <br/>
         <table class="table table-sm o_main_table" style="width:100%;">
             <thead>
@@ -509,17 +507,14 @@
                     <td style="text-align:left;font-size:12px;">
                         <t t-esc="(line.price_unit-line.discount)*(line.quantity)"/>
                     </td>
-                    <td style="text-align:left;font-size:12px;">
-                        <t t-foreach="line.tax_ids" t-as="t">
-                            <span t-esc="'%.2f'%(t.amount)"/>
-                        </t>
-                        <span t-if="not line.tax_ids">0.0</span>
-                    </td>
                     <t t-set="val" t-value="0"/>
                     <t t-foreach="line.tax_ids" t-as="t">
                         <t t-set="val" t-value="val+t.amount"/>
                     </t>
-
+                    <td style="text-align:left;">
+                        <t t-set="val" t-value="line.price_subtotal*val/100"/>
+                        <span t-esc="'%.2f'%(val)"/>
+                    </td>
                     <td style="text-align:left;font-size:12px;">
                         <t t-esc="((line.price_unit-line.discount)*(line.quantity))+val"/>
                     </td>
