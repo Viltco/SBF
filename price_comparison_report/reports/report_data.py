@@ -2,7 +2,7 @@ from odoo import models, api
 
 
 class PriceComparisonReport(models.AbstractModel):
-    _name = 'report.price_comparison_report.price_comparison_id_print'
+    _name = 'report.price_comparison_report.price_comparison_id_landscape'
     _description = 'Price Comparison Report'
 
     @api.model

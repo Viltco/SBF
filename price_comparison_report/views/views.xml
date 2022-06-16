@@ -1,5 +1,15 @@
 <odoo>
-  <data>
-
-  </data>
+    <data>
+        <record id="purchase_requisition_form_inherited" model="ir.ui.view">
+            <field name="name">purchase.order.inherited</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="model">purchase.order</field>
+            <field name="priority">100</field>
+            <field type="xml" name="arch">
+                <field name="origin" position="replace">
+                    <field name="origin"/>
+                </field>
+            </field>
+        </record>
+    </data>
 </odoo>
