@@ -85,7 +85,6 @@ class PurchaseOrderInh(models.Model):
             product_list.append((0, 3, {
                 'product_id': line.product_id.id,
                 'brand': line.brand,
-                'warranty': line.warranty,
                 'product_qty': line.product_qty,
                 'discount': line.discount,
                 'price_unit': line.price_unit,

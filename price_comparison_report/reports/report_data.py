@@ -14,7 +14,7 @@ class PriceComparisonReport(models.AbstractModel):
         for rec in records:
             origin_list.append((rec.name))
         print(origin_list)
-        rfq = self.env['purchase.order'].search([('origin', 'in', origin_list)])
+        rfq = self.env['purchase.order'].search([('requisition_id.name', 'in', origin_list)])
 
         return {
             'doc_ids': docids,
