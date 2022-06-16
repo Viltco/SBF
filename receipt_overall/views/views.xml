@@ -13,7 +13,11 @@
 
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
                     <field name="brand"/>
-                    <field name="warranty"/>
+                </xpath>
+
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="warranty" string="Warranty"/>
+
                 </xpath>
 
                 <xpath expr="//page[@name='purchase_delivery_invoice']" position="after">
@@ -22,7 +26,6 @@
                             <tree edbitable="bottom">
                                 <field name="product_id"/>
                                 <field name="brand"/>
-                                <field name="warranty"/>
                                 <field name="product_qty"/>
                                 <field name="product_uom" string="UOM"/>
                                 <field name="discount"/>

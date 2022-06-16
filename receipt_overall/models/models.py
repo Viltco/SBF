@@ -69,12 +69,12 @@ class PurchaseOrderLineInh(models.Model):
     _inherit = 'purchase.order.line'
 
     brand = fields.Char()
-    warranty = fields.Char()
 
 
 class PurchaseOrderInh(models.Model):
     _inherit = 'purchase.order'
 
+    warranty = fields.Char('Warranty')
     comparison_lines = fields.One2many('comparison.line', 'order_id')
 
     def action_add_lines(self):
@@ -115,4 +115,3 @@ class ComparisonItemsLine(models.Model):
     discount = fields.Float()
     brand = fields.Char()
     warranty = fields.Char()
-
