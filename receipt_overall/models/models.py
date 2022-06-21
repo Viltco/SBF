@@ -51,7 +51,6 @@ class StockPickingInh(models.Model):
     is_receipt = fields.Boolean()
 
     def action_ready(self):
-        print(self.check_ids[0].name)
         for rec in self.check_ids:
             if rec.quality_state != 'pass':
                 raise UserError('Quality Checks Are not Passed.')
