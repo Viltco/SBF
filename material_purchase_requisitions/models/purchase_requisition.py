@@ -507,7 +507,7 @@ class MaterialPurchaseRequisition(models.Model):
                 rec.state = 'stock'
         if pur != -1:
             for u_rec in pur.order_line:
-                u_rec.product_qty = math.ceil(u_rec.product_qty)
+                u_rec.product_qty = math.ceil(round(u_rec.product_qty, 2))
 
 
     # @api.multi
