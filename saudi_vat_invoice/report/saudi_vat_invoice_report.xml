@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!--        <report id="action_summary_report" string="Dispatch Summary" model="stock.picking" report_type="qweb-pdf"-->
-        <!--                file="qg_dispatch_summary.summary_report_template" name="qg_dispatch_summary.summary_report_template"-->
-        <!--                print_report_name="'Dispatch Summary - %s - %s' % (object.location_dest_id.name or '', object.name)"/>-->
         <record id="paperformat_lowmargin" model="report.paperformat">
             <field name="name">European A4 low margin</field>
             <field name="default" eval="True"/>
@@ -22,8 +19,8 @@
             <field name="name">VAT Invoice</field>
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">saudi_vat_invoice.report_vat_invoice</field>
-            <field name="report_file">saudi_vat_invoice.report_vat_invoice</field>
+            <field name="report_name">saudi_vat_invoice.report_vat_invoice_document</field>
+            <field name="report_file">saudi_vat_invoice.report_vat_invoice_document</field>
         </record>
 
         <record id="action_report_simplified_saudi_vat_invoice" model="ir.actions.report">
@@ -35,20 +32,13 @@
             <field name="report_file">saudi_vat_invoice.report_simplified_vat_invoice_document_id</field>
         </record>
 
-
-        <!--	<template id="assets_backend" name="vat invoice assets" inherit_id="web.assets_backend">
-                <xpath expr="." position="inside">
-                       <link rel="stylesheet" href="/saudi_vat_invoice/static/src/css/style.css"/>
-                </xpath>
-            </template>-->
-
         <report
                 id="action_report_saudi_vat_invoice"
                 string="VAT Invoice"
                 model="account.move"
                 report_type="qweb-pdf"
-                file="saudi_vat_invoice.report_vat_invoice"
-                name="saudi_vat_invoice.report_vat_invoice"
+                file="saudi_vat_invoice.report_vat_invoice_document"
+                name="saudi_vat_invoice.report_vat_invoice_document"
                 print_report_name="'VAT Invoice -%s' %(object.partner_id.name)"/>
 
         <report

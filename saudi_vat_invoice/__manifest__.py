@@ -19,7 +19,7 @@ Saudi VAT Invoice / E-Invoice / Saudi Electronic Invoice / Electronic Invoice KS
     'depends': ['account', 'sa_uae_vat'],
     'data': [
         'report/saudi_report_layout.xml',
-         'report/saudi_vat_simplified_tax_invoice_report.xml',
+        'report/saudi_vat_simplified_tax_invoice_report.xml',
         'report/saudi_vat_invoice_report_template.xml',
         'report/saudi_vat_invoice_report.xml',
         'views/vat_invoice_view.xml',
