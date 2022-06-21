@@ -46,17 +46,17 @@
 
         </template>
 
-        <template id="einv_external_layout_standard"
-                  inherit_id="web.external_layout_standard">
-            <xpath expr="//div[contains(@t-attf-class,'footer')]/div/ul" position="before">
-                <div t-call="einv_sa.financial_layout_row">
-                </div>
+<!--        <template id="einv_external_layout_standard"-->
+<!--                  inherit_id="web.external_layout_standard">-->
+<!--            <xpath expr="//div[contains(@t-attf-class,'footer')]/div/ul" position="before">-->
+<!--                <div t-call="einv_sa.financial_layout_row">-->
+<!--                </div>-->
 
-            </xpath>
-            <!--            <xpath expr="//li[@t-if='company.vat']" position="replace">-->
+<!--            </xpath>-->
+<!--            &lt;!&ndash;            <xpath expr="//li[@t-if='company.vat']" position="replace">&ndash;&gt;-->
 
-            <!--            </xpath>-->
-        </template>
+<!--            &lt;!&ndash;            </xpath>&ndash;&gt;-->
+<!--        </template>-->
 
         <template id="einv_external_layout_boxed"
                   inherit_id="web.external_layout_boxed">

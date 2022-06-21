@@ -8,6 +8,11 @@ from odoo.exceptions import UserError, Warning
 # import arabic_reshaper
 # from bidi.algorithm import get_display
 
+class AccountMovennInh(models.Model):
+    _inherit = 'account.edi.document'
+
+    def action_export_xml(self):
+        pass
 
 class AccountMove(models.Model):
     _name = "account.move"

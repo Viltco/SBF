@@ -14,7 +14,7 @@
 <!--					<field name="customer_rank" invisible="1"/>-->
 <!--					<field name="supplier_rank" invisible="1"/>-->
 					<field name="partner_type"/>
-					<field name="cr_no"/>
+					<field name="cr_no" attrs="{'required': [('partner_type', '!=', 'employee')]}"/>
 <!--					attrs="{'invisible': [('partner_type', '=', 'customer')]}"-->
 				</xpath>
 
