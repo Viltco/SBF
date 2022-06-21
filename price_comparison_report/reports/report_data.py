@@ -21,4 +21,5 @@ class PriceComparisonReport(models.AbstractModel):
             'doc_model': 'purchase.requisition',
             'docs': records,
             'orders': rfq,
+            'total_rfq': len(rfq)
         }

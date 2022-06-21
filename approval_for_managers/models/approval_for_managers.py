@@ -12,7 +12,8 @@ class PurchaseOrderInh(models.Model):
     state = fields.Selection([
         ('draft', 'RFQ'),
         ('sent', 'RFQ Sent'),
-        ('approve', 'Waiting For Approval'),
+        ('approve', 'Waiting For Finance Approval'),
+        ('manager', 'Waiting For Manager Approval'),
         ('to approve', 'To Approve'),
         ('purchase', 'Purchase Order'),
         ('done', 'Locked'),
@@ -23,30 +24,40 @@ class PurchaseOrderInh(models.Model):
 
     approved_by = fields.Many2one('res.users')
 
-    def button_confirm(self):
-        self.write({
-            'state': 'approve'
-        })
-
-    def button_approved(self):
+    def button_manager(self):
         for order in self:
-            if order.state not in ['draft', 'sent','approve']:
+            if order.state not in ['draft', 'sent', 'approve', 'manager']:
                 continue
             order._add_supplier_to_product()
             # Deal with double validation process
-            if order.company_id.po_double_validation == 'one_step'\
-                    or (order.company_id.po_double_validation == 'two_step'\
+            if order.company_id.po_double_validation == 'one_step' \
+                    or (order.company_id.po_double_validation == 'two_step' \
                         and order.amount_total < self.env.company.currency_id._convert(
-                            order.company_id.po_double_validation_amount, order.currency_id, order.company_id, order.date_order or fields.Date.today()))\
+                        order.company_id.po_double_validation_amount, order.currency_id, order.company_id,
+                        order.date_order or fields.Date.today())) \
                     or order.user_has_groups('purchase.group_purchase_manager'):
                 order.button_approve()
             else:
                 order.write({'state': 'to approve'})
             order.approved_by = order.env.user.id
         return True
-        # rec = super(PurchaseOrderInh, self).button_confirm()
+
+    def button_confirm(self):
+        self.write({
+            'state': 'approve'
+        })
+
+    def button_approved(self):
+        self.write({
+            'state': 'manager'
+        })
 
     def button_reject(self):
+        self.write({
+            'state': 'draft'
+        })
+
+    def manager_reject(self):
         self.write({
             'state': 'reject'
         })
@@ -216,6 +227,7 @@ class AccountMoveInh(models.Model):
         ('reject', 'Reject')
         ], string='Status', required=True, readonly=True, copy=False, tracking=True,
         default='draft')
+    available_partner_bank_ids = fields.Many2many('res.bank')
 
     def action_post(self):
         self.write({

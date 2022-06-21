@@ -6,15 +6,21 @@
                      t-att-data-oe-id="doc and doc.id">
                     <t t-call="price_comparison_report.sannad_bags_header_footer_landscape"/>
                     <div class="page">
+                        <link href="//db.onlinewebfonts.com/c/ce7b5754581057e6f7444e2192850cc8?family=Sakkal+Majalla"
+                              rel="stylesheet" type="text/css"/>
+                        <!--                        OR                      -->
+                        <!--                        <link rel="stylesheet" href="price_comparison_report/static/css/style.css" type="text/css"/>-->
+
                         <br/>
                         <t t-foreach="docs" t-as="o">
                             <div class=" text-center">
-                                <h3>PRICE COMPARISON SHEET</h3>
+                                <h3 style="font-family: Sakkal Majalla;">PRICE COMPARISON SHEET</h3>
                             </div>
                             <t t-if="orders.comparison_lines">
-                                <table>
+                                <table class="table table-bordered table-sm"
+                                       style="table-layout: auto; width: 100%;">
                                     <tr>
-                                        <td width="30%">
+                                        <td width="40%" style="font-family: Sakkal Majalla; font-size:10px">
                                             <table class="table table-bordered table-sm">
                                                 <thead>
                                                     <tr style="font-size:11px">
@@ -28,13 +34,13 @@
 
                                                 </thead>
                                                 <t t-set="sr_no" t-value="0"/>
-                                                <tr style="font-size:11px">
+                                                <tr>
                                                     <th colspan="4">&#160;</th>
                                                 </tr>
                                                 <t t-foreach="o.line_ids" t-as="line">
                                                     <t t-set="sr_no" t-value="sr_no + 1"/>
                                                     <tbody>
-                                                        <tr style="font-size:11px">
+                                                        <tr>
                                                             <td style="text-align:center">
                                                                 <span t-esc="sr_no"/>
                                                             </td>
@@ -54,113 +60,1837 @@
 
                                                 <tr>
                                                     <td>&#160;</td>
-                                                    <td style="text-align:right">TOTAL SAR NET</td>
+                                                    <td style="text-align:right;">
+                                                        <strong>TOTAL SAR NET</strong>
+                                                    </td>
                                                     <td>&#160;</td>
                                                     <td>&#160;</td>
                                                 </tr>
                                                 <tr>
                                                     <td>&#160;</td>
-                                                    <td style="text-align:right">DELIVERY TIME</td>
+                                                    <td style="text-align:right;">
+                                                        <strong>DELIVERY TIME</strong>
+                                                    </td>
                                                     <td>&#160;</td>
                                                     <td>&#160;</td>
                                                 </tr>
                                                 <tr>
                                                     <td>&#160;</td>
-                                                    <td style="text-align:right">PAYMENT TERMS</td>
+                                                    <td style="text-align:right;">
+                                                        <strong>PAYMENT TERMS</strong>
+                                                    </td>
                                                     <td>&#160;</td>
                                                     <td>&#160;</td>
                                                 </tr>
                                                 <tr>
                                                     <td>&#160;</td>
-                                                    <td style="text-align:right">WARRANTY</td>
+                                                    <td style="text-align:right;">
+                                                        <strong>WARRANTY</strong>
+                                                    </td>
                                                     <td>&#160;</td>
                                                     <td>&#160;</td>
                                                 </tr>
 
                                             </table>
                                         </td>
+                                        <t t-set="rec_no" t-value="0"/>
                                         <t t-foreach="orders" t-as="rfq">
+                                            <t t-set="rec_no" t-value="rec_no + 1"/>
                                             <t t-if="rfq.comparison_lines">
                                                 <t t-if="o.name == rfq.requisition_id.name">
-                                                    <td>
-
-                                                        <table class="table table-bordered table-sm">
-                                                            <thead>
-                                                                <tr style="font-size:11px">
-                                                                    <th class="text-center" colspan="4">
-                                                                        <span t-field="rfq.partner_id.name"/>
-                                                                    </th>
-                                                                </tr>
-                                                                <tr style="font-size:11px">
-                                                                    <th style="text-align:center">UNIT PRICE</th>
-                                                                    <th style="text-align:center">UOM</th>
-                                                                    <th style="text-align:center">TOTAL</th>
-                                                                    <th style="text-align:center">BRAND</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <t t-set="total" t-value="0"/>
-                                                            <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
-                                                                <tbody>
-                                                                    <tr style="font-size:11px">
-                                                                        <td style="text-align:center">
-                                                                            <span t-esc="rfq_line.price_unit"/>
-                                                                        </td>
-                                                                        <td style="text-align:center">
-                                                                            <span t-esc="rfq_line.product_uom.name"/>
-                                                                        </td>
-
-                                                                        <td style="text-align:center">
-                                                                            <span t-esc="rfq_line.price_subtotal"/>
-                                                                        </td>
-                                                                        <td style="text-align:center">
-                                                                            <span t-esc="rfq_line.brand"/>
-                                                                        </td>
+                                                    <t t-if="rec_no &lt; 4">
+                                                        <td style="font-family: Sakkal Majalla; font-size:10px">
+                                                            <table class="table table-bordered table-sm"
+                                                                   style="table-layout: auto;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-center" colspan="4">
+                                                                            <span t-field="rfq.partner_id.name"/>
+                                                                        </th>
                                                                     </tr>
-                                                                </tbody>
-                                                                <t t-set="total"
-                                                                   t-value="total + rfq_line.price_subtotal"/>
-                                                            </t>
-                                                            <tr>
-                                                                <td>&#160;</td>
-                                                                <td>&#160;</td>
-                                                                <th style="text-align:center; font-size:11px">
-                                                                    <span t-esc="total"/>
-                                                                </th>
-                                                                <td>&#160;</td>
-                                                            </tr>
+                                                                    <tr>
+                                                                        <th style="text-align:center">UNIT PRICE
+                                                                        </th>
+                                                                        <th style="text-align:center">UOM</th>
+                                                                        <th style="text-align:center">TOTAL</th>
+                                                                        <th style="text-align:center">BRAND</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <t t-set="total" t-value="0"/>
+                                                                <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                    <tbody>
+                                                                        <tr style="font-size:11px">
+                                                                            <td style="text-align:center">
+                                                                                <span t-esc="rfq_line.price_unit"/>
+                                                                            </td>
+                                                                            <td style="text-align:center">
+                                                                                <span t-esc="rfq_line.product_uom.name"/>
+                                                                            </td>
 
-                                                            <tr>
-                                                                <td>&#160;</td>
-                                                                <td>&#160;</td>
-                                                                <td style="text-align:center; font-size:11px">&#160;
-                                                                </td>
-                                                                <td>&#160;</td>
-                                                            </tr>
+                                                                            <td style="text-align:center">
+                                                                                <span t-esc="rfq_line.price_subtotal"/>
+                                                                            </td>
+                                                                            <td style="text-align:center">
+                                                                                <span t-esc="rfq_line.brand"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    <t t-set="total"
+                                                                       t-value="total + rfq_line.price_subtotal"/>
+                                                                </t>
+                                                                <tr>
+                                                                    <td>&#160;</td>
+                                                                    <td>&#160;</td>
+                                                                    <th style="text-align:center;">
+                                                                        <span t-esc="total"/>
+                                                                    </th>
+                                                                    <td>&#160;</td>
+                                                                </tr>
 
-                                                            <tr>
-                                                                <td>&#160;</td>
-                                                                <td>&#160;</td>
-                                                                <th style="text-align:center; font-size:11px">
-                                                                    <span t-esc="rfq.payment_term_id.name"/>
-                                                                </th>
-                                                                <td>&#160;</td>
-                                                            </tr>
+                                                                <tr>
+                                                                    <td style="text-align:center;">
+                                                                        &#160;
+                                                                    </td>
+                                                                    <td>&#160;</td>
+                                                                    <td>&#160;</td>
+                                                                    <td>&#160;</td>
+                                                                </tr>
 
-                                                            <tr>
-                                                                <td>&#160;</td>
-                                                                <td>&#160;</td>
-                                                                <th style="text-align:center; font-size:11px">
-                                                                    <span t-esc="rfq.warranty"/>
-                                                                </th>
-                                                                <td>&#160;</td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
+                                                                <tr>
+                                                                    <th style="text-align:center;">
+                                                                        <span t-esc="rfq.payment_term_id.name"/>
+                                                                    </th>
+                                                                    <td>&#160;</td>
+                                                                    <td>&#160;</td>
+                                                                    <td>&#160;</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <th style="text-align:center;">
+                                                                        <span t-esc="rfq.warranty"/>
+                                                                    </th>
+                                                                    <td>&#160;</td>
+                                                                    <td>&#160;</td>
+                                                                    <td>&#160;</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </t>
                                                 </t>
                                             </t>
                                         </t>
                                     </tr>
                                 </table>
+                            </t>
+                            <t t-if="total_rfq &gt; 3">
+                                <p style="page-break-before:always;"/>
+                                <br/>
+                                <br/>
+                                <t t-if="orders.comparison_lines">
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: auto; width: 100%;">
+                                        <tr>
+                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:11px">
+                                                            <th style="text-align:center" rowspan="2">S.No.</th>
+                                                            <th style="text-align:center" rowspan="2">DESCRIPTION
+                                                            </th>
+                                                            <th style="text-align:center" rowspan="2">QTY</th>
+                                                            <th style="text-align:center">UOM</th>
+                                                        </tr>
+
+
+                                                    </thead>
+                                                    <t t-set="sr_no" t-value="0"/>
+                                                    <tr style="font-size:11px">
+                                                        <th colspan="4">&#160;</th>
+                                                    </tr>
+                                                    <t t-foreach="o.line_ids" t-as="line">
+                                                        <t t-set="sr_no" t-value="sr_no + 1"/>
+                                                        <tbody>
+                                                            <tr style="font-size:11px">
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="sr_no"/>
+                                                                </td>
+                                                                <td style="text-align:left">
+                                                                    <span t-esc="line.product_id.name"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_qty"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_uom_id.name"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </t>
+
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>TOTAL SAR NET</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>DELIVERY TIME</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>PAYMENT TERMS</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>WARRANTY</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <t t-set="rec_no" t-value="0"/>
+                                            <t t-foreach="orders" t-as="rfq">
+                                                <t t-set="rec_no" t-value="rec_no + 1"/>
+                                                <t t-if="rfq.comparison_lines">
+                                                    <t t-if="o.name == rfq.requisition_id.name">
+                                                        <t t-if="rec_no &lt; 7 and rec_no &gt; 3">
+                                                            <td style="font-family: Sakkal Majalla;">
+                                                                <table class="table table-bordered table-sm"
+                                                                       style="table-layout: auto;">
+                                                                    <thead>
+                                                                        <tr style="font-size:11px">
+                                                                            <th class="text-center" colspan="4">
+                                                                                <span t-field="rfq.partner_id.name"/>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr style="font-size:11px">
+                                                                            <th style="text-align:center">UNIT PRICE
+                                                                            </th>
+                                                                            <th style="text-align:center">UOM</th>
+                                                                            <th style="text-align:center">TOTAL</th>
+                                                                            <th style="text-align:center">BRAND</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <t t-set="total" t-value="0"/>
+                                                                    <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                        <tbody>
+                                                                            <tr style="font-size:11px">
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_unit"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.product_uom.name"/>
+                                                                                </td>
+
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_subtotal"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.brand"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <t t-set="total"
+                                                                           t-value="total + rfq_line.price_subtotal"/>
+                                                                    </t>
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="total"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <td style="text-align:center; font-size:11px">
+                                                                            &#160;
+                                                                        </td>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.payment_term_id.name"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.warranty"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+                            <t t-if="total_rfq &gt; 6">
+                                <p style="page-break-before:always;"/>
+                                <br/>
+                                <br/>
+                                <t t-if="orders.comparison_lines">
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: auto; width: 100%;">
+                                        <tr>
+                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:11px">
+                                                            <th style="text-align:center" rowspan="2">S.No.</th>
+                                                            <th style="text-align:center" rowspan="2">DESCRIPTION
+                                                            </th>
+                                                            <th style="text-align:center" rowspan="2">QTY</th>
+                                                            <th style="text-align:center">UOM</th>
+                                                        </tr>
+
+
+                                                    </thead>
+                                                    <t t-set="sr_no" t-value="0"/>
+                                                    <tr style="font-size:11px">
+                                                        <th colspan="4">&#160;</th>
+                                                    </tr>
+                                                    <t t-foreach="o.line_ids" t-as="line">
+                                                        <t t-set="sr_no" t-value="sr_no + 1"/>
+                                                        <tbody>
+                                                            <tr style="font-size:11px">
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="sr_no"/>
+                                                                </td>
+                                                                <td style="text-align:left">
+                                                                    <span t-esc="line.product_id.name"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_qty"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_uom_id.name"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </t>
+
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>TOTAL SAR NET</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>DELIVERY TIME</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>PAYMENT TERMS</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>WARRANTY</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <t t-set="rec_no" t-value="0"/>
+                                            <t t-foreach="orders" t-as="rfq">
+                                                <t t-set="rec_no" t-value="rec_no + 1"/>
+                                                <t t-if="rfq.comparison_lines">
+                                                    <t t-if="o.name == rfq.requisition_id.name">
+                                                        <t t-if="rec_no &lt; 10 and rec_no &gt; 6">
+                                                            <td style="font-family: Sakkal Majalla;">
+                                                                <table class="table table-bordered table-sm"
+                                                                       style="table-layout: auto;">
+                                                                    <thead>
+                                                                        <tr style="font-size:11px">
+                                                                            <th class="text-center" colspan="4">
+                                                                                <span t-field="rfq.partner_id.name"/>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr style="font-size:11px">
+                                                                            <th style="text-align:center">UNIT PRICE
+                                                                            </th>
+                                                                            <th style="text-align:center">UOM</th>
+                                                                            <th style="text-align:center">TOTAL</th>
+                                                                            <th style="text-align:center">BRAND</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <t t-set="total" t-value="0"/>
+                                                                    <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                        <tbody>
+                                                                            <tr style="font-size:11px">
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_unit"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.product_uom.name"/>
+                                                                                </td>
+
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_subtotal"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.brand"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <t t-set="total"
+                                                                           t-value="total + rfq_line.price_subtotal"/>
+                                                                    </t>
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="total"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <td style="text-align:center; font-size:11px">
+                                                                            &#160;
+                                                                        </td>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.payment_term_id.name"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.warranty"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+                            <t t-if="total_rfq &gt; 9">
+                                <p style="page-break-before:always;"/>
+                                <br/>
+                                <br/>
+                                <t t-if="orders.comparison_lines">
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: auto; width: 100%;">
+                                        <tr>
+                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:11px">
+                                                            <th style="text-align:center" rowspan="2">S.No.</th>
+                                                            <th style="text-align:center" rowspan="2">DESCRIPTION
+                                                            </th>
+                                                            <th style="text-align:center" rowspan="2">QTY</th>
+                                                            <th style="text-align:center">UOM</th>
+                                                        </tr>
+
+
+                                                    </thead>
+                                                    <t t-set="sr_no" t-value="0"/>
+                                                    <tr style="font-size:11px">
+                                                        <th colspan="4">&#160;</th>
+                                                    </tr>
+                                                    <t t-foreach="o.line_ids" t-as="line">
+                                                        <t t-set="sr_no" t-value="sr_no + 1"/>
+                                                        <tbody>
+                                                            <tr style="font-size:11px">
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="sr_no"/>
+                                                                </td>
+                                                                <td style="text-align:left">
+                                                                    <span t-esc="line.product_id.name"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_qty"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_uom_id.name"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </t>
+
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>TOTAL SAR NET</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>DELIVERY TIME</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>PAYMENT TERMS</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>WARRANTY</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <t t-set="rec_no" t-value="0"/>
+                                            <t t-foreach="orders" t-as="rfq">
+                                                <t t-set="rec_no" t-value="rec_no + 1"/>
+                                                <t t-if="rfq.comparison_lines">
+                                                    <t t-if="o.name == rfq.requisition_id.name">
+                                                        <t t-if="rec_no &lt; 13 and rec_no &gt; 9">
+                                                            <td style="font-family: Sakkal Majalla;">
+                                                                <table class="table table-bordered table-sm"
+                                                                       style="table-layout: auto;">
+                                                                    <thead>
+                                                                        <tr style="font-size:11px">
+                                                                            <th class="text-center" colspan="4">
+                                                                                <span t-field="rfq.partner_id.name"/>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr style="font-size:11px">
+                                                                            <th style="text-align:center">UNIT PRICE
+                                                                            </th>
+                                                                            <th style="text-align:center">UOM</th>
+                                                                            <th style="text-align:center">TOTAL</th>
+                                                                            <th style="text-align:center">BRAND</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <t t-set="total" t-value="0"/>
+                                                                    <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                        <tbody>
+                                                                            <tr style="font-size:11px">
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_unit"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.product_uom.name"/>
+                                                                                </td>
+
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_subtotal"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.brand"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <t t-set="total"
+                                                                           t-value="total + rfq_line.price_subtotal"/>
+                                                                    </t>
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="total"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <td style="text-align:center; font-size:11px">
+                                                                            &#160;
+                                                                        </td>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.payment_term_id.name"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.warranty"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+                            <t t-if="total_rfq &gt; 12">
+                                <p style="page-break-before:always;"/>
+                                <br/>
+                                <br/>
+                                <t t-if="orders.comparison_lines">
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: auto; width: 100%;">
+                                        <tr>
+                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:11px">
+                                                            <th style="text-align:center" rowspan="2">S.No.</th>
+                                                            <th style="text-align:center" rowspan="2">DESCRIPTION
+                                                            </th>
+                                                            <th style="text-align:center" rowspan="2">QTY</th>
+                                                            <th style="text-align:center">UOM</th>
+                                                        </tr>
+
+
+                                                    </thead>
+                                                    <t t-set="sr_no" t-value="0"/>
+                                                    <tr style="font-size:11px">
+                                                        <th colspan="4">&#160;</th>
+                                                    </tr>
+                                                    <t t-foreach="o.line_ids" t-as="line">
+                                                        <t t-set="sr_no" t-value="sr_no + 1"/>
+                                                        <tbody>
+                                                            <tr style="font-size:11px">
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="sr_no"/>
+                                                                </td>
+                                                                <td style="text-align:left">
+                                                                    <span t-esc="line.product_id.name"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_qty"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_uom_id.name"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </t>
+
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>TOTAL SAR NET</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>DELIVERY TIME</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>PAYMENT TERMS</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>WARRANTY</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <t t-set="rec_no" t-value="0"/>
+                                            <t t-foreach="orders" t-as="rfq">
+                                                <t t-set="rec_no" t-value="rec_no + 1"/>
+                                                <t t-if="rfq.comparison_lines">
+                                                    <t t-if="o.name == rfq.requisition_id.name">
+                                                        <t t-if="rec_no &lt; 16 and rec_no &gt; 12">
+                                                            <td style="font-family: Sakkal Majalla;">
+                                                                <table class="table table-bordered table-sm"
+                                                                       style="table-layout: auto;">
+                                                                    <thead>
+                                                                        <tr style="font-size:11px">
+                                                                            <th class="text-center" colspan="4">
+                                                                                <span t-field="rfq.partner_id.name"/>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr style="font-size:11px">
+                                                                            <th style="text-align:center">UNIT PRICE
+                                                                            </th>
+                                                                            <th style="text-align:center">UOM</th>
+                                                                            <th style="text-align:center">TOTAL</th>
+                                                                            <th style="text-align:center">BRAND</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <t t-set="total" t-value="0"/>
+                                                                    <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                        <tbody>
+                                                                            <tr style="font-size:11px">
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_unit"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.product_uom.name"/>
+                                                                                </td>
+
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_subtotal"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.brand"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <t t-set="total"
+                                                                           t-value="total + rfq_line.price_subtotal"/>
+                                                                    </t>
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="total"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <td style="text-align:center; font-size:11px">
+                                                                            &#160;
+                                                                        </td>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.payment_term_id.name"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.warranty"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+                            <t t-if="total_rfq &gt; 15">
+                                <p style="page-break-before:always;"/>
+                                <br/>
+                                <br/>
+                                <t t-if="orders.comparison_lines">
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: auto; width: 100%;">
+                                        <tr>
+                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:11px">
+                                                            <th style="text-align:center" rowspan="2">S.No.</th>
+                                                            <th style="text-align:center" rowspan="2">DESCRIPTION
+                                                            </th>
+                                                            <th style="text-align:center" rowspan="2">QTY</th>
+                                                            <th style="text-align:center">UOM</th>
+                                                        </tr>
+
+
+                                                    </thead>
+                                                    <t t-set="sr_no" t-value="0"/>
+                                                    <tr style="font-size:11px">
+                                                        <th colspan="4">&#160;</th>
+                                                    </tr>
+                                                    <t t-foreach="o.line_ids" t-as="line">
+                                                        <t t-set="sr_no" t-value="sr_no + 1"/>
+                                                        <tbody>
+                                                            <tr style="font-size:11px">
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="sr_no"/>
+                                                                </td>
+                                                                <td style="text-align:left">
+                                                                    <span t-esc="line.product_id.name"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_qty"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_uom_id.name"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </t>
+
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>TOTAL SAR NET</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>DELIVERY TIME</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>PAYMENT TERMS</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>WARRANTY</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <t t-set="rec_no" t-value="0"/>
+                                            <t t-foreach="orders" t-as="rfq">
+                                                <t t-set="rec_no" t-value="rec_no + 1"/>
+                                                <t t-if="rfq.comparison_lines">
+                                                    <t t-if="o.name == rfq.requisition_id.name">
+                                                        <t t-if="rec_no &lt; 19 and rec_no &gt; 15">
+                                                            <td style="font-family: Sakkal Majalla;">
+                                                                <table class="table table-bordered table-sm"
+                                                                       style="table-layout: auto;">
+                                                                    <thead>
+                                                                        <tr style="font-size:11px">
+                                                                            <th class="text-center" colspan="4">
+                                                                                <span t-field="rfq.partner_id.name"/>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr style="font-size:11px">
+                                                                            <th style="text-align:center">UNIT PRICE
+                                                                            </th>
+                                                                            <th style="text-align:center">UOM</th>
+                                                                            <th style="text-align:center">TOTAL</th>
+                                                                            <th style="text-align:center">BRAND</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <t t-set="total" t-value="0"/>
+                                                                    <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                        <tbody>
+                                                                            <tr style="font-size:11px">
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_unit"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.product_uom.name"/>
+                                                                                </td>
+
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_subtotal"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.brand"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <t t-set="total"
+                                                                           t-value="total + rfq_line.price_subtotal"/>
+                                                                    </t>
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="total"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <td style="text-align:center; font-size:11px">
+                                                                            &#160;
+                                                                        </td>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.payment_term_id.name"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.warranty"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+                            <t t-if="total_rfq &gt; 18">
+                                <p style="page-break-before:always;"/>
+                                <br/>
+                                <br/>
+                                <t t-if="orders.comparison_lines">
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: auto; width: 100%;">
+                                        <tr>
+                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:11px">
+                                                            <th style="text-align:center" rowspan="2">S.No.</th>
+                                                            <th style="text-align:center" rowspan="2">DESCRIPTION
+                                                            </th>
+                                                            <th style="text-align:center" rowspan="2">QTY</th>
+                                                            <th style="text-align:center">UOM</th>
+                                                        </tr>
+
+
+                                                    </thead>
+                                                    <t t-set="sr_no" t-value="0"/>
+                                                    <tr style="font-size:11px">
+                                                        <th colspan="4">&#160;</th>
+                                                    </tr>
+                                                    <t t-foreach="o.line_ids" t-as="line">
+                                                        <t t-set="sr_no" t-value="sr_no + 1"/>
+                                                        <tbody>
+                                                            <tr style="font-size:11px">
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="sr_no"/>
+                                                                </td>
+                                                                <td style="text-align:left">
+                                                                    <span t-esc="line.product_id.name"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_qty"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_uom_id.name"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </t>
+
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>TOTAL SAR NET</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>DELIVERY TIME</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>PAYMENT TERMS</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>WARRANTY</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <t t-set="rec_no" t-value="0"/>
+                                            <t t-foreach="orders" t-as="rfq">
+                                                <t t-set="rec_no" t-value="rec_no + 1"/>
+                                                <t t-if="rfq.comparison_lines">
+                                                    <t t-if="o.name == rfq.requisition_id.name">
+                                                        <t t-if="rec_no &lt; 22 and rec_no &gt; 18">
+                                                            <td style="font-family: Sakkal Majalla;">
+                                                                <table class="table table-bordered table-sm"
+                                                                       style="table-layout: auto;">
+                                                                    <thead>
+                                                                        <tr style="font-size:11px">
+                                                                            <th class="text-center" colspan="4">
+                                                                                <span t-field="rfq.partner_id.name"/>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr style="font-size:11px">
+                                                                            <th style="text-align:center">UNIT PRICE
+                                                                            </th>
+                                                                            <th style="text-align:center">UOM</th>
+                                                                            <th style="text-align:center">TOTAL</th>
+                                                                            <th style="text-align:center">BRAND</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <t t-set="total" t-value="0"/>
+                                                                    <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                        <tbody>
+                                                                            <tr style="font-size:11px">
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_unit"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.product_uom.name"/>
+                                                                                </td>
+
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_subtotal"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.brand"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <t t-set="total"
+                                                                           t-value="total + rfq_line.price_subtotal"/>
+                                                                    </t>
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="total"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <td style="text-align:center; font-size:11px">
+                                                                            &#160;
+                                                                        </td>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.payment_term_id.name"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.warranty"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+                            <t t-if="total_rfq &gt; 21">
+                                <p style="page-break-before:always;"/>
+                                <br/>
+                                <br/>
+                                <t t-if="orders.comparison_lines">
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: auto; width: 100%;">
+                                        <tr>
+                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:11px">
+                                                            <th style="text-align:center" rowspan="2">S.No.</th>
+                                                            <th style="text-align:center" rowspan="2">DESCRIPTION
+                                                            </th>
+                                                            <th style="text-align:center" rowspan="2">QTY</th>
+                                                            <th style="text-align:center">UOM</th>
+                                                        </tr>
+
+
+                                                    </thead>
+                                                    <t t-set="sr_no" t-value="0"/>
+                                                    <tr style="font-size:11px">
+                                                        <th colspan="4">&#160;</th>
+                                                    </tr>
+                                                    <t t-foreach="o.line_ids" t-as="line">
+                                                        <t t-set="sr_no" t-value="sr_no + 1"/>
+                                                        <tbody>
+                                                            <tr style="font-size:11px">
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="sr_no"/>
+                                                                </td>
+                                                                <td style="text-align:left">
+                                                                    <span t-esc="line.product_id.name"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_qty"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_uom_id.name"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </t>
+
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>TOTAL SAR NET</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>DELIVERY TIME</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>PAYMENT TERMS</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>WARRANTY</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <t t-set="rec_no" t-value="0"/>
+                                            <t t-foreach="orders" t-as="rfq">
+                                                <t t-set="rec_no" t-value="rec_no + 1"/>
+                                                <t t-if="rfq.comparison_lines">
+                                                    <t t-if="o.name == rfq.requisition_id.name">
+                                                        <t t-if="rec_no &lt; 25 and rec_no &gt; 21">
+                                                            <td style="font-family: Sakkal Majalla;">
+                                                                <table class="table table-bordered table-sm"
+                                                                       style="table-layout: auto;">
+                                                                    <thead>
+                                                                        <tr style="font-size:11px">
+                                                                            <th class="text-center" colspan="4">
+                                                                                <span t-field="rfq.partner_id.name"/>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr style="font-size:11px">
+                                                                            <th style="text-align:center">UNIT PRICE
+                                                                            </th>
+                                                                            <th style="text-align:center">UOM</th>
+                                                                            <th style="text-align:center">TOTAL</th>
+                                                                            <th style="text-align:center">BRAND</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <t t-set="total" t-value="0"/>
+                                                                    <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                        <tbody>
+                                                                            <tr style="font-size:11px">
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_unit"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.product_uom.name"/>
+                                                                                </td>
+
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_subtotal"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.brand"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <t t-set="total"
+                                                                           t-value="total + rfq_line.price_subtotal"/>
+                                                                    </t>
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="total"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <td style="text-align:center; font-size:11px">
+                                                                            &#160;
+                                                                        </td>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.payment_term_id.name"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.warranty"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+                            <t t-if="total_rfq &gt; 24">
+                                <p style="page-break-before:always;"/>
+                                <br/>
+                                <br/>
+                                <t t-if="orders.comparison_lines">
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: auto; width: 100%;">
+                                        <tr>
+                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:11px">
+                                                            <th style="text-align:center" rowspan="2">S.No.</th>
+                                                            <th style="text-align:center" rowspan="2">DESCRIPTION
+                                                            </th>
+                                                            <th style="text-align:center" rowspan="2">QTY</th>
+                                                            <th style="text-align:center">UOM</th>
+                                                        </tr>
+
+
+                                                    </thead>
+                                                    <t t-set="sr_no" t-value="0"/>
+                                                    <tr style="font-size:11px">
+                                                        <th colspan="4">&#160;</th>
+                                                    </tr>
+                                                    <t t-foreach="o.line_ids" t-as="line">
+                                                        <t t-set="sr_no" t-value="sr_no + 1"/>
+                                                        <tbody>
+                                                            <tr style="font-size:11px">
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="sr_no"/>
+                                                                </td>
+                                                                <td style="text-align:left">
+                                                                    <span t-esc="line.product_id.name"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_qty"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_uom_id.name"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </t>
+
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>TOTAL SAR NET</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>DELIVERY TIME</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>PAYMENT TERMS</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>WARRANTY</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <t t-set="rec_no" t-value="0"/>
+                                            <t t-foreach="orders" t-as="rfq">
+                                                <t t-set="rec_no" t-value="rec_no + 1"/>
+                                                <t t-if="rfq.comparison_lines">
+                                                    <t t-if="o.name == rfq.requisition_id.name">
+                                                        <t t-if="rec_no &lt; 28 and rec_no &gt; 24">
+                                                            <td style="font-family: Sakkal Majalla;">
+                                                                <table class="table table-bordered table-sm"
+                                                                       style="table-layout: auto;">
+                                                                    <thead>
+                                                                        <tr style="font-size:11px">
+                                                                            <th class="text-center" colspan="4">
+                                                                                <span t-field="rfq.partner_id.name"/>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr style="font-size:11px">
+                                                                            <th style="text-align:center">UNIT PRICE
+                                                                            </th>
+                                                                            <th style="text-align:center">UOM</th>
+                                                                            <th style="text-align:center">TOTAL</th>
+                                                                            <th style="text-align:center">BRAND</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <t t-set="total" t-value="0"/>
+                                                                    <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                        <tbody>
+                                                                            <tr style="font-size:11px">
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_unit"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.product_uom.name"/>
+                                                                                </td>
+
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_subtotal"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.brand"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <t t-set="total"
+                                                                           t-value="total + rfq_line.price_subtotal"/>
+                                                                    </t>
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="total"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <td style="text-align:center; font-size:11px">
+                                                                            &#160;
+                                                                        </td>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.payment_term_id.name"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.warranty"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+                            <t t-if="total_rfq &gt; 27">
+                                <p style="page-break-before:always;"/>
+                                <br/>
+                                <br/>
+                                <t t-if="orders.comparison_lines">
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: auto; width: 100%;">
+                                        <tr>
+                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:11px">
+                                                            <th style="text-align:center" rowspan="2">S.No.</th>
+                                                            <th style="text-align:center" rowspan="2">DESCRIPTION
+                                                            </th>
+                                                            <th style="text-align:center" rowspan="2">QTY</th>
+                                                            <th style="text-align:center">UOM</th>
+                                                        </tr>
+
+
+                                                    </thead>
+                                                    <t t-set="sr_no" t-value="0"/>
+                                                    <tr style="font-size:11px">
+                                                        <th colspan="4">&#160;</th>
+                                                    </tr>
+                                                    <t t-foreach="o.line_ids" t-as="line">
+                                                        <t t-set="sr_no" t-value="sr_no + 1"/>
+                                                        <tbody>
+                                                            <tr style="font-size:11px">
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="sr_no"/>
+                                                                </td>
+                                                                <td style="text-align:left">
+                                                                    <span t-esc="line.product_id.name"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_qty"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_uom_id.name"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </t>
+
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>TOTAL SAR NET</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>DELIVERY TIME</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>PAYMENT TERMS</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>WARRANTY</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <t t-set="rec_no" t-value="0"/>
+                                            <t t-foreach="orders" t-as="rfq">
+                                                <t t-set="rec_no" t-value="rec_no + 1"/>
+                                                <t t-if="rfq.comparison_lines">
+                                                    <t t-if="o.name == rfq.requisition_id.name">
+                                                        <t t-if="rec_no &lt; 31 and rec_no &gt; 27">
+                                                            <td style="font-family: Sakkal Majalla;">
+                                                                <table class="table table-bordered table-sm"
+                                                                       style="table-layout: auto;">
+                                                                    <thead>
+                                                                        <tr style="font-size:11px">
+                                                                            <th class="text-center" colspan="4">
+                                                                                <span t-field="rfq.partner_id.name"/>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr style="font-size:11px">
+                                                                            <th style="text-align:center">UNIT PRICE
+                                                                            </th>
+                                                                            <th style="text-align:center">UOM</th>
+                                                                            <th style="text-align:center">TOTAL</th>
+                                                                            <th style="text-align:center">BRAND</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <t t-set="total" t-value="0"/>
+                                                                    <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                        <tbody>
+                                                                            <tr style="font-size:11px">
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_unit"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.product_uom.name"/>
+                                                                                </td>
+
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_subtotal"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.brand"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <t t-set="total"
+                                                                           t-value="total + rfq_line.price_subtotal"/>
+                                                                    </t>
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="total"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <td style="text-align:center; font-size:11px">
+                                                                            &#160;
+                                                                        </td>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.payment_term_id.name"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.warranty"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+                            <t t-if="total_rfq &gt; 30">
+                                <p style="page-break-before:always;"/>
+                                <br/>
+                                <br/>
+                                <t t-if="orders.comparison_lines">
+                                    <table class="table table-bordered table-sm"
+                                           style="table-layout: auto; width: 100%;">
+                                        <tr>
+                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:11px">
+                                                            <th style="text-align:center" rowspan="2">S.No.</th>
+                                                            <th style="text-align:center" rowspan="2">DESCRIPTION
+                                                            </th>
+                                                            <th style="text-align:center" rowspan="2">QTY</th>
+                                                            <th style="text-align:center">UOM</th>
+                                                        </tr>
+
+
+                                                    </thead>
+                                                    <t t-set="sr_no" t-value="0"/>
+                                                    <tr style="font-size:11px">
+                                                        <th colspan="4">&#160;</th>
+                                                    </tr>
+                                                    <t t-foreach="o.line_ids" t-as="line">
+                                                        <t t-set="sr_no" t-value="sr_no + 1"/>
+                                                        <tbody>
+                                                            <tr style="font-size:11px">
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="sr_no"/>
+                                                                </td>
+                                                                <td style="text-align:left">
+                                                                    <span t-esc="line.product_id.name"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_qty"/>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <span t-esc="line.product_uom_id.name"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </t>
+
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>TOTAL SAR NET</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>DELIVERY TIME</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>PAYMENT TERMS</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#160;</td>
+                                                        <td style="text-align:right; font-size:12px">
+                                                            <strong>WARRANTY</strong>
+                                                        </td>
+                                                        <td>&#160;</td>
+                                                        <td>&#160;</td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <t t-set="rec_no" t-value="0"/>
+                                            <t t-foreach="orders" t-as="rfq">
+                                                <t t-set="rec_no" t-value="rec_no + 1"/>
+                                                <t t-if="rfq.comparison_lines">
+                                                    <t t-if="o.name == rfq.requisition_id.name">
+                                                        <t t-if="rec_no &lt; 34 and rec_no &gt; 30">
+                                                            <td style="font-family: Sakkal Majalla;">
+                                                                <table class="table table-bordered table-sm"
+                                                                       style="table-layout: auto;">
+                                                                    <thead>
+                                                                        <tr style="font-size:11px">
+                                                                            <th class="text-center" colspan="4">
+                                                                                <span t-field="rfq.partner_id.name"/>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr style="font-size:11px">
+                                                                            <th style="text-align:center">UNIT PRICE
+                                                                            </th>
+                                                                            <th style="text-align:center">UOM</th>
+                                                                            <th style="text-align:center">TOTAL</th>
+                                                                            <th style="text-align:center">BRAND</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <t t-set="total" t-value="0"/>
+                                                                    <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
+                                                                        <tbody>
+                                                                            <tr style="font-size:11px">
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_unit"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.product_uom.name"/>
+                                                                                </td>
+
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.price_subtotal"/>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <span t-esc="rfq_line.brand"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <t t-set="total"
+                                                                           t-value="total + rfq_line.price_subtotal"/>
+                                                                    </t>
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="total"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <td style="text-align:center; font-size:11px">
+                                                                            &#160;
+                                                                        </td>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.payment_term_id.name"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>&#160;</td>
+                                                                        <td>&#160;</td>
+                                                                        <th style="text-align:center; font-size:11px">
+                                                                            <span t-esc="rfq.warranty"/>
+                                                                        </th>
+                                                                        <td>&#160;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </t>
                             </t>
                             <t t-if="not orders.comparison_lines">
                                 <table class="table table-bordered table-sm">

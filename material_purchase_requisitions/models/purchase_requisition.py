@@ -333,14 +333,14 @@ class MaterialPurchaseRequisition(models.Model):
                 email_iruser_template = self.env.ref('material_purchase_requisitions.email_purchase_requisition')
                 employee_mail_template.sudo().send_mail(self.id)
                 email_iruser_template.sudo().send_mail(self.id)
-                flag = False
-                for line in rec.requisition_line_ids:
-                    if line.requisition_type == 'purchase':
-                        flag = True
-                if flag:
-                    rec.state = 'ir_approve'
-                else:
-                    rec.state = 'approve'
+                # flag = False
+                # for line in rec.requisition_line_ids:
+                #     if line.requisition_type == 'purchase':
+                #         flag = True
+                # if flag:
+                #     rec.state = 'ir_approve'
+                # else:
+                rec.state = 'approve'
 
     #                 if rec.requisition_line_ids[0].requisition_type:
     #                     if rec.requisition_line_ids[0].requisition_type == 'internal':

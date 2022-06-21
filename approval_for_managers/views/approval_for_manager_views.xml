@@ -11,6 +11,13 @@
                     <button name="button_approved"
                             type="object"
                             states="approve"
+                            string="Budget Approve"
+                            class="oe_highlight"
+                            groups="material_purchase_requisitions.group_purchase_requisition_user"/>
+
+                    <button name="button_manager"
+                            type="object"
+                            states="manager"
                             string="Approve"
                             class="oe_highlight"
                             groups="purchase.group_purchase_manager"/>
@@ -20,6 +27,13 @@
                     <button name="button_reject"
                             type="object"
                             states="approve"
+                            string="Not Available"
+                            class="oe_highlight"
+                            groups="material_purchase_requisitions.group_purchase_requisition_user"/>
+
+                    <button name="manager_reject"
+                            type="object"
+                            states="manager"
                             string="Reject"
                             class="oe_highlight"
                             groups="purchase.group_purchase_manager"/>

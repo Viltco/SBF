@@ -4,13 +4,23 @@ from odoo import models, fields, api
 from odoo.exceptions import UserError
 
 
+class ResUserInh(models.Model):
+    _inherit = 'res.users'
+
+    @api.model
+    def create(self, vals):
+        record = super(ResUserInh, self).create(vals)
+        record.partner_type = 'customer'
+        return record
+
+
 class ResPartnerInh(models.Model):
     _inherit = 'res.partner'
 
     vat = fields.Char(string='Tax ID', size=15, index=True, help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
     cr_no = fields.Char('CR#', default='', required=True, size=10)
     partner_type = fields.Selection([
-        ('supplier', 'Supplier'), ('customer', 'Customer')],
+        ('supplier', 'Supplier'), ('customer', 'Customer'), ('employee', 'Employee')],
         index=True, required=True, tracking=15)
 
     @api.onchange('cr_no')

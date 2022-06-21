@@ -14,7 +14,7 @@
 """,
     "live_test_url"        :  "",
     "depends"              :  [
-        'sale','purchase','mrp', 'account'
+        'sale','purchase','mrp', 'account', 'material_purchase_requisitions'
     ],
     "data":  [
         # 'security/ir.model.access.csv',
