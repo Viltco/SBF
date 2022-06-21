@@ -20,10 +20,10 @@
                                 <table class="table table-bordered table-sm"
                                        style="table-layout: auto; width: 100%;">
                                     <tr>
-                                        <td width="40%" style="font-family: Sakkal Majalla; font-size:10px">
+                                        <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                             <table class="table table-bordered table-sm">
                                                 <thead>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="font-size:12px; background-color:LightGray">
                                                         <th style="text-align:center" rowspan="2">S.No.</th>
                                                         <th style="text-align:center" rowspan="2">DESCRIPTION
                                                         </th>
@@ -34,7 +34,7 @@
 
                                                 </thead>
                                                 <t t-set="sr_no" t-value="0"/>
-                                                <tr>
+                                                <tr style="background-color:LightGray">
                                                     <th colspan="4">&#160;</th>
                                                 </tr>
                                                 <t t-foreach="o.line_ids" t-as="line">
@@ -58,9 +58,9 @@
                                                     </tbody>
                                                 </t>
 
-                                                <tr>
+                                                <tr style="font-size:12px; background-color:LightGray">
                                                     <td>&#160;</td>
-                                                    <td style="text-align:right;">
+                                                    <td>
                                                         <strong>TOTAL SAR NET</strong>
                                                     </td>
                                                     <td>&#160;</td>
@@ -99,16 +99,16 @@
                                             <t t-if="rfq.comparison_lines">
                                                 <t t-if="o.name == rfq.requisition_id.name">
                                                     <t t-if="rec_no &lt; 4">
-                                                        <td style="font-family: Sakkal Majalla; font-size:10px">
+                                                        <td style="font-family: Sakkal Majalla; font-size:12px">
                                                             <table class="table table-bordered table-sm"
                                                                    style="table-layout: auto;">
                                                                 <thead>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <th class="text-center" colspan="4">
                                                                             <span t-field="rfq.partner_id.name"/>
                                                                         </th>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <th style="text-align:center">UNIT PRICE
                                                                         </th>
                                                                         <th style="text-align:center">UOM</th>
@@ -119,7 +119,7 @@
                                                                 <t t-set="total" t-value="0"/>
                                                                 <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                     <tbody>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr>
                                                                             <td style="text-align:center">
                                                                                 <span t-esc="rfq_line.price_unit"/>
                                                                             </td>
@@ -138,7 +138,7 @@
                                                                     <t t-set="total"
                                                                        t-value="total + rfq_line.price_subtotal"/>
                                                                 </t>
-                                                                <tr>
+                                                                <tr style="font-size:12px; background-color:LightGray">
                                                                     <td>&#160;</td>
                                                                     <td>&#160;</td>
                                                                     <th style="text-align:center;">
@@ -148,29 +148,31 @@
                                                                 </tr>
 
                                                                 <tr>
+                                                                    <td>&#160;</td>
+                                                                    <td>&#160;</td>
                                                                     <td style="text-align:center;">
                                                                         &#160;
                                                                     </td>
                                                                     <td>&#160;</td>
-                                                                    <td>&#160;</td>
-                                                                    <td>&#160;</td>
                                                                 </tr>
 
                                                                 <tr>
+
+                                                                    <td>&#160;</td>
+                                                                    <td>&#160;</td>
                                                                     <th style="text-align:center;">
                                                                         <span t-esc="rfq.payment_term_id.name"/>
                                                                     </th>
                                                                     <td>&#160;</td>
-                                                                    <td>&#160;</td>
-                                                                    <td>&#160;</td>
                                                                 </tr>
 
                                                                 <tr>
+
+                                                                    <td>&#160;</td>
+                                                                    <td>&#160;</td>
                                                                     <th style="text-align:center;">
                                                                         <span t-esc="rfq.warranty"/>
                                                                     </th>
-                                                                    <td>&#160;</td>
-                                                                    <td>&#160;</td>
                                                                     <td>&#160;</td>
                                                                 </tr>
                                                             </table>
@@ -190,10 +192,10 @@
                                     <table class="table table-bordered table-sm"
                                            style="table-layout: auto; width: 100%;">
                                         <tr>
-                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                            <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                                 <table class="table table-bordered table-sm">
                                                     <thead>
-                                                        <tr style="font-size:11px">
+                                                        <tr style="font-size:12px;background-color:LightGray">
                                                             <th style="text-align:center" rowspan="2">S.No.</th>
                                                             <th style="text-align:center" rowspan="2">DESCRIPTION
                                                             </th>
@@ -204,13 +206,13 @@
 
                                                     </thead>
                                                     <t t-set="sr_no" t-value="0"/>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="background-color:LightGray">
                                                         <th colspan="4">&#160;</th>
                                                     </tr>
                                                     <t t-foreach="o.line_ids" t-as="line">
                                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                                         <tbody>
-                                                            <tr style="font-size:11px">
+                                                            <tr>
                                                                 <td style="text-align:center">
                                                                     <span t-esc="sr_no"/>
                                                                 </td>
@@ -228,9 +230,9 @@
                                                         </tbody>
                                                     </t>
 
-                                                    <tr>
+                                                    <tr style="font-size:12px; background-color:LightGray">
                                                         <td>&#160;</td>
-                                                        <td style="text-align:right; font-size:12px">
+                                                        <td>
                                                             <strong>TOTAL SAR NET</strong>
                                                         </td>
                                                         <td>&#160;</td>
@@ -269,16 +271,16 @@
                                                 <t t-if="rfq.comparison_lines">
                                                     <t t-if="o.name == rfq.requisition_id.name">
                                                         <t t-if="rec_no &lt; 7 and rec_no &gt; 3">
-                                                            <td style="font-family: Sakkal Majalla;">
+                                                            <td style="font-family: Sakkal Majalla; font-size:12px">
                                                                 <table class="table table-bordered table-sm"
                                                                        style="table-layout: auto;">
                                                                     <thead>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th class="text-center" colspan="4">
                                                                                 <span t-field="rfq.partner_id.name"/>
                                                                             </th>
                                                                         </tr>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th style="text-align:center">UNIT PRICE
                                                                             </th>
                                                                             <th style="text-align:center">UOM</th>
@@ -289,7 +291,7 @@
                                                                     <t t-set="total" t-value="0"/>
                                                                     <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                         <tbody>
-                                                                            <tr style="font-size:11px">
+                                                                            <tr>
                                                                                 <td style="text-align:center">
                                                                                     <span t-esc="rfq_line.price_unit"/>
                                                                                 </td>
@@ -308,10 +310,10 @@
                                                                         <t t-set="total"
                                                                            t-value="total + rfq_line.price_subtotal"/>
                                                                     </t>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="total"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -320,7 +322,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <td style="text-align:center; font-size:11px">
+                                                                        <td style="text-align:center;">
                                                                             &#160;
                                                                         </td>
                                                                         <td>&#160;</td>
@@ -329,7 +331,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.payment_term_id.name"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -338,7 +340,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.warranty"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -361,10 +363,10 @@
                                     <table class="table table-bordered table-sm"
                                            style="table-layout: auto; width: 100%;">
                                         <tr>
-                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                            <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                                 <table class="table table-bordered table-sm">
                                                     <thead>
-                                                        <tr style="font-size:11px">
+                                                        <tr style="font-size:12px;background-color:LightGray">
                                                             <th style="text-align:center" rowspan="2">S.No.</th>
                                                             <th style="text-align:center" rowspan="2">DESCRIPTION
                                                             </th>
@@ -375,13 +377,13 @@
 
                                                     </thead>
                                                     <t t-set="sr_no" t-value="0"/>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="background-color:LightGray">
                                                         <th colspan="4">&#160;</th>
                                                     </tr>
                                                     <t t-foreach="o.line_ids" t-as="line">
                                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                                         <tbody>
-                                                            <tr style="font-size:11px">
+                                                            <tr>
                                                                 <td style="text-align:center">
                                                                     <span t-esc="sr_no"/>
                                                                 </td>
@@ -399,9 +401,9 @@
                                                         </tbody>
                                                     </t>
 
-                                                    <tr>
+                                                    <tr style="font-size:12px; background-color:LightGray">
                                                         <td>&#160;</td>
-                                                        <td style="text-align:right; font-size:12px">
+                                                        <td style="font-size:12px; background-color:LightGray">
                                                             <strong>TOTAL SAR NET</strong>
                                                         </td>
                                                         <td>&#160;</td>
@@ -440,16 +442,16 @@
                                                 <t t-if="rfq.comparison_lines">
                                                     <t t-if="o.name == rfq.requisition_id.name">
                                                         <t t-if="rec_no &lt; 10 and rec_no &gt; 6">
-                                                            <td style="font-family: Sakkal Majalla;">
+                                                            <td style="font-family: Sakkal Majalla; font-size:12px">
                                                                 <table class="table table-bordered table-sm"
                                                                        style="table-layout: auto;">
                                                                     <thead>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th class="text-center" colspan="4">
                                                                                 <span t-field="rfq.partner_id.name"/>
                                                                             </th>
                                                                         </tr>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th style="text-align:center">UNIT PRICE
                                                                             </th>
                                                                             <th style="text-align:center">UOM</th>
@@ -460,7 +462,7 @@
                                                                     <t t-set="total" t-value="0"/>
                                                                     <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                         <tbody>
-                                                                            <tr style="font-size:11px">
+                                                                            <tr>
                                                                                 <td style="text-align:center">
                                                                                     <span t-esc="rfq_line.price_unit"/>
                                                                                 </td>
@@ -479,10 +481,10 @@
                                                                         <t t-set="total"
                                                                            t-value="total + rfq_line.price_subtotal"/>
                                                                     </t>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="total"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -491,7 +493,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <td style="text-align:center; font-size:11px">
+                                                                        <td style="text-align:center;">
                                                                             &#160;
                                                                         </td>
                                                                         <td>&#160;</td>
@@ -500,7 +502,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.payment_term_id.name"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -509,7 +511,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.warranty"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -532,10 +534,10 @@
                                     <table class="table table-bordered table-sm"
                                            style="table-layout: auto; width: 100%;">
                                         <tr>
-                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                            <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                                 <table class="table table-bordered table-sm">
                                                     <thead>
-                                                        <tr style="font-size:11px">
+                                                        <tr style="font-size:12px;background-color:LightGray">
                                                             <th style="text-align:center" rowspan="2">S.No.</th>
                                                             <th style="text-align:center" rowspan="2">DESCRIPTION
                                                             </th>
@@ -546,13 +548,13 @@
 
                                                     </thead>
                                                     <t t-set="sr_no" t-value="0"/>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="background-color:LightGray">
                                                         <th colspan="4">&#160;</th>
                                                     </tr>
                                                     <t t-foreach="o.line_ids" t-as="line">
                                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                                         <tbody>
-                                                            <tr style="font-size:11px">
+                                                            <tr>
                                                                 <td style="text-align:center">
                                                                     <span t-esc="sr_no"/>
                                                                 </td>
@@ -570,9 +572,9 @@
                                                         </tbody>
                                                     </t>
 
-                                                    <tr>
+                                                    <tr style="font-size:12px; background-color:LightGray">
                                                         <td>&#160;</td>
-                                                        <td style="text-align:right; font-size:12px">
+                                                        <td style="font-size:12px; background-color:LightGray">
                                                             <strong>TOTAL SAR NET</strong>
                                                         </td>
                                                         <td>&#160;</td>
@@ -611,16 +613,16 @@
                                                 <t t-if="rfq.comparison_lines">
                                                     <t t-if="o.name == rfq.requisition_id.name">
                                                         <t t-if="rec_no &lt; 13 and rec_no &gt; 9">
-                                                            <td style="font-family: Sakkal Majalla;">
+                                                            <td style="font-family: Sakkal Majalla; font-size:12px">
                                                                 <table class="table table-bordered table-sm"
                                                                        style="table-layout: auto;">
                                                                     <thead>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th class="text-center" colspan="4">
                                                                                 <span t-field="rfq.partner_id.name"/>
                                                                             </th>
                                                                         </tr>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th style="text-align:center">UNIT PRICE
                                                                             </th>
                                                                             <th style="text-align:center">UOM</th>
@@ -631,7 +633,7 @@
                                                                     <t t-set="total" t-value="0"/>
                                                                     <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                         <tbody>
-                                                                            <tr style="font-size:11px">
+                                                                            <tr>
                                                                                 <td style="text-align:center">
                                                                                     <span t-esc="rfq_line.price_unit"/>
                                                                                 </td>
@@ -650,10 +652,10 @@
                                                                         <t t-set="total"
                                                                            t-value="total + rfq_line.price_subtotal"/>
                                                                     </t>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="total"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -662,7 +664,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <td style="text-align:center; font-size:11px">
+                                                                        <td style="text-align:center;">
                                                                             &#160;
                                                                         </td>
                                                                         <td>&#160;</td>
@@ -671,7 +673,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.payment_term_id.name"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -680,7 +682,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.warranty"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -703,10 +705,10 @@
                                     <table class="table table-bordered table-sm"
                                            style="table-layout: auto; width: 100%;">
                                         <tr>
-                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                            <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                                 <table class="table table-bordered table-sm">
                                                     <thead>
-                                                        <tr style="font-size:11px">
+                                                        <tr style="font-size:12px;background-color:LightGray">
                                                             <th style="text-align:center" rowspan="2">S.No.</th>
                                                             <th style="text-align:center" rowspan="2">DESCRIPTION
                                                             </th>
@@ -717,13 +719,13 @@
 
                                                     </thead>
                                                     <t t-set="sr_no" t-value="0"/>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="background-color:LightGray">
                                                         <th colspan="4">&#160;</th>
                                                     </tr>
                                                     <t t-foreach="o.line_ids" t-as="line">
                                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                                         <tbody>
-                                                            <tr style="font-size:11px">
+                                                            <tr>
                                                                 <td style="text-align:center">
                                                                     <span t-esc="sr_no"/>
                                                                 </td>
@@ -741,9 +743,9 @@
                                                         </tbody>
                                                     </t>
 
-                                                    <tr>
+                                                    <tr style="font-size:12px; background-color:LightGray">
                                                         <td>&#160;</td>
-                                                        <td style="text-align:right; font-size:12px">
+                                                        <td style="font-size:12px; background-color:LightGray">
                                                             <strong>TOTAL SAR NET</strong>
                                                         </td>
                                                         <td>&#160;</td>
@@ -782,16 +784,16 @@
                                                 <t t-if="rfq.comparison_lines">
                                                     <t t-if="o.name == rfq.requisition_id.name">
                                                         <t t-if="rec_no &lt; 16 and rec_no &gt; 12">
-                                                            <td style="font-family: Sakkal Majalla;">
+                                                            <td style="font-family: Sakkal Majalla; font-size:12px">
                                                                 <table class="table table-bordered table-sm"
                                                                        style="table-layout: auto;">
                                                                     <thead>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th class="text-center" colspan="4">
                                                                                 <span t-field="rfq.partner_id.name"/>
                                                                             </th>
                                                                         </tr>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th style="text-align:center">UNIT PRICE
                                                                             </th>
                                                                             <th style="text-align:center">UOM</th>
@@ -802,7 +804,7 @@
                                                                     <t t-set="total" t-value="0"/>
                                                                     <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                         <tbody>
-                                                                            <tr style="font-size:11px">
+                                                                            <tr>
                                                                                 <td style="text-align:center">
                                                                                     <span t-esc="rfq_line.price_unit"/>
                                                                                 </td>
@@ -821,10 +823,10 @@
                                                                         <t t-set="total"
                                                                            t-value="total + rfq_line.price_subtotal"/>
                                                                     </t>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="total"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -833,7 +835,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <td style="text-align:center; font-size:11px">
+                                                                        <td style="text-align:center;">
                                                                             &#160;
                                                                         </td>
                                                                         <td>&#160;</td>
@@ -842,7 +844,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.payment_term_id.name"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -851,7 +853,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.warranty"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -874,10 +876,10 @@
                                     <table class="table table-bordered table-sm"
                                            style="table-layout: auto; width: 100%;">
                                         <tr>
-                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                            <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                                 <table class="table table-bordered table-sm">
                                                     <thead>
-                                                        <tr style="font-size:11px">
+                                                        <tr style="font-size:12px;background-color:LightGray">
                                                             <th style="text-align:center" rowspan="2">S.No.</th>
                                                             <th style="text-align:center" rowspan="2">DESCRIPTION
                                                             </th>
@@ -888,13 +890,13 @@
 
                                                     </thead>
                                                     <t t-set="sr_no" t-value="0"/>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="background-color:LightGray">
                                                         <th colspan="4">&#160;</th>
                                                     </tr>
                                                     <t t-foreach="o.line_ids" t-as="line">
                                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                                         <tbody>
-                                                            <tr style="font-size:11px">
+                                                            <tr>
                                                                 <td style="text-align:center">
                                                                     <span t-esc="sr_no"/>
                                                                 </td>
@@ -912,9 +914,9 @@
                                                         </tbody>
                                                     </t>
 
-                                                    <tr>
+                                                    <tr style="font-size:12px; background-color:LightGray">
                                                         <td>&#160;</td>
-                                                        <td style="text-align:right; font-size:12px">
+                                                        <td style="font-size:12px; background-color:LightGray">
                                                             <strong>TOTAL SAR NET</strong>
                                                         </td>
                                                         <td>&#160;</td>
@@ -953,16 +955,16 @@
                                                 <t t-if="rfq.comparison_lines">
                                                     <t t-if="o.name == rfq.requisition_id.name">
                                                         <t t-if="rec_no &lt; 19 and rec_no &gt; 15">
-                                                            <td style="font-family: Sakkal Majalla;">
+                                                            <td style="font-family: Sakkal Majalla; font-size:12px">
                                                                 <table class="table table-bordered table-sm"
                                                                        style="table-layout: auto;">
                                                                     <thead>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th class="text-center" colspan="4">
                                                                                 <span t-field="rfq.partner_id.name"/>
                                                                             </th>
                                                                         </tr>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th style="text-align:center">UNIT PRICE
                                                                             </th>
                                                                             <th style="text-align:center">UOM</th>
@@ -973,7 +975,7 @@
                                                                     <t t-set="total" t-value="0"/>
                                                                     <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                         <tbody>
-                                                                            <tr style="font-size:11px">
+                                                                            <tr>
                                                                                 <td style="text-align:center">
                                                                                     <span t-esc="rfq_line.price_unit"/>
                                                                                 </td>
@@ -992,10 +994,10 @@
                                                                         <t t-set="total"
                                                                            t-value="total + rfq_line.price_subtotal"/>
                                                                     </t>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="total"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1004,7 +1006,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <td style="text-align:center; font-size:11px">
+                                                                        <td style="text-align:center;">
                                                                             &#160;
                                                                         </td>
                                                                         <td>&#160;</td>
@@ -1013,7 +1015,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.payment_term_id.name"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1022,7 +1024,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.warranty"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1045,10 +1047,10 @@
                                     <table class="table table-bordered table-sm"
                                            style="table-layout: auto; width: 100%;">
                                         <tr>
-                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                            <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                                 <table class="table table-bordered table-sm">
                                                     <thead>
-                                                        <tr style="font-size:11px">
+                                                        <tr style="font-size:12px;background-color:LightGray">
                                                             <th style="text-align:center" rowspan="2">S.No.</th>
                                                             <th style="text-align:center" rowspan="2">DESCRIPTION
                                                             </th>
@@ -1059,13 +1061,13 @@
 
                                                     </thead>
                                                     <t t-set="sr_no" t-value="0"/>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="background-color:LightGray">
                                                         <th colspan="4">&#160;</th>
                                                     </tr>
                                                     <t t-foreach="o.line_ids" t-as="line">
                                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                                         <tbody>
-                                                            <tr style="font-size:11px">
+                                                            <tr>
                                                                 <td style="text-align:center">
                                                                     <span t-esc="sr_no"/>
                                                                 </td>
@@ -1083,9 +1085,9 @@
                                                         </tbody>
                                                     </t>
 
-                                                    <tr>
+                                                    <tr style="font-size:12px; background-color:LightGray">
                                                         <td>&#160;</td>
-                                                        <td style="text-align:right; font-size:12px">
+                                                        <td style="font-size:12px; background-color:LightGray">
                                                             <strong>TOTAL SAR NET</strong>
                                                         </td>
                                                         <td>&#160;</td>
@@ -1124,16 +1126,16 @@
                                                 <t t-if="rfq.comparison_lines">
                                                     <t t-if="o.name == rfq.requisition_id.name">
                                                         <t t-if="rec_no &lt; 22 and rec_no &gt; 18">
-                                                            <td style="font-family: Sakkal Majalla;">
+                                                            <td stylestyle="font-family: Sakkal Majalla; font-size:12px">
                                                                 <table class="table table-bordered table-sm"
                                                                        style="table-layout: auto;">
                                                                     <thead>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th class="text-center" colspan="4">
                                                                                 <span t-field="rfq.partner_id.name"/>
                                                                             </th>
                                                                         </tr>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th style="text-align:center">UNIT PRICE
                                                                             </th>
                                                                             <th style="text-align:center">UOM</th>
@@ -1144,7 +1146,7 @@
                                                                     <t t-set="total" t-value="0"/>
                                                                     <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                         <tbody>
-                                                                            <tr style="font-size:11px">
+                                                                            <tr>
                                                                                 <td style="text-align:center">
                                                                                     <span t-esc="rfq_line.price_unit"/>
                                                                                 </td>
@@ -1163,10 +1165,10 @@
                                                                         <t t-set="total"
                                                                            t-value="total + rfq_line.price_subtotal"/>
                                                                     </t>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="total"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1175,7 +1177,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <td style="text-align:center; font-size:11px">
+                                                                        <td style="text-align:center;">
                                                                             &#160;
                                                                         </td>
                                                                         <td>&#160;</td>
@@ -1184,7 +1186,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.payment_term_id.name"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1193,7 +1195,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.warranty"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1216,10 +1218,10 @@
                                     <table class="table table-bordered table-sm"
                                            style="table-layout: auto; width: 100%;">
                                         <tr>
-                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                            <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                                 <table class="table table-bordered table-sm">
                                                     <thead>
-                                                        <tr style="font-size:11px">
+                                                        <tr style="font-size:12px;background-color:LightGray">
                                                             <th style="text-align:center" rowspan="2">S.No.</th>
                                                             <th style="text-align:center" rowspan="2">DESCRIPTION
                                                             </th>
@@ -1230,13 +1232,13 @@
 
                                                     </thead>
                                                     <t t-set="sr_no" t-value="0"/>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="background-color:LightGray">
                                                         <th colspan="4">&#160;</th>
                                                     </tr>
                                                     <t t-foreach="o.line_ids" t-as="line">
                                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                                         <tbody>
-                                                            <tr style="font-size:11px">
+                                                            <tr>
                                                                 <td style="text-align:center">
                                                                     <span t-esc="sr_no"/>
                                                                 </td>
@@ -1254,9 +1256,9 @@
                                                         </tbody>
                                                     </t>
 
-                                                    <tr>
+                                                    <tr style="font-size:12px; background-color:LightGray">
                                                         <td>&#160;</td>
-                                                        <td style="text-align:right; font-size:12px">
+                                                        <td style="font-size:12px; background-color:LightGray">
                                                             <strong>TOTAL SAR NET</strong>
                                                         </td>
                                                         <td>&#160;</td>
@@ -1295,16 +1297,16 @@
                                                 <t t-if="rfq.comparison_lines">
                                                     <t t-if="o.name == rfq.requisition_id.name">
                                                         <t t-if="rec_no &lt; 25 and rec_no &gt; 21">
-                                                            <td style="font-family: Sakkal Majalla;">
+                                                            <td style="font-family: Sakkal Majalla; font-size:12px">
                                                                 <table class="table table-bordered table-sm"
                                                                        style="table-layout: auto;">
                                                                     <thead>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th class="text-center" colspan="4">
                                                                                 <span t-field="rfq.partner_id.name"/>
                                                                             </th>
                                                                         </tr>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th style="text-align:center">UNIT PRICE
                                                                             </th>
                                                                             <th style="text-align:center">UOM</th>
@@ -1315,7 +1317,7 @@
                                                                     <t t-set="total" t-value="0"/>
                                                                     <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                         <tbody>
-                                                                            <tr style="font-size:11px">
+                                                                            <tr>
                                                                                 <td style="text-align:center">
                                                                                     <span t-esc="rfq_line.price_unit"/>
                                                                                 </td>
@@ -1334,10 +1336,10 @@
                                                                         <t t-set="total"
                                                                            t-value="total + rfq_line.price_subtotal"/>
                                                                     </t>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="total"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1346,7 +1348,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <td style="text-align:center; font-size:11px">
+                                                                        <td style="text-align:center;">
                                                                             &#160;
                                                                         </td>
                                                                         <td>&#160;</td>
@@ -1355,7 +1357,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.payment_term_id.name"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1364,7 +1366,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.warranty"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1387,10 +1389,10 @@
                                     <table class="table table-bordered table-sm"
                                            style="table-layout: auto; width: 100%;">
                                         <tr>
-                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                            <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                                 <table class="table table-bordered table-sm">
                                                     <thead>
-                                                        <tr style="font-size:11px">
+                                                        <tr style="font-size:12px;background-color:LightGray">
                                                             <th style="text-align:center" rowspan="2">S.No.</th>
                                                             <th style="text-align:center" rowspan="2">DESCRIPTION
                                                             </th>
@@ -1401,13 +1403,13 @@
 
                                                     </thead>
                                                     <t t-set="sr_no" t-value="0"/>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="background-color:LightGray">
                                                         <th colspan="4">&#160;</th>
                                                     </tr>
                                                     <t t-foreach="o.line_ids" t-as="line">
                                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                                         <tbody>
-                                                            <tr style="font-size:11px">
+                                                            <tr>
                                                                 <td style="text-align:center">
                                                                     <span t-esc="sr_no"/>
                                                                 </td>
@@ -1425,9 +1427,9 @@
                                                         </tbody>
                                                     </t>
 
-                                                    <tr>
+                                                    <tr style="font-size:12px; background-color:LightGray">
                                                         <td>&#160;</td>
-                                                        <td style="text-align:right; font-size:12px">
+                                                        <td style="font-size:12px; background-color:LightGray">
                                                             <strong>TOTAL SAR NET</strong>
                                                         </td>
                                                         <td>&#160;</td>
@@ -1466,16 +1468,16 @@
                                                 <t t-if="rfq.comparison_lines">
                                                     <t t-if="o.name == rfq.requisition_id.name">
                                                         <t t-if="rec_no &lt; 28 and rec_no &gt; 24">
-                                                            <td style="font-family: Sakkal Majalla;">
+                                                            <td style="font-family: Sakkal Majalla; font-size:12px">
                                                                 <table class="table table-bordered table-sm"
                                                                        style="table-layout: auto;">
                                                                     <thead>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th class="text-center" colspan="4">
                                                                                 <span t-field="rfq.partner_id.name"/>
                                                                             </th>
                                                                         </tr>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th style="text-align:center">UNIT PRICE
                                                                             </th>
                                                                             <th style="text-align:center">UOM</th>
@@ -1486,7 +1488,7 @@
                                                                     <t t-set="total" t-value="0"/>
                                                                     <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                         <tbody>
-                                                                            <tr style="font-size:11px">
+                                                                            <tr>
                                                                                 <td style="text-align:center">
                                                                                     <span t-esc="rfq_line.price_unit"/>
                                                                                 </td>
@@ -1505,10 +1507,10 @@
                                                                         <t t-set="total"
                                                                            t-value="total + rfq_line.price_subtotal"/>
                                                                     </t>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="total"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1517,7 +1519,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <td style="text-align:center; font-size:11px">
+                                                                        <td style="text-align:center;">
                                                                             &#160;
                                                                         </td>
                                                                         <td>&#160;</td>
@@ -1526,7 +1528,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.payment_term_id.name"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1535,7 +1537,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.warranty"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1558,10 +1560,10 @@
                                     <table class="table table-bordered table-sm"
                                            style="table-layout: auto; width: 100%;">
                                         <tr>
-                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                            <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                                 <table class="table table-bordered table-sm">
                                                     <thead>
-                                                        <tr style="font-size:11px">
+                                                        <tr style="font-size:12px;background-color:LightGray">
                                                             <th style="text-align:center" rowspan="2">S.No.</th>
                                                             <th style="text-align:center" rowspan="2">DESCRIPTION
                                                             </th>
@@ -1572,13 +1574,13 @@
 
                                                     </thead>
                                                     <t t-set="sr_no" t-value="0"/>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="background-color:LightGray">
                                                         <th colspan="4">&#160;</th>
                                                     </tr>
                                                     <t t-foreach="o.line_ids" t-as="line">
                                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                                         <tbody>
-                                                            <tr style="font-size:11px">
+                                                            <tr>
                                                                 <td style="text-align:center">
                                                                     <span t-esc="sr_no"/>
                                                                 </td>
@@ -1596,9 +1598,9 @@
                                                         </tbody>
                                                     </t>
 
-                                                    <tr>
+                                                    <tr style="font-size:12px; background-color:LightGray">
                                                         <td>&#160;</td>
-                                                        <td style="text-align:right; font-size:12px">
+                                                        <td style="font-size:12px; background-color:LightGray">
                                                             <strong>TOTAL SAR NET</strong>
                                                         </td>
                                                         <td>&#160;</td>
@@ -1637,16 +1639,16 @@
                                                 <t t-if="rfq.comparison_lines">
                                                     <t t-if="o.name == rfq.requisition_id.name">
                                                         <t t-if="rec_no &lt; 31 and rec_no &gt; 27">
-                                                            <td style="font-family: Sakkal Majalla;">
+                                                            <td style="font-family: Sakkal Majalla; font-size:12px">
                                                                 <table class="table table-bordered table-sm"
                                                                        style="table-layout: auto;">
                                                                     <thead>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th class="text-center" colspan="4">
                                                                                 <span t-field="rfq.partner_id.name"/>
                                                                             </th>
                                                                         </tr>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th style="text-align:center">UNIT PRICE
                                                                             </th>
                                                                             <th style="text-align:center">UOM</th>
@@ -1657,7 +1659,7 @@
                                                                     <t t-set="total" t-value="0"/>
                                                                     <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                         <tbody>
-                                                                            <tr style="font-size:11px">
+                                                                            <tr>
                                                                                 <td style="text-align:center">
                                                                                     <span t-esc="rfq_line.price_unit"/>
                                                                                 </td>
@@ -1676,10 +1678,10 @@
                                                                         <t t-set="total"
                                                                            t-value="total + rfq_line.price_subtotal"/>
                                                                     </t>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="total"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1688,7 +1690,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <td style="text-align:center; font-size:11px">
+                                                                        <td style="text-align:center;">
                                                                             &#160;
                                                                         </td>
                                                                         <td>&#160;</td>
@@ -1697,7 +1699,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.payment_term_id.name"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1706,7 +1708,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.warranty"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1729,10 +1731,10 @@
                                     <table class="table table-bordered table-sm"
                                            style="table-layout: auto; width: 100%;">
                                         <tr>
-                                            <td width="30%" style="font-family: Sakkal Majalla;">
+                                            <td width="30%" style="font-family: Sakkal Majalla; font-size:12px">
                                                 <table class="table table-bordered table-sm">
                                                     <thead>
-                                                        <tr style="font-size:11px">
+                                                        <tr style="font-size:12px;background-color:LightGray">
                                                             <th style="text-align:center" rowspan="2">S.No.</th>
                                                             <th style="text-align:center" rowspan="2">DESCRIPTION
                                                             </th>
@@ -1743,13 +1745,13 @@
 
                                                     </thead>
                                                     <t t-set="sr_no" t-value="0"/>
-                                                    <tr style="font-size:11px">
+                                                    <tr style="background-color:LightGray">
                                                         <th colspan="4">&#160;</th>
                                                     </tr>
                                                     <t t-foreach="o.line_ids" t-as="line">
                                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                                         <tbody>
-                                                            <tr style="font-size:11px">
+                                                            <tr>
                                                                 <td style="text-align:center">
                                                                     <span t-esc="sr_no"/>
                                                                 </td>
@@ -1767,9 +1769,9 @@
                                                         </tbody>
                                                     </t>
 
-                                                    <tr>
+                                                    <tr  style="font-size:12px; background-color:LightGray">
                                                         <td>&#160;</td>
-                                                        <td style="text-align:right; font-size:12px">
+                                                        <td>
                                                             <strong>TOTAL SAR NET</strong>
                                                         </td>
                                                         <td>&#160;</td>
@@ -1808,16 +1810,16 @@
                                                 <t t-if="rfq.comparison_lines">
                                                     <t t-if="o.name == rfq.requisition_id.name">
                                                         <t t-if="rec_no &lt; 34 and rec_no &gt; 30">
-                                                            <td style="font-family: Sakkal Majalla;">
+                                                            <td style="font-family: Sakkal Majalla; font-size:12px">
                                                                 <table class="table table-bordered table-sm"
                                                                        style="table-layout: auto;">
                                                                     <thead>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th class="text-center" colspan="4">
                                                                                 <span t-field="rfq.partner_id.name"/>
                                                                             </th>
                                                                         </tr>
-                                                                        <tr style="font-size:11px">
+                                                                        <tr style="font-size:12px; background-color:LightGray">
                                                                             <th style="text-align:center">UNIT PRICE
                                                                             </th>
                                                                             <th style="text-align:center">UOM</th>
@@ -1828,7 +1830,7 @@
                                                                     <t t-set="total" t-value="0"/>
                                                                     <t t-foreach="rfq.comparison_lines" t-as="rfq_line">
                                                                         <tbody>
-                                                                            <tr style="font-size:11px">
+                                                                            <tr>
                                                                                 <td style="text-align:center">
                                                                                     <span t-esc="rfq_line.price_unit"/>
                                                                                 </td>
@@ -1847,10 +1849,10 @@
                                                                         <t t-set="total"
                                                                            t-value="total + rfq_line.price_subtotal"/>
                                                                     </t>
-                                                                    <tr>
+                                                                    <tr style="font-size:12px; background-color:LightGray">
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="total"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1859,7 +1861,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <td style="text-align:center; font-size:11px">
+                                                                        <td style="text-align:center;">
                                                                             &#160;
                                                                         </td>
                                                                         <td>&#160;</td>
@@ -1868,7 +1870,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.payment_term_id.name"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1877,7 +1879,7 @@
                                                                     <tr>
                                                                         <td>&#160;</td>
                                                                         <td>&#160;</td>
-                                                                        <th style="text-align:center; font-size:11px">
+                                                                        <th style="text-align:center;">
                                                                             <span t-esc="rfq.warranty"/>
                                                                         </th>
                                                                         <td>&#160;</td>
@@ -1895,7 +1897,7 @@
                             <t t-if="not orders.comparison_lines">
                                 <table class="table table-bordered table-sm">
                                     <thead>
-                                        <tr style="font-size:11px">
+                                        <tr style="font-size:12px;background-color:LightGray">
                                             <th style="text-align:center">S.No.</th>
                                             <th style="text-align:center">DESCRIPTION
                                             </th>
@@ -1910,7 +1912,7 @@
                                     <t t-foreach="o.line_ids" t-as="line">
                                         <t t-set="sr_no" t-value="sr_no + 1"/>
                                         <tbody>
-                                            <tr style="font-size:11px">
+                                            <tr>
                                                 <td style="text-align:center">
                                                     <span t-esc="sr_no"/>
                                                 </td>
