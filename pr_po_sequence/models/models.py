@@ -41,10 +41,11 @@ class POInherit(models.Model):
     def create(self, vals):
         res = super(POInherit, self).create(vals)
         pos = str(self.env['ir.sequence'].next_by_code('purchase.sequence'))
+        print(pos)
         pre = str(res.name[:4])
         record = self.env['res.users'].browse(vals['user_id'])
         dept = str(record.department_id.dept_code)
-        new_name = (pre + '2' + dept + pos)
+        new_name = (pre + '2' + dept + pos[-3:])
         res.update({
             'name': new_name
         })
