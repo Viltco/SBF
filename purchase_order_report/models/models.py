@@ -18,7 +18,7 @@ class PurchaseOrderReport(models.Model):
         ('by_road', 'By Road'),
         ('by_air', 'By Air'),
         ('by_sea', 'By Sea')],
-        string='Shipment Mode', default="o1", tracking=True)
+        string='Shipment Mode', default="by_road", tracking=True)
 
     def button_draft(self):
         self.rev = self.rev + 1
