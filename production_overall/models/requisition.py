@@ -99,9 +99,10 @@ class MaterialPurchaseRequisitionInh(models.Model):
             raise UserError('Please Select Vendor.')
 
     def manager_approve(self):
-        for line in self.requisition_line_ids:
-            if line.requisition_type != 'False':
-                line.requisition_type = self.requisition_type
+        if self.requisition_type:
+            for line in self.requisition_line_ids:
+                if line.requisition_type != 'False':
+                    line.requisition_type = self.requisition_type
         return super(MaterialPurchaseRequisitionInh, self).manager_approve()
 
     # def action_get_components(self):

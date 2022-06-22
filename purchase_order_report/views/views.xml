@@ -9,10 +9,18 @@
 
                 <xpath expr="//field[@name='partner_ref']" position="after">
                     <field name="attn" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                    <field name="rev" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+<!--                    <field name="rev" attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
                     <field name="iso_ref" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                    <field name="rev_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+<!--                    <field name="rev_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
                     <field name="shipment_mode" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='fiscal_position_id']" position="after">
+<!--                    <field name="attn" attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
+                    <field name="rev" readonly="1"/>
+<!--                    <field name="iso_ref" attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
+                    <field name="rev_date" readonly="1"/>
+<!--                    <field name="shipment_mode" attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
                 </xpath>
 
                 <xpath expr="//notebook/page[@name='purchase_delivery_invoice']" position="after">

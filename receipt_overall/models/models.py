@@ -92,8 +92,18 @@ class PurchaseOrderInh(models.Model):
             }))
         self.comparison_lines = product_list
 
-    def button_approved(self):
-        record = super(PurchaseOrderInh, self).button_approved()
+    def button_cancel(self):
+        record = super(PurchaseOrderInh, self).button_cancel()
+        for order in self:
+            for picking in order.picking_ids:
+                if picking.state == 'done':
+                    raise UserError('You cannot cancel this purchase order since partial receipt have been made.')
+                if picking.state != 'done':
+                    picking.action_cancel()
+        return record
+
+    def button_manager(self):
+        record = super(PurchaseOrderInh, self).button_manager()
         for order in self:
             for picking in order.picking_ids:
                 picking.do_unreserve()

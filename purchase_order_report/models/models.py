@@ -15,8 +15,9 @@ class PurchaseOrderReport(models.Model):
     special_instruction = fields.Char('Special Instructions')
     special_terms = fields.Text('Special Terms')
     shipment_mode = fields.Selection([
-        ('o1', 'Option 1'),
-        ('o2', 'Option 2')],
+        ('by_road', 'By Road'),
+        ('by_air', 'By Air'),
+        ('by_sea', 'By Sea')],
         string='Shipment Mode', default="o1", tracking=True)
 
     def button_draft(self):
