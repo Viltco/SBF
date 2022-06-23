@@ -11,12 +11,20 @@
                 <button string="Add Components" type="object" name="action_add_components" attrs="{'invisible': ['|', ('state', '!=', 'draft') ,('is_components_added', '=', True)]}"/>
             </xpath>
 
+            <xpath expr="///field[@name='employee_id']" position="attributes">
+                    <attribute name="options">{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}</attribute>
+                </xpath>
+
+            <xpath expr="///field[@name='department_id']" position="attributes">
+                    <attribute name="options">{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}</attribute>
+                </xpath>
+
             <xpath expr="//field[@name='date_end']" position="after">
-                <field name="vendor_id" groups="material_purchase_requisitions.group_store_keeper,material_purchase_requisitions.group_purchase_requisition_manager,material_purchase_requisitions.group_purchase_requisition_user,material_purchase_requisitions.group_purchase_requisition_department"/>
+                <field name="vendor_id" options="{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}" groups="material_purchase_requisitions.group_store_keeper,material_purchase_requisitions.group_purchase_requisition_manager,material_purchase_requisitions.group_purchase_requisition_user,material_purchase_requisitions.group_purchase_requisition_department"/>
             </xpath>
 
             <xpath expr="//field[@name='requisiton_responsible_id']" position="after">
-                <field name="product_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="product_id" options="{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                 <field name="qty" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                 <field name="requisition_type" attrs="{'readonly': [('state', 'not in', ['draft', 'dept_confirm'])]}"/>
                 <field name="is_components_added" invisible="1"/>

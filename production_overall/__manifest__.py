@@ -30,6 +30,7 @@
         'views/requisition_views.xml',
         'views/product_views.xml',
         'views/unique_lot.xml',
+        'views/create_view_all.xml',
         'wizard/produced_wizard.xml',
         'reports/barcode.xml',
     ],
