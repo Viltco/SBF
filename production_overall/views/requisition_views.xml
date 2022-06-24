@@ -1,5 +1,45 @@
 <odoo>
 
+    <record id="view_purchase_requisition_form_inh" model="ir.ui.view">
+        <field name="name">purchase.requisition.form</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+        <field name="arch" type="xml">
+
+<!--                        <xpath expr="//button[@name='%(purchase_requisition.action_purchase_requisition_to_so)d']" position="attributes">-->
+<!--                            <attribute name="invisible">1</attribute>-->
+<!--                        </xpath>-->
+
+            <xpath expr="///button[1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="///button[2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!--             <xpath expr="//div[@name='button_box']" position="inside">-->
+            <!--                <button class="oe_stat_button" icon="fa-wrench" type="object"  name="action_view_po">-->
+            <!--                    <field string="Purchase Order" name="purchase_count" widget="statinfo" />-->
+            <!--                </button>-->
+            <!--            </xpath>-->
+
+            <xpath expr="///field[@name='origin']" position="after">
+                <field name="requisition_id"/>
+                <field name="is_created_po" invisible="1"/>
+            </xpath>
+
+            <xpath expr="///field[@name='vendor_id']" position="replace">
+                <field name="vendor_id" context="{'res_partner_search_mode': 'supplier'}" attrs="{'readonly': [('state', 'in', ['ongoing','done'])]}"/>
+            </xpath>
+
+            <xpath expr="///header" position="inside">
+                <button string="New Quotation" type="object" name="request_stock" class="oe_highlight" attrs="{'invisible': ['|',('state', 'not in', ['ongoing', 'in_progress']),('is_created_po', '=', True)]}"/>
+            </xpath>
+
+        </field>
+    </record>
+
     <record id="view_material_purchase_requisition_form_inh" model="ir.ui.view">
         <field name="name">material.purchase.requisition.form</field>
         <field name="model">material.purchase.requisition</field>
@@ -7,8 +47,18 @@
         <field name="arch" type="xml">
 
             <xpath expr="//header" position="inside">
+                <!--                <button string="Create Purchase Agreement" type="object" name="action_create_agreement" class="oe_highlight" attrs="{'invisible': [('requisition_type', '=', 'internal')]}"/>-->
                 <button string="Add Vendor" type="object" name="action_add_vendors" attrs="{'invisible': [('requisition_type', '=', 'internal')]}"/>
                 <button string="Add Components" type="object" name="action_add_components" attrs="{'invisible': ['|', ('state', '!=', 'draft') ,('is_components_added', '=', True)]}"/>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" icon="fa-wrench" type="object" string="Purchase Agreement" name="action_view_purchase_agreement">
+                    <!--                    <field string="Transfers" name="transfer_count" widget="statinfo" />-->
+                </button>
+                <!--                <button class="oe_stat_button" icon="fa-wrench" type="object" name="action_show_adjustment" attrs="{'invisible': [('adjust_count', '=', 0)]}">-->
+                <!--                    <field string="Adjustment" name="adjust_count" widget="statinfo" />-->
+                <!--                </button>-->
             </xpath>
 
             <xpath expr="///field[@name='employee_id']" position="attributes">
@@ -18,8 +68,10 @@
             <xpath expr="///field[@name='department_id']" position="attributes">
                 <attribute name="options">{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}</attribute>
             </xpath>
+
             <xpath expr="///field[@name='analytic_account_id']" position="attributes">
                 <attribute name="options">{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}</attribute>
+                <attribute name="attrs">{'invisible': [('analytic_account_id', '=', False), ('state', '!=', 'draft')]}</attribute>
             </xpath>
 
             <xpath expr="///field[@name='requisiton_responsible_id']" position="attributes">
@@ -33,13 +85,14 @@
             <xpath expr="//field[@name='requisition_line_ids']/tree/field[@name='product_id']" position="attributes">
                 <attribute name="options">{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}</attribute>
             </xpath>
+
             <xpath expr="//field[@name='requisition_line_ids']/tree/field[@name='uom']" position="attributes">
                 <attribute name="options">{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}</attribute>
             </xpath>
 
             <xpath expr="//field[@name='requisiton_responsible_id']" position="after">
-                <field name="product_id" options="{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                <field name="qty" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="product_id" options="{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}" attrs="{'readonly': [('state', '!=', 'draft')], 'invisible': [('product_id', '=', False), ('state', '!=', 'draft')]}"/>
+                <field name="qty" attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('qty', '=', 0), ('state', '!=', 'draft')]}"/>
                 <field name="requisition_type" attrs="{'readonly': [('state', 'not in', ['draft', 'dept_confirm'])]}"/>
                 <field name="is_components_added" invisible="1"/>
             </xpath>
@@ -56,7 +109,6 @@
                     </field>
                 </page>
             </xpath>
-
 
         </field>
     </record>

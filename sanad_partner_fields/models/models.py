@@ -17,11 +17,14 @@ class ResUserInh(models.Model):
 class ResPartnerInh(models.Model):
     _inherit = 'res.partner'
 
-    vat = fields.Char(string='Tax ID', size=15, index=True, help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
-    cr_no = fields.Char('CR#', default='', size=10)
+    vat = fields.Char(string='Tax ID', size=15, index=True, tracking=1,help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
+    cr_no = fields.Char('CR#', default='', size=10, tracking=1)
     partner_type = fields.Selection([
         ('supplier', 'Supplier'), ('customer', 'Customer'), ('employee', 'Employee')],
         index=True, required=True, tracking=15)
+    phone = fields.Char(tracking=1)
+    mobile = fields.Char(tracking=1)
+    email = fields.Char(tracking=1)
 
     @api.onchange('cr_no')
     def _check_value(self):

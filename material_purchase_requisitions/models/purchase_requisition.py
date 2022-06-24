@@ -321,26 +321,26 @@ class MaterialPurchaseRequisition(models.Model):
 
     # @api.multi
     def manager_approve(self):
-        for rec in self:
-            requis = rec.requisition_line_ids.filtered(lambda r: r.requisition_type == False)
-            if requis:
-                raise UserError(_('please select requisition action!'))
-            else:
-                rec.managerapp_date = fields.Date.today()
-                rec.approve_manager_id = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
-                employee_mail_template = self.env.ref(
-                    'material_purchase_requisitions.email_purchase_requisition_iruser_custom')
-                email_iruser_template = self.env.ref('material_purchase_requisitions.email_purchase_requisition')
-                employee_mail_template.sudo().send_mail(self.id)
-                email_iruser_template.sudo().send_mail(self.id)
-                # flag = False
-                # for line in rec.requisition_line_ids:
-                #     if line.requisition_type == 'purchase':
-                #         flag = True
-                # if flag:
-                #     rec.state = 'ir_approve'
-                # else:
-                rec.state = 'approve'
+        # for rec in self:
+        requis = self.requisition_line_ids.filtered(lambda r: r.requisition_type == False)
+        if requis:
+            raise UserError(_('please select requisition action!'))
+        else:
+            self.managerapp_date = fields.Date.today()
+            self.approve_manager_id = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
+            employee_mail_template = self.env.ref(
+                'material_purchase_requisitions.email_purchase_requisition_iruser_custom')
+            email_iruser_template = self.env.ref('material_purchase_requisitions.email_purchase_requisition')
+            employee_mail_template.sudo().send_mail(self.id)
+            email_iruser_template.sudo().send_mail(self.id)
+            # flag = False
+            # for line in rec.requisition_line_ids:
+            #     if line.requisition_type == 'purchase':
+            #         flag = True
+            # if flag:
+            #     rec.state = 'ir_approve'
+            # else:
+            self.state = 'approve'
 
     #                 if rec.requisition_line_ids[0].requisition_type:
     #                     if rec.requisition_line_ids[0].requisition_type == 'internal':
@@ -392,7 +392,7 @@ class MaterialPurchaseRequisition(models.Model):
             'date_planned': fields.Date.today(),
             'price_unit': line.product_id.standard_price,
             'order_id': purchase_order.id,
-            'account_analytic_id': self.analytic_account_id.id,
+            # 'account_analytic_id': self.analytic_account_id.id,
             'custom_requisition_line_id': line.id
         }
         return po_line_vals

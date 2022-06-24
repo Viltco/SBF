@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp', 'stock', 'material_purchase_requisitions', 'purchase', 'product', 'stock_account', 'quality_mrp', 'receipt_overall'],
+    'depends': ['base', 'mrp', 'stock', 'material_purchase_requisitions', 'purchase', 'product', 'stock_account', 'quality_mrp', 'receipt_overall', 'purchase_requisition'],
 
     # always loaded
     'data': [
