@@ -146,6 +146,11 @@ class MaterialPurchaseRequisitionInh(models.Model):
         ('internal', 'Internal Picking'),
         ('purchase', 'Purchase Order')], string='Requisition Action')
     is_components_added = fields.Boolean(copy=False)
+    agreement_count = fields.Integer(compute='compute_agreement_count')
+
+    def compute_agreement_count(self):
+        count = self.env['purchase.requisition'].search_count([('requisition_id', '=', self.id)])
+        self.agreement_count = count
 
     def request_stock(self):
         stock_obj = self.env['stock.picking']
@@ -159,14 +164,14 @@ class MaterialPurchaseRequisitionInh(models.Model):
         self.action_create_agreement()
         for rec in self:
             if not rec.requisition_line_ids:
-                raise Warning(_('Please create some requisition lines.'))
+                raise UserError(_('Please create some requisition lines.'))
             if any(line.requisition_type == 'internal' for line in rec.requisition_line_ids):
                 if not rec.location_id.id:
-                    raise Warning(_('Select Source location under the picking details.'))
+                    raise UserError(_('Select Source location under the picking details.'))
                 if not rec.custom_picking_type_id.id:
-                    raise Warning(_('Select Picking Type under the picking details.'))
+                    raise UserError(_('Select Picking Type under the picking details.'))
                 if not rec.dest_location_id:
-                    raise Warning(_('Select Destination location under the picking details.'))
+                    raise UserError(_('Select Destination location under the picking details.'))
                 #                 if not rec.employee_id.dest_location_id.id or not rec.employee_id.department_id.dest_location_id.id:
                 #                     raise Warning(_('Select Destination location under the picking details.'))
                 picking_vals = {
@@ -384,7 +389,7 @@ class MaterialPurchaseRequisitionInh(models.Model):
     def manager_approve(self):
         if self.requisition_type:
             for line in self.requisition_line_ids:
-                if line.requisition_type != 'False':
+                if not line.requisition_type:
                     line.requisition_type = self.requisition_type
         return super(MaterialPurchaseRequisitionInh, self).manager_approve()
 

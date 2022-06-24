@@ -53,8 +53,8 @@
             </xpath>
 
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button class="oe_stat_button" icon="fa-wrench" type="object" string="Purchase Agreement" name="action_view_purchase_agreement">
-                    <!--                    <field string="Transfers" name="transfer_count" widget="statinfo" />-->
+                <button class="oe_stat_button" icon="fa-wrench" type="object"  name="action_view_purchase_agreement">
+                                        <field string="Purchase Agreement" name="agreement_count" widget="statinfo" />
                 </button>
                 <!--                <button class="oe_stat_button" icon="fa-wrench" type="object" name="action_show_adjustment" attrs="{'invisible': [('adjust_count', '=', 0)]}">-->
                 <!--                    <field string="Adjustment" name="adjust_count" widget="statinfo" />-->

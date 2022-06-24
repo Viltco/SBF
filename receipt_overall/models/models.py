@@ -77,20 +77,21 @@ class PurchaseOrderInh(models.Model):
     comparison_lines = fields.One2many('comparison.line', 'order_id')
 
     def action_add_lines(self):
-        product_list = []
-        for rec in self.comparison_lines:
-            rec.unlink()
-        for line in self.order_line:
-            product_list.append((0, 3, {
-                'product_id': line.product_id.id,
-                'brand': line.brand,
-                'product_qty': line.product_qty,
-                'discount': line.discount,
-                'price_unit': line.price_unit,
-                'product_uom': line.product_uom.id,
-                'price_subtotal': line.price_subtotal
-            }))
-        self.comparison_lines = product_list
+        for res in self:
+            product_list = []
+            for rec in res.comparison_lines:
+                rec.unlink()
+            for line in res.order_line:
+                product_list.append((0, 3, {
+                    'product_id': line.product_id.id,
+                    'brand': line.brand,
+                    'product_qty': line.product_qty,
+                    'discount': line.discount,
+                    'price_unit': line.price_unit,
+                    'product_uom': line.product_uom.id,
+                    'price_subtotal': line.price_subtotal
+                }))
+            res.comparison_lines = product_list
 
     def button_cancel(self):
         record = super(PurchaseOrderInh, self).button_cancel()
