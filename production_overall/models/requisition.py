@@ -291,9 +291,12 @@ class MaterialPurchaseRequisitionInh(models.Model):
             'requisition_id': self.id,
         }
         req = self.env['purchase.requisition'].create(vals)
-        # self.requisition_product_lines = new_list
         for j in req.line_ids:
             j.product_qty = math.ceil(round(j.product_qty / j.product_id.uom_po_id.factor_inv, 2))
+        req.action_in_progress()
+        req.request_stock()
+        # self.requisition_product_lines = new_list
+
 
     def action_view_purchase_agreement(self):
         return {

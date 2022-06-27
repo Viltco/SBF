@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="view_quality_check_form_inherited" model="ir.ui.view">
+        <field name="name">quality.check.inherited</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_form"/>
+        <field name="model">quality.check</field>
+        <field type="xml" name="arch">
+<!--            <xpath expr="//button[@name='do_fail']" position="after">-->
+<!--                <button string="Reset" type="object" name="action_reset" attrs="{'invisible': [('quality_state', '!=', 'fail')]}"/>-->
+<!--            </xpath>-->
+            <xpath expr="//button[2]" position="attributes">
+                <attribute name="groups">quality.group_quality_user</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
     <record id="view_order_form_inherited" model="ir.ui.view">
         <field name="name">sale.order.inherited</field>
         <field name="inherit_id" ref="sale.view_order_form"/>

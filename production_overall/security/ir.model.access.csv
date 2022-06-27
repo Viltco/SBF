@@ -8,3 +8,4 @@ access_done_qty_wizard,access.done.qty.wizard,model_done_qty_wizard,,1,1,1,1
 access_produced_qty_line,access.produced.qty.line,model_produced_qty_line,,1,1,1,1
 access_unique_lot,access.unique.lot,model_unique_lot,,1,1,1,1
 access_reason_line,access.reason.line,model_reason_line,,1,1,1,1
+access_purchase_requisition,access.purchase_requisition,model_purchase_requisition,material_purchase_requisitions.group_create_requisition,1,1,1,1
