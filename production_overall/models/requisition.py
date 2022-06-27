@@ -3,7 +3,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 import math
-from datetime import datetime
 
 
 class PurchaseRequisitionInh(models.Model):
@@ -27,9 +26,6 @@ class PurchaseRequisitionInh(models.Model):
         }
 
     def request_stock(self):
-        # stock_obj = self.env['stock.picking']
-        # move_obj = self.env['stock.move']
-        # internal_obj = self.env['stock.picking.type'].search([('code','=', 'internal')], limit=1)
         purchase_obj = self.env['purchase.order']
         purchase_line_obj = self.env['purchase.order.line']
         #         if not internal_obj:
@@ -280,22 +276,23 @@ class MaterialPurchaseRequisitionInh(models.Model):
                             rec['product_qty'] = rec['product_qty'] + line.qty
                             # rec['qty_in_cm'] = rec['qty_in_cm'] + line.qty
         new_list = []
-        for res in product_list:
-            new_list.append((0, 0, res))
-        vals = {
-            'user_id': self.env.user.id,
-            # 'invoice_date': datetime.today().date(),
-            'line_ids': new_list,
-            'state': 'draft',
-            'origin': self.name,
-            'requisition_id': self.id,
-        }
-        req = self.env['purchase.requisition'].create(vals)
-        for j in req.line_ids:
-            j.product_qty = math.ceil(round(j.product_qty / j.product_id.uom_po_id.factor_inv, 2))
-        req.action_in_progress()
-        req.request_stock()
-        # self.requisition_product_lines = new_list
+        if product_list:
+            for res in product_list:
+                new_list.append((0, 0, res))
+            vals = {
+                'user_id': self.env.user.id,
+                # 'invoice_date': datetime.today().date(),
+                'line_ids': new_list,
+                'state': 'draft',
+                'origin': self.name,
+                'requisition_id': self.id,
+            }
+            req = self.env['purchase.requisition'].create(vals)
+            for j in req.line_ids:
+                j.product_qty = math.ceil(round(j.product_qty / j.product_id.uom_po_id.factor_inv, 2))
+            req.action_in_progress()
+            req.request_stock()
+            # self.requisition_product_lines = new_list
 
 
     def action_view_purchase_agreement(self):
