@@ -5,12 +5,16 @@ class ResInherit(models.Model):
     _inherit = "res.partner"
 
     active = fields.Boolean('Active', default=True)
+    name = fields.Char(index=True, tracking=1)
+    is_archive = fields.Boolean()
 
     def action_view_sale_order(self):
         pass
 
     def action_approve(self):
         self.active = True
+        self.is_archive = False
+        self.message_post(body="Contact Approved")
 
     def action_confirm(self):
         self.active = True
@@ -19,4 +23,5 @@ class ResInherit(models.Model):
     def create(self, vals):
         record = super(ResInherit, self).create(vals)
         record.active = False
+        record.is_archive = True
         return record
