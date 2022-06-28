@@ -9,11 +9,12 @@
 
             <xpath expr="//group[1]" position="after">
                 <group>
-                    <field name="first" readonly="1"/>
+                    <field name="first" readonly="1" attrs="{'invisible': [('is_trace', '=', True)]}"/>
+                    <field name="is_trace" invisible="1"/>
                 </group>
                 <group col="4">
-                    <field name="qty"/>
-                    <button string="Add SR" type="object" name="action_add_lines"/>
+                    <field name="qty" attrs="{'invisible': [('is_trace', '=', True)]}"/>
+                    <button string="Add SR" type="object" name="action_add_lines" attrs="{'invisible': [('is_trace', '=', True)]}"/>
                 </group>
             </xpath>
 
