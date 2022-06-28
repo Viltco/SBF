@@ -26,9 +26,9 @@ class StockMoveInh(models.Model):
     @api.depends('product_id', 'product_id.tracking')
     def _compute_trace(self):
         if self.product_id.tracking != 'none':
-            self.is_trace = True
-        else:
             self.is_trace = False
+        else:
+            self.is_trace = True
 
     @api.onchange('first')
     def set_upper(self):
