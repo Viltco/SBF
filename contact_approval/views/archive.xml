@@ -7,26 +7,12 @@
             <field name="model">res.partner</field>
             <field name="priority">100</field>
             <field type="xml" name="arch">
-
                 <xpath expr="/form/sheet" position="before">
                     <header>
                         <button id="button_approve" name="action_approve" string="Approve" groups="purchase.group_purchase_manager"
                                 class="btn-primary" type="object" confirm="Are you sure that you need to approve?" attrs="{'invisible': [('active', '=', True)]}"/>
                     </header>
                 </xpath>
-
-                <xpath expr="//field[@name='vat']" position="after">
-                    <field name="is_archive" invisible="1"/>
-                </xpath>
-
-                <xpath expr="//widget[@name='web_ribbon']" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|',('active', '=', True),('is_archive', '=', True)]}</attribute>
-                </xpath>
-
-                <xpath expr="//widget[@name='web_ribbon']" position="after">
-                    <widget name="web_ribbon" title="Waiting For Approval" bg_color="bg-primary" attrs="{'invisible': [('active', '=', True),('is_archive', '=', False)]}"/>
-                </xpath>
-
             </field>
         </record>
 
@@ -35,7 +21,7 @@
             <field name="res_model">res.partner</field>
             <!--        <field name="view_type">form</field>-->
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('active', '=', False),('is_archive', '=', True)]</field>
+            <field name="domain">[('active', '=', False)]</field>
             <!--        <field name="search_view_id" ref="view_project_filter" />-->
             <field name="context">{}</field>
         </record>
