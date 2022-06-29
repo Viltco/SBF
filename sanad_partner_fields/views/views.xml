@@ -10,17 +10,11 @@
 					<field name="vat" size="15"/>
 				</xpath>
 
-				<xpath expr="//field[@name='country_id']" position="attributes">
-					<attribute name="required">1</attribute>
-				</xpath>
-
 				<xpath expr="//field[@name='vat']" position="before">
 <!--					<field name="customer_rank" invisible="1"/>-->
 <!--					<field name="supplier_rank" invisible="1"/>-->
-					<field name="is_saudia"/>
 					<field name="partner_type"/>
-					<field name="cr_no" attrs="{'required': [('is_saudia', '=', True)]}"/>
-					<field name="vat" attrs="{'required': [('is_saudia', '=', True)]}"/>
+					<field name="cr_no" attrs="{'required': [('partner_type', '!=', 'employee')]}"/>
 <!--					attrs="{'invisible': [('partner_type', '=', 'customer')]}"-->
 				</xpath>
 

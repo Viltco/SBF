@@ -17,10 +17,7 @@ class ResUserInh(models.Model):
 class ResPartnerInh(models.Model):
     _inherit = 'res.partner'
 
-    vat = fields.Char(string='Tax ID', size=15, index=True, tracking=1, help="The Tax Identification Number. Complete "
-                                                                             "it if the contact is subjected to "
-                                                                             "government taxes. Used in some legal "
-                                                                             "statements.")
+    vat = fields.Char(string='Tax ID', size=15, index=True, tracking=1,help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
     cr_no = fields.Char('CR#', default='', size=10, tracking=1)
     partner_type = fields.Selection([
         ('supplier', 'Supplier'), ('customer', 'Customer'), ('employee', 'Employee')],
@@ -28,24 +25,17 @@ class ResPartnerInh(models.Model):
     phone = fields.Char(tracking=1)
     mobile = fields.Char(tracking=1)
     email = fields.Char(tracking=1)
-    is_saudia = fields.Boolean()
-
-    @api.onchange('country_id')
-    def onchange_country(self):
-        if self.country_id.name == 'Saudi Arabia':
-            self.is_saudia = True
-        else:
-            self.is_saudia = False
 
     @api.onchange('cr_no')
     def _check_value(self):
-        if self.cr_no and self.country_id.name == 'Saudi Arabia':
+        # print(self.context)
+        if self.cr_no:
             if not self.cr_no.isnumeric() or len(self.cr_no) < 10:
                 raise UserError('Incorrect CR# format: CR# can be numeric only. Must be 10 digits only.')
 
     @api.onchange('vat')
     def _check_vat(self):
-        if self.vat and self.country_id.name == 'Saudi Arabia':
+        if self.vat:
             if not self.vat.isnumeric() or len(self.vat) < 15:
                 raise UserError('Incorrect TAX ID format: TAX ID can be numeric only. Must be 15 digits only.')
 
@@ -65,7 +55,7 @@ class ResPartnerInh(models.Model):
 
     @api.constrains('cr_no')
     def check_code(self):
-        if self.cr_no and self.country_id.name == 'Saudi Arabia':
+        if self.cr_no:
             code = self.env['res.partner'].search([('cr_no', '=', self.cr_no), ('active', 'in', [False, True])])
             if len(code) > 1:
                 raise UserError('CR No Already Exist')
