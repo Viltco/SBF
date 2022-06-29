@@ -79,7 +79,11 @@
             </xpath>
 
             <xpath expr="//field[@name='date_end']" position="after">
-                <field name="vendor_id" options="{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}" groups="material_purchase_requisitions.group_store_keeper,material_purchase_requisitions.group_purchase_requisition_manager,material_purchase_requisitions.group_purchase_requisition_user,material_purchase_requisitions.group_purchase_requisition_department"/>
+                <field name="vendor_id" attrs="{'invisible': [('state', '=', 'dept_confirm')]}" options="{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}" groups="material_purchase_requisitions.group_store_keeper,material_purchase_requisitions.group_purchase_requisition_manager,material_purchase_requisitions.group_purchase_requisition_user,material_purchase_requisitions.group_purchase_requisition_department"/>
+            </xpath>
+
+            <xpath expr="//field[@name='requisition_line_ids']/tree/field[@name='partner_id']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.state', '=', 'dept_confirm')]}</attribute>
             </xpath>
 
             <xpath expr="//field[@name='requisition_line_ids']/tree/field[@name='product_id']" position="attributes">
@@ -89,12 +93,13 @@
             <xpath expr="//field[@name='requisition_line_ids']/tree/field[@name='uom']" position="attributes">
                 <attribute name="options">{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}</attribute>
             </xpath>
-
+<!--            domain="[('id', 'in', product_id.bom_ids.product_id)]"-->
             <xpath expr="//field[@name='requisiton_responsible_id']" position="after">
-                <field name="product_id" options="{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}" attrs="{'readonly': [('state', '!=', 'draft')], 'invisible': [('product_id', '=', False), ('state', '!=', 'draft')]}"/>
+                <field name="product_id" domain="[('id', 'in', bom_product_ids)]"  options="{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}" attrs="{'readonly': [('state', '!=', 'draft')], 'invisible': [('product_id', '=', False), ('state', '!=', 'draft')]}"/>
                 <field name="qty" attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('qty', '=', 0), ('state', '!=', 'draft')]}"/>
                 <field name="requisition_type" attrs="{'readonly': [('state', 'not in', ['draft', 'dept_confirm'])]}"/>
                 <field name="is_components_added" invisible="1"/>
+                <field name="bom_product_ids" widget="many2many_tags" invisible="1"/>
             </xpath>
 
             <xpath expr="//notebook/page" position="after">

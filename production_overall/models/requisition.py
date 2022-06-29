@@ -1,5 +1,4 @@
 
-
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 import math
@@ -116,7 +115,8 @@ class PurchaseRequisitionInh(models.Model):
                             check = False
                             for p_line in purchase_order.order_line:
                                 if p_line.product_id.id == line.product_id.id:
-                                    p_line.product_qty = (line.qty/line.product_id.uom_po_id.factor_inv) + p_line.product_qty
+                                    p_line.product_qty = \
+                                                                     (line.qty / line.product_id.uom_po_id.factor_inv) + p_line.product_qty
                                     check = True
                             if not check:
                                 purchase_line_obj.sudo().create(po_line_vals)
@@ -143,6 +143,13 @@ class MaterialPurchaseRequisitionInh(models.Model):
         ('purchase', 'Purchase Order')], string='Requisition Action')
     is_components_added = fields.Boolean(copy=False)
     agreement_count = fields.Integer(compute='compute_agreement_count')
+
+    bom_product_ids = fields.Many2many('product.product', compute='_compute_bom_product_ids')
+
+    @api.depends('product_id')
+    def _compute_bom_product_ids(self):
+        products = self.env['mrp.bom'].search([]).mapped('product_id')
+        self.bom_product_ids = products
 
     def compute_agreement_count(self):
         count = self.env['purchase.requisition'].search_count([('requisition_id', '=', self.id)])
@@ -294,7 +301,6 @@ class MaterialPurchaseRequisitionInh(models.Model):
             req.request_stock()
             # self.requisition_product_lines = new_list
 
-
     def action_view_purchase_agreement(self):
         return {
             'type': 'ir.actions.act_window',
@@ -324,7 +330,7 @@ class MaterialPurchaseRequisitionInh(models.Model):
             new_list.append((0, 0, res))
         self.requisition_product_lines = new_list
         for j in self.requisition_product_lines:
-            j.qty = math.ceil(round(j.qty/j.product_id.uom_po_id.factor_inv, 2))
+            j.qty = math.ceil(round(j.qty / j.product_id.uom_po_id.factor_inv, 2))
 
     def action_add_components(self):
         product_list = []
