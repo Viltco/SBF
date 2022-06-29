@@ -1,0 +1,146 @@
+<odoo>
+
+    <record model="ir.ui.view" id="mrp_workorder_form_inh_date">
+        <field name="name">mrp.workorder.form.inh</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//tree/field[@name='state']" position="before">
+                <field name="start_date_custom"/>
+                <field name="lot" invisible="1"/>
+                <field name="unique_lots" widget="many2many_tags" invisible="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mrp_production_form_quality_inh">
+        <field name="name">mrp.production.form.inh</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="quality_mrp.mrp_production_view_form_inherit_quality"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']/button[@name='open_quality_alert_mo']" position="attributes">
+                <attribute name="groups">receipt_overall.group_quality_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(quality_mrp.quality_check_action_mo)d']" position="attributes">
+                <attribute name="groups">receipt_overall.group_quality_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='check_quality']" position="attributes">
+                <attribute name="groups">receipt_overall.group_quality_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_quality_alert']" position="attributes">
+                <attribute name="groups">receipt_overall.group_quality_manager</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mrp_production_form_inh">
+        <field name="name">mrp.production.form.inh</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+
+             <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" icon="fa-wrench" type="object" name="action_view_transfers" attrs="{'invisible': [('transfer_count', '=', 0)]}">
+                    <field string="Transfers" name="transfer_count" widget="statinfo" />
+                </button>
+<!--                <button class="oe_stat_button" icon="fa-wrench" type="object" name="action_show_adjustment" attrs="{'invisible': [('adjust_count', '=', 0)]}">-->
+<!--                    <field string="Adjustment" name="adjust_count" widget="statinfo" />-->
+<!--                </button>-->
+            </xpath>
+
+            <xpath expr="//header" position="inside">
+                <button string="Create Picking" type="object" name="action_create_internal_transfer" class="oe_highlight" attrs="{'invisible': ['|',('state', 'not in', ['confirmed']), ('show_create_in', '=', True)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="allowed_product_ids" invisible="1"/>
+                <field name="show_create_in" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom_qty']" position="after">
+                <field name="to_consume_sm" optional="hide"/>
+             </xpath>
+
+            <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='forecast_availability']" position="after">
+                <field name="to_reserve_sm" optional="hide"/>
+             </xpath>
+
+            <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='quantity_done']" position="after">
+                <field name="to_consumed_sm" optional="hide"/>
+             </xpath>
+
+             <xpath expr="//page[@name='miscellaneous']/group/group/field[@name='picking_type_id']" position="attributes">
+                 <attribute name="attrs">{'readonly': [('state', 'not in', ['draft', 'approve'])]}</attribute>
+             </xpath>
+
+            <xpath expr="//field[@name='location_src_id']" position="attributes">
+                 <attribute name="attrs">{'readonly': [('state', 'not in', ['draft', 'approve'])]}</attribute>
+             </xpath>
+
+            <xpath expr="//page[@name='miscellaneous']/group/group/field[@name='location_dest_id']" position="attributes">
+                 <attribute name="attrs">{'readonly': [('state', 'not in', ['draft', 'approve'])]}</attribute>
+             </xpath>
+
+            <xpath expr="//button[2]" position="attributes">
+                <attribute name="attrs">{'invisible': ['&amp;', '|', ('state', 'not in', ('to_close')), ('qty_producing', '!=', 0), ('state', '!=', 'to_close')]}</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='button_mark_done']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('state', 'in', ('draft', 'cancel', 'progress', 'done', 'to_close', 'approve')), ('qty_producing', '=', 0)]}</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='button_unplan']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|',('is_planned', '=', False), ('state', 'in', ('approve'))]}</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='miscellaneous']" position="after">
+                <page string="Produced Quantity">
+                    <field name="produced_lines">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="workcenter_id"/>
+                            <field name="workcenter_machine_id"/>
+                            <field name="employee_id"/>
+                            <field name="start_date"/>
+                            <field name="paused_date"/>
+                            <field name="qty"/>
+                        </tree>
+                    </field>
+                </page>
+
+                <page string="Finished Unique Products">
+                    <field name="lot_lines">
+                        <tree editable="bottom">
+                            <field name="name" string="Unique No"/>
+                            <field name="lot_id" />
+                            <field name="status" />
+                            <field name="mrp_id" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+
+                <page string="Rejection Reason">
+                    <field name="reason_lines">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="workcenter_id"/>
+                            <field name="workcenter_machine_id"/>
+                            <field name="employee_id"/>
+                            <field name="start_date"/>
+                            <field name="paused_date"/>
+                            <field name="qty" string="Quantity"/>
+                            <field name="reason"/>
+                        </tree>
+                    </field>
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

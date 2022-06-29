@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_quality_check_form_inherited" model="ir.ui.view">
+        <field name="name">quality.check.inherited</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_form"/>
+        <field name="model">quality.check</field>
+        <field type="xml" name="arch">
+<!--            <xpath expr="//button[@name='do_fail']" position="after">-->
+<!--                <button string="Reset" type="object" name="action_reset" attrs="{'invisible': [('quality_state', '!=', 'fail')]}"/>-->
+<!--            </xpath>-->
+            <xpath expr="//button[2]" position="attributes">
+                <attribute name="groups">quality.group_quality_user</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_order_form_inherited" model="ir.ui.view">
+        <field name="name">sale.order.inherited</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="model">sale.order</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='partner_id']" position="replace">
+                <field name="partner_id" options="{'no_create': True}"/>
+            </xpath>
+<!--            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="replace">-->
+<!--                <field name="product_id" options="{'no_create': True}"/>-->
+<!--            </xpath>-->
+
+
+        </field>
+    </record>
+
+    <record id="view_purchase_form_inherited" model="ir.ui.view">
+        <field name="name">purchase.order.inherited</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="model">purchase.order</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='partner_id']" position="replace">
+                <field name="partner_id" options="{'no_quick_create': True,'no_create': True,'no_edit': True, 'no_create_edit' : True}"/>
+            </xpath>
+<!--            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="replace">-->
+<!--                <field name="product_id" options="{'no_create': True}"/>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+</odoo>

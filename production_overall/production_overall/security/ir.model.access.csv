@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_requisition_product_lines,access.requisition.product.lines,model_requisition_product_lines,,1,1,1,1
+access_produced_qty_wizard,access.produced.qty.wizard,model_produced_qty_wizard,,1,1,1,1
+access_produced_lot_wizard,access.produced.lot.wizard,model_produced_lot_wizard,,1,1,1,1
+access_done_lot_wizard,access.done.lot.wizard,model_done_lot_wizard,,1,1,1,1
+access_finish_lot_wizard,access.finish.lot.wizard,model_finish_lot_wizard,,1,1,1,1
+access_done_qty_wizard,access.done.qty.wizard,model_done_qty_wizard,,1,1,1,1
+access_produced_qty_line,access.produced.qty.line,model_produced_qty_line,,1,1,1,1
+access_unique_lot,access.unique.lot,model_unique_lot,,1,1,1,1
+access_reason_line,access.reason.line,model_reason_line,,1,1,1,1
+access_purchase_requisition,access.purchase_requisition,model_purchase_requisition,material_purchase_requisitions.group_create_requisition,1,1,1,1
