@@ -1,0 +1,409 @@
+<odoo>
+
+    <!--    Product Template Approvals-->
+
+    <record id="view_product_template_form_inherit" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="button_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="oe_highlight"
+                            states="draft"
+                    />
+                    <!--                    context = "{'turn_view_readonly':True}"-->
+
+                    <button name="button_approve"
+                            string="Approve"
+                            type="object"
+                            class="oe_highlight"
+                            states="to_approve"
+                            groups="stock.group_stock_manager"
+                    />
+
+                    <button name="button_reject"
+                            string="Reject"
+                            type="object"
+                            class="oe_highlight"
+                            states="to_approve"
+                            groups="stock.group_stock_manager"
+                    />
+
+                    <button name="button_draft"
+                            string="Set To draft"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('state', 'not in', ['rejected','done'])]}"
+                    />
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,to_approve,done"/>
+
+                </header>
+            </xpath>
+
+            <xpath expr="//widget[@name='web_ribbon']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|',('active', '=', True),('is_archive', '=', True)]}</attribute>
+            </xpath>
+
+            <xpath expr="//widget[@name='web_ribbon']" position="after">
+                <widget name="web_ribbon" title="Waiting For Approval" bg_color="bg-primary" attrs="{'invisible': [('active', '=', True),('is_archive', '=', False)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='sale_ok']" position="after">
+                <field name="is_archive" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sale_ok']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='purchase_ok']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='categ_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='default_code']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='list_price']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='taxes_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='standard_price']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attribute_line_ids']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_policy']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='supplier_taxes_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='purchase_method']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description_purchase']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='responsible_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='weight']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='volume']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='produce_delay']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sale_delay']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tracking']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='property_stock_production']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='property_stock_inventory']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description_pickingout']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description_pickingin']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description_picking']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='seller_ids']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description_sale']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='property_account_income_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='property_account_expense_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='property_account_creditor_price_difference']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='route_ids']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='barcode']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='uom_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='uom_po_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </xpath>
+            <!--            <xpath expr="//field[@name='tic_category_id']" position="attributes">-->
+            <!--                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>-->
+            <!--            </xpath>-->
+
+        </field>
+    </record>
+
+    <record id="view_product_template_tree_inherit" model="ir.ui.view">
+        <field name="name">product.template.tree.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <tree>
+                <!--                <field name="id"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_product_template_view_inherit" model="ir.actions.act_window">
+        <field name="name">Product Template Form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_product_template_tree_inherit"/>
+        <field name="domain">[('active', '=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found. Let's Create..........
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_item_under_approval_products"
+              name="Under Approval Product"
+              parent="stock.menu_stock_root"/>
+
+    <menuitem id="menu_action_under_approval_products_template"
+              name="Under Approval Product Template"
+              parent="menu_item_under_approval_products"
+              action="action_product_template_view_inherit"
+              sequence="1"/>
+
+
+    <!--    Product Variants Approvals-->
+
+    <record id="view_product_product_form_inherit" model="ir.ui.view">
+        <field name="name">product.product.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="button_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|', ('is_tmpl', '=', True), ('state', '!=', 'draft')]}"
+                    />
+
+                    <button name="button_approve"
+                            string="Approve"
+                            type="object"
+                            class="oe_highlight"
+                            groups="stock.group_stock_manager"
+                            attrs="{'invisible': ['|', ('is_tmpl', '=', True), ('state', '!=', 'to_approve')]}"
+                    />
+
+                    <button name="button_reject"
+                            string="Reject"
+                            type="object"
+                            class="oe_highlight"
+                            groups="stock.group_stock_manager"
+                            attrs="{'invisible': ['|', ('is_tmpl', '=', True), ('state', '!=', 'to_approve')]}"
+                    />
+
+                    <button name="button_draft"
+                            string="Set To draft"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('state', 'not in', ['rejected','done'])]}"
+                    />
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,to_approve,done"/>
+
+                </header>
+            </xpath>
+
+            <xpath expr="//field[@name='sale_ok']" position="after">
+                <field name="is_archive" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="is_tmpl"/>
+            </xpath>
+              <xpath expr="//widget[@name='web_ribbon']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|',('active', '=', True),('is_archive', '=', True)]}</attribute>
+            </xpath>
+
+            <xpath expr="//widget[@name='web_ribbon']" position="after">
+                <widget name="web_ribbon" title="Waiting For Approval" bg_color="bg-primary" attrs="{'invisible': [('active', '=', True),('is_archive', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_product_tree_inherit" model="ir.ui.view">
+        <field name="name">product.product.tree.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <tree>
+                <!--                <field name="id"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_product_product_view_inherit" model="ir.actions.act_window">
+        <field name="name">Product Form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_product_product_tree_inherit"/>
+        <field name="domain">[('active', '=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found. Let's Create..........
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_item_under_approval_products"
+              name="Under Approval Product"
+              parent="stock.menu_stock_root"/>
+
+    <menuitem id="menu_action_under_approval_products"
+              name="Under Approval Product Variants"
+              parent="menu_item_under_approval_products"
+              action="action_product_product_view_inherit"
+              sequence="2"/>
+
+    <record id="view_stock_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit' : True,}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_mrp_production_form_inherit" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_raw_ids']//tree//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_quality_point_form_inherit" model="ir.ui.view">
+        <field name="name">quality.point.form.inherit</field>
+        <field name="model">quality.point</field>
+        <field name="inherit_id" ref="quality.quality_point_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_ids']" position="attributes">
+                <attribute name="options">{'no_quick_create': True, 'no_create_edit':True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_quality_check_form_inherit" model="ir.ui.view">
+        <field name="name">quality.check.form.inherit</field>
+        <field name="model">quality.check</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_quality_alert_form_inherit" model="ir.ui.view">
+        <field name="name">quality.alert.form.inherit</field>
+        <field name="model">quality.alert</field>
+        <field name="inherit_id" ref="quality_control.quality_alert_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_tmpl_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pca_view_move_form_inherit" model="ir.ui.view">
+        <field name="name">pca.account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pca_view_move_line_form_inherit" model="ir.ui.view">
+        <field name="name">pca.account.move.line.form.inherit</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
