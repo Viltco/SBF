@@ -56,6 +56,6 @@ class ResPartnerInh(models.Model):
     @api.constrains('cr_no')
     def check_code(self):
         if self.cr_no:
-            code = self.env['res.partner'].search([('cr_no', '=', self.cr_no)])
+            code = self.env['res.partner'].search([('cr_no', '=', self.cr_no), ('active', 'in', [False, True])])
             if len(code) > 1:
                 raise UserError('CR No Already Exist')
