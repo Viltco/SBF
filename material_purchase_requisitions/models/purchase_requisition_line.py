@@ -49,6 +49,21 @@ class MaterialPurchaseRequisitionLine(models.Model):
         # required=True,
     )
 
+    parent = fields.Selection([
+        ('draft', 'New'),
+        ('dept_confirm', 'Waiting Department Approval'),
+        ('ir_approve', 'Waiting Finance Approval'),
+        ('approve', 'Approved'),
+        ('stock', 'Purchase Order Created'),
+        ('picking', 'Internal Picking Created'),
+        ('po_pick', 'PO/IP Created'),
+        ('receive', 'Received'),
+        ('cancel', 'Cancelled'),
+        ('reject', 'Rejected')],
+        default='draft',
+        track_visibility='onchange',related='requisition_id.state'
+    )
+
     @api.onchange('product_id')
     def onchange_product_id(self):
         for rec in self:
